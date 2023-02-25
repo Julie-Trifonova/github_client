@@ -2,10 +2,18 @@
 
 .block_type_select {
     display: flex;
+    overflow: auto;
+    height: 55px;
     justify-content: space-between;
     align-items: center;
     margin-bottom: 24px;
     font-family: Roboto-Regular, Arial, sans-serif;
+}
+.type_select_title {
+    display: inline-block;
+}
+.type_select_title_list_block {
+    display: inline-block;
 }
 .type_select_title {
     font-weight: 700;
@@ -28,8 +36,8 @@
     position: absolute;
     z-index: 2;
     display: block;
-    margin-top: 310px;
-    margin-left: 163px;
+    /*margin-top: 50px;*/
+    /*margin-left: 163px;*/
     color:#7E7E7E;
 }
 .type_select_chosen_element:hover {
@@ -49,12 +57,12 @@
 }
 .type_select_list_element_input:hover {
     cursor: pointer;
-    background-color: #FF5555;
-    opacity: 0.5;
+    background-color: #ff8282;
+    border: #FF5555;
 }
 .type_select_list_element_input:checked {
-    background-color: #FF5555;
-    opacity: 0.5;
+    background-color: #ff8282;
+    border: #FF5555;
 }
 .type_select_list_element_input_text {
     display: flex;
