@@ -1,0 +1,26 @@
+.repositories_block {
+  padding: 20px;
+  display: block;
+  margin: auto;
+
+}
+.loader_position {
+  display: flex;
+  justify-content: center;
+}
+
+@media (min-width: 1201px) {
+  .repositories_block {
+    width: 360px;
+  }
+}
+@media (min-width: 641px) and (max-width: 1200px) {
+  .repositories_block {
+    width: 57%;
+  }
+}
+@media (max-width: 640px) {
+  .repositories_block {
+    width: 80%;
+  }
+}
