@@ -1,4 +1,5 @@
-@import '@styles/ColorVariables.scss';
+/*@import '@styles/ColorVariables.scss';*/
+@import '../../styles/ColorVariables.scss';
 
 .block_type_select {
     display: flex;

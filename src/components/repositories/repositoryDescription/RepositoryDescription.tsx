@@ -1,45 +1,38 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 
-import { Loader } from "@components/loader";
-import { ReadmeCard } from "@components/repositories/readmeCard";
-import { getRepository, getRepositoryReadme } from "@utils/api";
-import { logger } from "@utils/logger";
-import { GithubCardType } from "@utils/types";
+// import { Loader } from "@components/loader";
+// import GitHubStore from "@store/gitHubStore";
+// import { Meta } from "@utils/meta";
 import Markdown from "markdown-to-jsx";
+import { observer } from "mobx-react-lite";
 import { Link, useLocation } from "react-router-dom";
 
 import styles from "./RepositoryDescription.module.scss";
+import { Loader } from "../../../components/loader";
+import GitHubStore from "../../../store/gitHubStore";
+import { Meta } from "../../../utils/meta";
 
-const RepositoryDescription: React.FC = () => {
+const RepositoryDescription: React.FC = observer(() => {
+  const gitHubStore = React.useMemo(() => new GitHubStore(), []);
   const location = useLocation();
-  const [repo, setRepo] = useState<GithubCardType>();
-  const [readme, setReadme] = useState<GithubCardType | any>();
   const [, , org, repoName]: Array<string> = location.pathname.split("/");
+
   useEffect(() => {
-    getRepository(org, repoName)
-      .then((response) => {
-        if (response) {
-          setRepo(response);
-        }
-      })
-      .catch((error) => logger(error));
-    getRepositoryReadme(org, repoName)
-      .then((response) => {
-        if (response) {
-          setReadme(response);
-        }
-      })
-      .catch((error) => logger(error));
-  }, [org, repoName]);
-  logger(repo);
-  if (!repo) {
+    gitHubStore.getRepoItem({ owner: org, repo: repoName }).then();
+  }, [gitHubStore, org, repoName]);
+  useEffect(() => {
+    gitHubStore.getRepoReadme({ owner: org, repo: repoName }).then();
+  }, [gitHubStore, org, repoName]);
+
+  if (gitHubStore.meta === Meta.loading) {
     return (
       <div className={styles.loader_position}>
         <Loader />
       </div>
     );
   }
-  if (repo.private) return <>Private Repository</>;
+
+  if (gitHubStore.repoItem?.private) return <>Private Repository</>;
 
   return (
     <div className={styles.block_repository_description}>
@@ -48,7 +41,7 @@ const RepositoryDescription: React.FC = () => {
       >
         <Link
           className={styles.repository_description_link_to_back_block}
-          to={"/"}
+          to={`/?repo=${org}`}
         >
           <button className={styles.repository_description_link_to_back_button}>
             <svg
@@ -67,10 +60,10 @@ const RepositoryDescription: React.FC = () => {
           </button>
         </Link>
         <span className={styles.repository_description_title}>
-          {repo.full_name}
+          {gitHubStore.repoItem?.full_name}
         </span>
       </div>
-      {repo.owner.login && repo.html_url && (
+      {gitHubStore.repoItem?.owner.login && gitHubStore.repoItem?.html_url && (
         <div className={styles.repository_description_link_and_svg_block}>
           <svg
             className={styles.repository_description_link_svg_one}
@@ -100,15 +93,15 @@ const RepositoryDescription: React.FC = () => {
           </svg>
           <a
             className={styles.repository_description_link}
-            href={repo.html_url}
+            href={gitHubStore.repoItem?.html_url}
           >
-            {repo.owner.login}
+            {gitHubStore.repoItem?.owner.login}
           </a>
         </div>
       )}
-      {repo.topics && (
+      {gitHubStore.repoItem?.topics && (
         <div className={styles.repository_description_tags}>
-          {repo.topics.map((topic: string) => (
+          {gitHubStore.repoItem?.topics.map((topic: string) => (
             <div className={styles.repository_description_tag}>{topic}</div>
           ))}
         </div>
@@ -130,7 +123,9 @@ const RepositoryDescription: React.FC = () => {
           />
         </svg>
         <span className={styles.repository_description_stars_count}>
-          {repo.stargazers_count ? repo.stargazers_count : 0}
+          {gitHubStore.repoItem?.stargazers_count
+            ? gitHubStore.repoItem?.stargazers_count
+            : 0}
         </span>
         <span className={styles.repository_description_stars_text}>stars</span>
       </div>
@@ -165,7 +160,9 @@ const RepositoryDescription: React.FC = () => {
           />
         </svg>
         <span className={styles.repository_description_watchers_count}>
-          {repo.watchers_count ? repo.watchers_count : 0}
+          {gitHubStore.repoItem?.watchers_count
+            ? gitHubStore.repoItem?.watchers_count
+            : 0}
         </span>
         <span className={styles.repository_description_watchers_text}>
           watching
@@ -186,26 +183,24 @@ const RepositoryDescription: React.FC = () => {
           />
         </svg>
         <span className={styles.repository_description_forks_count}>
-          {repo.forks_count ? repo.forks_count : 0}
+          {gitHubStore.repoItem?.forks_count
+            ? gitHubStore.repoItem?.forks_count
+            : 0}
         </span>
         <span className={styles.repository_description_forks_text}>fork</span>
       </div>
-      {readme && (
+      {gitHubStore.repoReadme && (
         <div className={styles.repository_description_readme_block}>
           <div className={styles.repository_description_readme_title}>
             Readme.md
           </div>
-          <div className={styles.repository_description_readme_content}>
-            <Markdown>{readme}</Markdown>
+          <div key="" className={styles.repository_description_readme_content}>
+            <Markdown>{`${gitHubStore.repoReadme}`}</Markdown>
           </div>
         </div>
       )}
-      {/*{readme && <div>{readme}</div>}*/}
-      {/*{readme && <ReadmeCard readme ={readme} />}*/}
-      {/*<ReadmeCard readme={readme} />*/}
-      {/*{readme}*/}
     </div>
   );
-};
+});
 
 export { RepositoryDescription };

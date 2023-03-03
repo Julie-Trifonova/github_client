@@ -1,4 +1,4 @@
-@import '@styles/ColorVariables';
+//@import '@styles/ColorVariables';
 
 @keyframes spinner {
   0% {
@@ -9,30 +9,27 @@
   }
 }
 
-@media (min-width: 1201px) {
-  .loader {
+.loader {
+  @media (min-width: 1201px) {
     width: 60px;
     height: 60px;
-    border: solid 6px $loader-border-color;
+    //border: solid 6px $loader-border-color;
   }
-}
-@media (min-width: 641px) and (max-width: 1200px) {
-  .loader {
+  @media (min-width: 641px) and (max-width: 1200px) {
     width: 40px;
     height: 40px;
-    border: solid calc(9px / 2) $loader-border-color;
+    //border: solid calc(9px / 2) $loader-border-color;
   }
-}
-@media (max-width: 640px) {
-  .loader {
+  @media (max-width: 640px) {
     width: 20px;
     height: 20px;
-    border: solid 3px $loader-border-color;
+    //border: solid 3px $loader-border-color;
   }
 }
+
 .loader {
   margin: 50px auto;
   border-radius: 50%;
   animation: spinner 2s linear infinite;
-  border-bottom-color: $loader-border-color-white;
+  //border-bottom-color: $loader-border-color-white;
 }

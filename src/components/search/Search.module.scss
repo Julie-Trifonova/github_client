@@ -1,5 +1,8 @@
-@import '@styles/ColorVariables';
-@import '@styles/App';
+//@import '@styles/ColorVariables';
+@import '../../styles/ColorVariables';
+
+//@import '@styles/App';
+@import '../../styles/App';
 
 .search_block {
   display: flex;
@@ -15,7 +18,7 @@
   border: solid 1px $border-color;
   border-radius: 6px;
   padding-left: 12px;
-  font-family: Roboto-Regular, Arial, sans-serif;
+  font-family: $font;
   font-style: normal;
   font-size: 14px;
 }

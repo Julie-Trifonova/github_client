@@ -1,55 +1,66 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useEffect } from "react";
 
-import { Loader } from "@components/loader/Loader";
-import { RepositoryCard } from "@components/repositories/repositoryCard/RepositoryCard";
-import { Search } from "@components/search";
-import { BlockType } from "@components/type";
-import { getRepositories, getRepositoriesCount } from "@utils/api";
-import { logger } from "@utils/logger";
-import { GithubCardType } from "@utils/types";
+// import { GitHubError } from "@components/gitHubError/GitHubError";
+import { observer } from "mobx-react-lite";
 import InfiniteScroll from "react-infinite-scroll-component";
+import { useSearchParams } from "react-router-dom";
 
 import styles from "./Repositories.module.scss";
+import { GitHubError } from "../../components/gitHubError/GitHubError";
+// import { Loader } from "@components/loader/Loader";
+import { Loader } from "../../components/loader/Loader";
+// import { InitialPage } from "@components/repositories/initialPage/InitialPage";
+import { InitialPage } from "../../components/repositories/initialPage/InitialPage";
+// import { RepositoryCard } from "@components/repositories/repositoryCard/RepositoryCard";
+import { RepositoryCard } from "../../components/repositories/repositoryCard/RepositoryCard";
+import { Search } from "../../components/search";
+// import { Search } from "@components/search";
+// import { blockType } from "@components/blockType";
+// import GitHubStore from "@store/gitHubStore";
+import GitHubStore from "../../store/gitHubStore";
+// import { GitHubRepoItemModel } from "@store/models/gitHub";
+import { GitHubRepoItemModel } from "../../store/models/gitHub";
+// import { Meta } from "@utils/meta";
+import { Meta } from "../../utils/meta";
+import { BlockType } from "../blockType";
 
-const Repositories: React.FC = () => {
-  const [repos, setRepos] = useState<GithubCardType[]>();
-  const [countRepos, setCountRepos] = useState(0);
-  const [page, setPage] = useState(2);
-  const [hasMore, setHasMore] = useState(true);
-  // const [valueType, setValueType] = useState('common');
+const Repositories: React.FC = observer(() => {
+  const gitHubStore = React.useMemo(() => new GitHubStore(), []);
+  const [search, setSearch] = useSearchParams();
 
   useEffect(() => {
-    getRepositories(1, 10)
-      .then((response) => {
-        if (response) {
-          setRepos(response);
-        }
-      })
-      .catch((error) => logger(error));
-    getRepositoriesCount()
-      .then((response) => setCountRepos(response))
-      .catch((error) => logger(error));
-  }, []);
+    if (search.get("repo") && search.get("repo") !== null) {
+      gitHubStore
+        .getOrganizationReposCount(search.get("repo") as string)
+        .then();
+      gitHubStore.setSearchValue(search.get("repo") as string);
+      gitHubStore
+        .getOrganizationReposList({
+          pageNumber: 1,
+          perPageCount: 20,
+          organizationName: search.get("repo") as string,
+        })
+        .then();
+    }
+  }, [gitHubStore, search]);
 
-  const fetchData = useCallback(() => {
-    getRepositories(page, 10)
-      .then((response) => {
-        if (response && repos !== undefined) {
-          setRepos([...repos, ...response]);
-        }
-      })
-      .then(() =>
-        setHasMore(
-          repos !== undefined &&
-            repos.length !== 0 &&
-            repos.length !== countRepos
-        )
-      )
-      .then(() => setPage(page + 1))
-      .catch((err) => logger(err));
-  }, [page, repos, countRepos]);
+  const handleSearchButton = useCallback(
+    (organization: string) => {
+      setSearch({ repo: organization });
+      gitHubStore.setSearchValue(organization);
+      gitHubStore.getOrganizationReposCount(gitHubStore.searchValue).then();
+      gitHubStore
+        .getOrganizationReposList({
+          pageNumber: 1,
+          perPageCount: 20,
+          organizationName: gitHubStore.searchValue,
+        })
+        .then();
+    },
+    [gitHubStore, setSearch]
+  );
 
-  if (repos === undefined || repos.length === 0) {
+  if (gitHubStore.meta === Meta.loading) {
     return (
       <div className={styles.loader_position}>
         <Loader />
@@ -59,38 +70,44 @@ const Repositories: React.FC = () => {
 
   return (
     <div className={styles.repositories_block}>
-      <Search />
-      <InfiniteScroll
-        dataLength={repos.length}
-        next={fetchData}
-        hasMore={hasMore}
-        loader={
-          <div className={styles.loader_position}>
-            <Loader />
-          </div>
-        }
-        endMessage={<h2 className={styles.loader_position}>End</h2>}
-      >
-        <BlockType repos={repos} disabled={false} />
-        {repos.map(
-          (repo) =>
-            !repo.private && (
-              <div key={repo.id}>
-                <RepositoryCard
-                  avatar={repo.owner.avatar_url}
-                  title={repo.name}
-                  link={repo.html_url}
-                  starCount={repo.stargazers_count}
-                  lastUpdated={repo.updated_at}
-                  owner={repo.owner.login}
-                  id={repo.id}
-                />
-              </div>
-            )
-        )}
-      </InfiniteScroll>
+      <Search handleSearchButton={handleSearchButton} />
+      {gitHubStore.meta === Meta.error ? (
+        <GitHubError errorMessage={gitHubStore.errorMessage} />
+      ) : gitHubStore.meta === Meta.initial ? (
+        <InitialPage />
+      ) : (
+        <InfiniteScroll
+          dataLength={gitHubStore.list.length}
+          next={() => gitHubStore.fetchOrganizationReposList()}
+          hasMore={gitHubStore.hasMore}
+          loader={
+            <div className={styles.loader_position}>
+              <Loader />
+            </div>
+          }
+          endMessage={<h2 className={styles.loader_position}>End</h2>}
+        >
+          <BlockType disabled={false} />
+          {gitHubStore.list.map(
+            (repo: GitHubRepoItemModel) =>
+              !repo.private && (
+                <div key={repo.id}>
+                  <RepositoryCard
+                    avatar={repo.owner.avatar_url}
+                    title={repo.name}
+                    link={repo.html_url}
+                    starCount={repo.stargazers_count}
+                    lastUpdated={repo.updated_at}
+                    owner={repo.owner.login}
+                    id={repo.id}
+                  />
+                </div>
+              )
+          )}
+        </InfiniteScroll>
+      )}
     </div>
   );
-};
+});
 
-export { Repositories };
+export default Repositories;

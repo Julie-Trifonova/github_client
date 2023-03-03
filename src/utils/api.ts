@@ -1,11 +1,15 @@
-import { BASE_URL, HEADER_API_KEY } from "@config/constants";
+// import { BASE_URL, HEADER_API_KEY } from "@config/constants";
+import axios from "axios";
+
+import { BASE_URL, HEADER_API_KEY } from "../../src/config/constants";
+// import { GithubCardType } from "@store/models/gitHub/repoItem";
+import { GithubCardType } from "../../src/store/models/gitHub/repoItem";
+// import { GetRepositoriesType, GetRepositoryType, GetRepositoriesCountType } from "@utils/types";
 import {
   GetRepositoriesType,
   GetRepositoryType,
-  GithubCardType,
   GetRepositoriesCountType,
-} from "@utils/types";
-import axios from "axios";
+} from "../utils/types";
 
 const getRepositories: GetRepositoriesType = async (
   pageNumber,
@@ -54,7 +58,6 @@ const getRepository: GetRepositoryType = async (org, repoName) => {
 const config = {
   headers: {
     Authorization: HEADER_API_KEY,
-    // Accept: "application/vnd.github.html",
     Accept: "application/vnd.github.raw",
   },
 };
@@ -78,13 +81,15 @@ const getRepositoryReadme: GetRepositoryType = async (org, repoName) => {
   }
 };
 
-const getRepositoriesCount: GetRepositoriesCountType = async () => {
+const getRepositoriesCount: GetRepositoriesCountType = async (
+  organizationName
+) => {
   if (HEADER_API_KEY === undefined) {
     throw new Error("Cannot find HEADER_API_KEY");
   }
   try {
     const request = await axios.get(
-      `${BASE_URL}/orgs/ktsstudio`,
+      `${BASE_URL}/orgs/${organizationName}`,
       HEADER_API_KEY
     );
     const data = await request.data;
