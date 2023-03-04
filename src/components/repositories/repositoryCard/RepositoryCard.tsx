@@ -1,10 +1,9 @@
 import React from "react";
 
-// import { dateOptionsType } from "@store/models/gitHub";
+import { dateOptionsType } from "@store/models/gitHub";
 import { Link } from "react-router-dom";
 
 import styles from "./RepositoryCard.module.scss";
-import { dateOptionsType } from "../../../store/models/gitHub";
 
 type RepositoryCardType = {
   avatar: string;

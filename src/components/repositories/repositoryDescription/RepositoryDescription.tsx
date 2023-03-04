@@ -1,16 +1,13 @@
 import React, { useEffect } from "react";
 
-// import { Loader } from "@components/loader";
-// import GitHubStore from "@store/gitHubStore";
-// import { Meta } from "@utils/meta";
+import { Loader } from "@components/loader";
+import GitHubStore from "@store/gitHubStore";
+import { Meta } from "@utils/meta";
 import Markdown from "markdown-to-jsx";
 import { observer } from "mobx-react-lite";
 import { Link, useLocation } from "react-router-dom";
 
 import styles from "./RepositoryDescription.module.scss";
-import { Loader } from "../../../components/loader";
-import GitHubStore from "../../../store/gitHubStore";
-import { Meta } from "../../../utils/meta";
 
 const RepositoryDescription: React.FC = observer(() => {
   const gitHubStore = React.useMemo(() => new GitHubStore(), []);

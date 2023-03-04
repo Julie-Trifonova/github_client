@@ -1,15 +1,11 @@
-// import { BASE_URL, HEADER_API_KEY } from "@config/constants";
-import axios from "axios";
-
-import { BASE_URL, HEADER_API_KEY } from "../../src/config/constants";
-// import { GithubCardType } from "@store/models/gitHub/repoItem";
-import { GithubCardType } from "../../src/store/models/gitHub/repoItem";
-// import { GetRepositoriesType, GetRepositoryType, GetRepositoriesCountType } from "@utils/types";
+import { BASE_URL, HEADER_API_KEY } from "@config/constants";
+import { GithubCardType } from "@store/models/gitHub/repoItem";
 import {
   GetRepositoriesType,
   GetRepositoryType,
   GetRepositoriesCountType,
-} from "../utils/types";
+} from "@utils/types";
+import axios from "axios";
 
 const getRepositories: GetRepositoriesType = async (
   pageNumber,

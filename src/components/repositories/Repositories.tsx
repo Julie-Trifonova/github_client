@@ -1,28 +1,19 @@
 import React, { useCallback, useEffect } from "react";
 
-// import { GitHubError } from "@components/gitHubError/GitHubError";
+import { BlockType } from "@components/blockType";
+import { GitHubError } from "@components/gitHubError/GitHubError";
+import { Loader } from "@components/loader/Loader";
+import { InitialPage } from "@components/repositories/initialPage/InitialPage";
+import { RepositoryCard } from "@components/repositories/repositoryCard/RepositoryCard";
+import { Search } from "@components/search";
+import GitHubStore from "@store/gitHubStore";
+import { GitHubRepoItemModel } from "@store/models/gitHub";
+import { Meta } from "@utils/meta";
 import { observer } from "mobx-react-lite";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { useSearchParams } from "react-router-dom";
 
 import styles from "./Repositories.module.scss";
-import { GitHubError } from "../../components/gitHubError/GitHubError";
-// import { Loader } from "@components/loader/Loader";
-import { Loader } from "../../components/loader/Loader";
-// import { InitialPage } from "@components/repositories/initialPage/InitialPage";
-import { InitialPage } from "../../components/repositories/initialPage/InitialPage";
-// import { RepositoryCard } from "@components/repositories/repositoryCard/RepositoryCard";
-import { RepositoryCard } from "../../components/repositories/repositoryCard/RepositoryCard";
-import { Search } from "../../components/search";
-// import { Search } from "@components/search";
-// import { blockType } from "@components/blockType";
-// import GitHubStore from "@store/gitHubStore";
-import GitHubStore from "../../store/gitHubStore";
-// import { GitHubRepoItemModel } from "@store/models/gitHub";
-import { GitHubRepoItemModel } from "../../store/models/gitHub";
-// import { Meta } from "@utils/meta";
-import { Meta } from "../../utils/meta";
-import { BlockType } from "../blockType";
 
 const Repositories: React.FC = observer(() => {
   const gitHubStore = React.useMemo(() => new GitHubStore(), []);

@@ -1,5 +1,4 @@
-//@import '@styles/ColorVariables';
-//@import '../src/styles/ColorVariables';
+@import '@styles/ColorVariables';
 
 .loader_position {
   display: flex;
@@ -10,7 +9,7 @@
   display: block;
   margin: auto;
   padding: 20px;
-  //font-family: $font;
+  font-family: $font;
   font-style: normal;
   font-weight: normal;
 }
@@ -22,7 +21,7 @@
 }
 
 .repository_description_link_to_back_button {
-  width: 30px;
+  width: 20px;
   height: 30px;
   border: none;
   background: transparent;
@@ -35,7 +34,7 @@
 }
 
 .repository_description_link_to_back_svg {
-  width: 16px;
+  width: 18px;
   height: 25px;
 }
 
@@ -66,7 +65,7 @@
   font-weight: 700;
   font-size: 14px;
   line-height: 16px;
-  //color: $repository-description-link-color;
+  color: $repository-description-link-color;
 }
 
 .repository_description_tags {
@@ -83,13 +82,13 @@
   padding: 4px 16px;
   justify-content: center;
   align-items: center;
-  //background: $repository-description-tag-background-color;
+  background: $repository-description-tag-background-color;
   border-radius: 20px;
-  //font-family: $font;
+  font-family: $font;
   font-weight: 700;
   font-size: 12px;
   line-height: 14px;
-  //color: $repository-description-tag-color;
+  color: $repository-description-tag-color;
 }
 
 .repository_description_stars_and_svg {
@@ -106,14 +105,14 @@
   font-weight: 600;
   font-size: 14px;
   line-height: 16px;
-  //color: $repository-description-text-color;
+  color: $repository-description-text-color;
 }
 
 .repository_description_stars_text {
   margin-left: 4px;
   font-size: 14px;
   line-height: 16px;
-  //color: $repository-description-text-color;
+  color: $repository-description-text-color;
 }
 
 .repository_description_watchers_and_svg_block {
@@ -137,14 +136,14 @@
   font-weight: 600;
   font-size: 14px;
   line-height: 16px;
-  //color: $repository-description-text-color;
+  color: $repository-description-text-color;
 }
 
 .repository_description_watchers_text {
   margin-left: 4px;
   font-size: 14px;
   line-height: 16px;
-  //color: $repository-description-text-color;
+  color: $repository-description-text-color;
 }
 
 .repository_description_forks_and_svg_block {
@@ -161,20 +160,20 @@
   font-weight: 600;
   font-size: 14px;
   line-height: 16px;
-  //color: $repository-description-text-color;
+  color: $repository-description-text-color;
 }
 
 .repository_description_forks_text {
   margin-left: 4px;
   font-size: 14px;
   line-height: 16px;
-  //color: $repository-description-text-color;
+  color: $repository-description-text-color;
 }
 
 .repository_description_readme_block {
   margin-top: 25px;
   padding: 12px;
-  //border: solid 1px $border-color;
+  border: solid 1px $border-color;
   border-radius: 6px;
 }
 
@@ -194,10 +193,10 @@
     width: 360px;
   }
   @media (min-width: 641px) and (max-width: 1200px) {
-    width: 50%;
+    width: 65%;
   }
   @media (max-width: 640px) {
-    width: 80%;
+    width: 100%;
   }
 }
 
