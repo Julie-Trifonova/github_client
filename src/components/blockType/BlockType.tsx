@@ -3,7 +3,6 @@ import React, { useState } from "react";
 import { nanoid } from "nanoid";
 
 import styles from "./BlockType.module.css";
-// import gitHubStore from "@store/gitHubStore";
 
 type BlockType = {
   disabled: boolean;

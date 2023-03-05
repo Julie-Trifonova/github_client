@@ -1,7 +1,6 @@
 import { ReactNode } from "react";
 
-// import { GithubCardType } from "@store/models/gitHub/repoItem";
-import { GithubCardType } from "../store/models/gitHub/repoItem";
+import { GithubCardType } from "@store/models/gitHub/repoItem";
 
 export type GetRepositoriesType = {
   (pageNumber: number, perPageCount: number, organization?: string): Promise<
@@ -36,46 +35,20 @@ export interface IGitHubStore {
   getRepoItem(params: GetRepoItemParams): Promise<void>;
   fetchOrganizationReposList(): Promise<void>;
   setSearchValue(e: string): void;
+  setErrorMessage(e: string): void;
 }
 
-// export blockType GetRepositoriesType = {
-//   (pageNumber: number, perPageCount: number, organization?: string): Promise<
-//     Array<GithubCardType>
-//   >;
-// };
-//
-// export blockType GetRepositoryType = {
-//   (org: string, repoName: string): Promise<GithubCardType>;
-// };
-//
-// export blockType GetRepositoriesCountType = {
-//   (): Promise<never | any>;
-// };
-//
-// export blockType DataType = {
-//   month: "short";
-//   day: "numeric";
-// };
-//
-// export blockType GithubCardType = {
-//   id: number;
-//   node_id: string;
-//   name: string;
-//   owner: OwnerType;
-//   full_name: string;
-//   html_url: string;
-//   updated_at: string;
-//   private: boolean;
-//   visibility: string;
-//   watchers_count: string;
-//   stargazers_count: number;
-//   forks_count: number;
-//   git_tags_url: string;
-//   topics: Array<string>;
-//   content: string;
-// };
-//
-// export blockType OwnerType = {
-//   avatar_url: string;
-//   login: string;
-// };
+export interface IRepositoryStore {
+  getRepoItem(params: GetRepoItemParams): Promise<void>;
+  setErrorMessage(e: string): void;
+}
+export interface IRepositoriesStore {
+  getOrganizationReposList(
+    params: GetOrganizationReposListParams
+  ): Promise<void>;
+  getOrganizationReposCount(organizationName: string): Promise<void>;
+  getRepoItem(params: GetRepoItemParams): Promise<void>;
+  fetchOrganizationReposList(): Promise<void>;
+  setSearchValue(e: string): void;
+  setErrorMessage(e: string): void;
+}

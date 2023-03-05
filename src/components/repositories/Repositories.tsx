@@ -6,26 +6,27 @@ import { Loader } from "@components/loader/Loader";
 import { InitialPage } from "@components/repositories/initialPage/InitialPage";
 import { RepositoryCard } from "@components/repositories/repositoryCard/RepositoryCard";
 import { Search } from "@components/search";
-import GitHubStore from "@store/gitHubStore";
 import { GitHubRepoItemModel } from "@store/models/gitHub";
+import RepositoriesStore from "@store/RepositoriesStore";
 import { Meta } from "@utils/meta";
 import { observer } from "mobx-react-lite";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { useSearchParams } from "react-router-dom";
 
 import styles from "./Repositories.module.scss";
+import RootStore from "@store/RootStore";
 
 const Repositories: React.FC = observer(() => {
-  const gitHubStore = React.useMemo(() => new GitHubStore(), []);
+  const repositoriesStore = React.useMemo(() => new RootStore(), []).queryRepositories;
   const [search, setSearch] = useSearchParams();
 
   useEffect(() => {
     if (search.get("repo") && search.get("repo") !== null) {
-      gitHubStore
+      repositoriesStore
         .getOrganizationReposCount(search.get("repo") as string)
         .then();
-      gitHubStore.setSearchValue(search.get("repo") as string);
-      gitHubStore
+      repositoriesStore.setSearchValue(search.get("repo") as string);
+      repositoriesStore
         .getOrganizationReposList({
           pageNumber: 1,
           perPageCount: 20,
@@ -33,25 +34,27 @@ const Repositories: React.FC = observer(() => {
         })
         .then();
     }
-  }, [gitHubStore, search]);
+  }, [repositoriesStore, search]);
 
   const handleSearchButton = useCallback(
     (organization: string) => {
       setSearch({ repo: organization });
-      gitHubStore.setSearchValue(organization);
-      gitHubStore.getOrganizationReposCount(gitHubStore.searchValue).then();
-      gitHubStore
+      repositoriesStore.setSearchValue(organization);
+      repositoriesStore
+        .getOrganizationReposCount(repositoriesStore.searchValue)
+        .then();
+      repositoriesStore
         .getOrganizationReposList({
           pageNumber: 1,
           perPageCount: 20,
-          organizationName: gitHubStore.searchValue,
+          organizationName: repositoriesStore.searchValue,
         })
         .then();
     },
-    [gitHubStore, setSearch]
+    [repositoriesStore, setSearch]
   );
 
-  if (gitHubStore.meta === Meta.loading) {
+  if (repositoriesStore.meta === Meta.loading) {
     return (
       <div className={styles.loader_position}>
         <Loader />
@@ -62,15 +65,15 @@ const Repositories: React.FC = observer(() => {
   return (
     <div className={styles.repositories_block}>
       <Search handleSearchButton={handleSearchButton} />
-      {gitHubStore.meta === Meta.error ? (
-        <GitHubError errorMessage={gitHubStore.errorMessage} />
-      ) : gitHubStore.meta === Meta.initial ? (
+      {repositoriesStore.meta === Meta.error ? (
+        <GitHubError errorMessage={repositoriesStore.errorMessage} />
+      ) : repositoriesStore.meta === Meta.initial ? (
         <InitialPage />
       ) : (
         <InfiniteScroll
-          dataLength={gitHubStore.list.length}
-          next={() => gitHubStore.fetchOrganizationReposList()}
-          hasMore={gitHubStore.hasMore}
+          dataLength={repositoriesStore.list.length}
+          next={() => repositoriesStore.fetchOrganizationReposList()}
+          hasMore={repositoriesStore.hasMore}
           loader={
             <div className={styles.loader_position}>
               <Loader />
@@ -79,7 +82,7 @@ const Repositories: React.FC = observer(() => {
           endMessage={<h2 className={styles.loader_position}>End</h2>}
         >
           <BlockType disabled={false} />
-          {gitHubStore.list.map(
+          {repositoriesStore.list.map(
             (repo: GitHubRepoItemModel) =>
               !repo.private && (
                 <div key={repo.id}>

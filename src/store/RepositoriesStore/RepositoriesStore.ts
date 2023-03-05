@@ -1,5 +1,4 @@
 import {
-  GithubCardType,
   GitHubRepoItemModel,
   normalizeGitHubRepoItem,
 } from "@store/models/gitHub/repoItem";
@@ -12,7 +11,6 @@ import {
   getRepository,
   getRepositories,
   getRepositoriesCount,
-  getRepositoryReadme,
 } from "@utils/api";
 import { getMoreFetch } from "@utils/helpers";
 import { logger } from "@utils/logger";
@@ -20,7 +18,7 @@ import { Meta } from "@utils/meta";
 import {
   GetOrganizationReposListParams,
   GetRepoItemParams,
-  IGitHubStore,
+  IRepositoriesStore,
 } from "@utils/types";
 import axios from "axios";
 import {
@@ -37,11 +35,10 @@ type PrivateFields =
   | "_count"
   | "_hasMore"
   | "_repoItem"
-  | "_repoReadme"
   | "_searchValue"
   | "_errorMessage";
 
-class GitHubStore implements IGitHubStore {
+class RepositoriesStore implements IRepositoriesStore {
   private _list: CollectionModel<number, GitHubRepoItemModel> =
     getInitialCollectionModel();
   private _meta: Meta = Meta.initial;
@@ -49,21 +46,19 @@ class GitHubStore implements IGitHubStore {
   private _hasMore = true;
   private _page = 2;
   private _repoItem: GitHubRepoItemModel | null = null;
-  private _repoReadme: string | GithubCardType | null = null;
   private _searchValue = "";
-  private _errorMessage = "";
   private _sortType = false;
+  private _errorMessage = "";
 
   constructor() {
-    makeObservable<GitHubStore, PrivateFields>(this, {
+    makeObservable<RepositoriesStore, PrivateFields>(this, {
       _list: observable.ref,
       _meta: observable,
       _count: observable,
       _hasMore: observable,
       _repoItem: observable,
-      _repoReadme: observable,
       _searchValue: observable,
-      _errorMessage: observable,
+      _errorMessage: observable.ref,
       list: computed,
       meta: computed,
       getOrganizationReposList: action,
@@ -73,6 +68,9 @@ class GitHubStore implements IGitHubStore {
       setSearchValue: action,
       setErrorMessage: action,
       sortByTypes: action,
+      errorMessage: computed,
+      repoItem: computed,
+      hasMore: computed,
     });
   }
 
@@ -86,9 +84,6 @@ class GitHubStore implements IGitHubStore {
 
   get repoItem(): GitHubRepoItemModel | null {
     return this._repoItem;
-  }
-  get repoReadme(): string | GithubCardType | null {
-    return this._repoReadme;
   }
 
   get hasMore(): boolean {
@@ -170,26 +165,6 @@ class GitHubStore implements IGitHubStore {
       if (data) {
         try {
           this._repoItem = normalizeGitHubRepoItem(data);
-          this._meta = Meta.success;
-          return;
-        } catch (e) {
-          this._meta = Meta.error;
-        }
-      }
-      this._meta = Meta.error;
-    });
-  }
-
-  async getRepoReadme(params: GetRepoItemParams) {
-    this._repoReadme = null;
-    this._meta = Meta.loading;
-    this.setErrorMessage("");
-    const data = await getRepositoryReadme(params.owner, params.repo);
-
-    runInAction(() => {
-      if (data) {
-        try {
-          this._repoReadme = data;
           this._meta = Meta.success;
           return;
         } catch (e) {
@@ -297,7 +272,7 @@ class GitHubStore implements IGitHubStore {
     });
   }
 }
-export default GitHubStore;
+export default RepositoriesStore;
 export const linearizeCollection = <K extends string | number, T>(
   elements: CollectionModel<K, T>
 ): T[] => elements.order.map((el) => elements.entities[el]);
