@@ -2,7 +2,7 @@ import React from "react";
 
 import "@styles/App.scss";
 import Repositories from "@components/repositories/Repositories";
-import { RepositoryDescription } from "@components/repositories/repositoryDescription";
+import { RepositoryDescription } from "@components/repositories/RepositoryDescription";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 const App = () => {
@@ -16,7 +16,6 @@ const App = () => {
             element={<RepositoryDescription />}
           />
           <Route path="/repos/:organization" element={<Repositories />} />
-          {/*<Route path="*" element={<Navigate to="/" replace />} />*/}
         </Routes>
       </BrowserRouter>
     </>

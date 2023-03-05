@@ -5,10 +5,7 @@ import {
 } from "@store/models/gitHub/repoItem";
 import { getRepository, getRepositoryReadme } from "@utils/api";
 import { Meta } from "@utils/meta";
-import {
-  GetRepoItemParams,
-  IRepositoryStore,
-} from "@utils/types";
+import { GetRepoItemParams, IRepositoryStore } from "@utils/types";
 import {
   action,
   computed,

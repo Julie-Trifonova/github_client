@@ -7,17 +7,19 @@ import { InitialPage } from "@components/repositories/initialPage/InitialPage";
 import { RepositoryCard } from "@components/repositories/repositoryCard/RepositoryCard";
 import { Search } from "@components/search";
 import { GitHubRepoItemModel } from "@store/models/gitHub";
-import RepositoriesStore from "@store/RepositoriesStore";
+import RootStore from "@store/RootStore";
 import { Meta } from "@utils/meta";
 import { observer } from "mobx-react-lite";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { useSearchParams } from "react-router-dom";
 
 import styles from "./Repositories.module.scss";
-import RootStore from "@store/RootStore";
 
 const Repositories: React.FC = observer(() => {
-  const repositoriesStore = React.useMemo(() => new RootStore(), []).queryRepositories;
+  const repositoriesStore = React.useMemo(
+    () => new RootStore(),
+    []
+  ).queryRepositories;
   const [search, setSearch] = useSearchParams();
 
   useEffect(() => {

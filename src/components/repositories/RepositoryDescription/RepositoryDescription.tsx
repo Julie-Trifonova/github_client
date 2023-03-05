@@ -1,17 +1,19 @@
 import React, { useEffect } from "react";
 
 import { Loader } from "@components/loader";
-import RepositoryStore from "@store/RepositoryStore";
+import RootStore from "@store/RootStore";
 import { Meta } from "@utils/meta";
 import Markdown from "markdown-to-jsx";
 import { observer } from "mobx-react-lite";
 import { Link, useLocation } from "react-router-dom";
 
 import styles from "./RepositoryDescription.module.scss";
-import RootStore from "@store/RootStore";
 
 const RepositoryDescription: React.FC = observer(() => {
-  const repositoryStore = React.useMemo(() => new RootStore(), []).queryRepository;
+  const repositoryStore = React.useMemo(
+    () => new RootStore(),
+    []
+  ).queryRepository;
   const location = useLocation();
   const [, , org, repoName]: Array<string> = location.pathname.split("/");
 

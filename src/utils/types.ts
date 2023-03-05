@@ -1,5 +1,3 @@
-import { ReactNode } from "react";
-
 import { GithubCardType } from "@store/models/gitHub/repoItem";
 
 export type GetRepositoriesType = {

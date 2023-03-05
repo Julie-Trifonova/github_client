@@ -1,5 +1,5 @@
 import {
-  GitHubRepoOwnerModel,
+  gitHubRepoOwnerModel,
   normalizeGitHubRepoOwner,
 } from "./gitHubRepoOwner";
 
@@ -9,7 +9,7 @@ export type GithubCardType = {
   stargazers_count: number;
   updated_at: string;
   id: number;
-  owner: GitHubRepoOwnerModel;
+  owner: gitHubRepoOwnerModel;
   private: boolean;
   full_name: string;
   topics: Array<string>;
@@ -27,7 +27,7 @@ export type GitHubRepoItemModel = {
   stargazers_count: number;
   updated_at: string;
   id: number;
-  owner: GitHubRepoOwnerModel;
+  owner: gitHubRepoOwnerModel;
   private: boolean;
   full_name: string;
   topics: Array<string>;
