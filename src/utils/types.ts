@@ -2,8 +2,11 @@ import { GithubCardType } from "@store/models/gitHub/repoItem";
 
 export type GetRepositoriesType = {
   (pageNumber: number, perPageCount: number, organization?: string): Promise<
-    Array<GithubCardType>
+    Array<GithubCardType> | undefined
   >;
+};
+export type GetRepositoryType = {
+  (owner: string, repoName: string): Promise<GithubCardType | undefined>;
 };
 
 export type GetOrganizationReposListParams = {
@@ -17,24 +20,9 @@ export type GetRepoItemParams = {
   repo: string;
 };
 
-export type GetRepositoryType = {
-  (owner: string, repo: string): Promise<GithubCardType>;
-};
-
 export type GetRepositoriesCountType = {
   (organizationName: string): Promise<never | number>;
 };
-
-export interface IGitHubStore {
-  getOrganizationReposList(
-    params: GetOrganizationReposListParams
-  ): Promise<void>;
-  getOrganizationReposCount(organizationName: string): Promise<void>;
-  getRepoItem(params: GetRepoItemParams): Promise<void>;
-  fetchOrganizationReposList(): Promise<void>;
-  setSearchValue(e: string): void;
-  setErrorMessage(e: string): void;
-}
 
 export interface IRepositoryStore {
   getRepoItem(params: GetRepoItemParams): Promise<void>;
