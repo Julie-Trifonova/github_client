@@ -8,14 +8,16 @@ import { observer } from "mobx-react-lite";
 import { Link, useLocation } from "react-router-dom";
 
 import styles from "./RepositoryDescription.module.scss";
+import {useLocalStore} from "@utils/UseLocalStore";
 
 const RepositoryDescription: React.FC = observer(() => {
   const repositoryStore = React.useMemo(
     () => new RootStore(),
     []
   ).queryRepository;
+  // const repositoryStore = useLocalStore(() => new RootStore()).queryRepository;
   const location = useLocation();
-  const [, , org, repoName]: Array<string> = location.pathname.split("/");
+  const [_root, _repo, org, repoName]: Array<string> = location.pathname.split("/");
 
   useEffect(() => {
     repositoryStore.getRepoItem({ owner: org, repo: repoName }).then();

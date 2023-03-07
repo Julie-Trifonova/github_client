@@ -1,4 +1,5 @@
 import { GithubCardType } from "@store/models/gitHub/repoItem";
+import {observable} from "mobx";
 
 export type GetRepositoriesType = {
   (pageNumber: number, perPageCount: number, organization?: string): Promise<
@@ -29,8 +30,27 @@ export interface IRepositoryStore {
   setErrorMessage(e: string): void;
 }
 export interface IRepositoriesStore {
+
   getOrganizationReposList(
     params: GetOrganizationReposListParams
+  ): void;
+  getOrganizationReposCount(organizationName: string): void;
+  getRepoItem(params: GetRepoItemParams): void;
+  fetchOrganizationReposList(): void;
+  setSearchValue(e: string): void;
+  setErrorMessage(e: string): void;
+}
+
+export interface IApiStore {
+  list: string,
+  meta: string,
+  count: string,
+  hasMore: string,
+  repoItem: string,
+  searchValue: string,
+  errorMessage: string,
+  getOrganizationReposList(
+      params: GetOrganizationReposListParams
   ): Promise<void>;
   getOrganizationReposCount(organizationName: string): Promise<void>;
   getRepoItem(params: GetRepoItemParams): Promise<void>;

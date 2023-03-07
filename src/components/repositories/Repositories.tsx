@@ -25,16 +25,14 @@ const Repositories: React.FC = observer(() => {
   useEffect(() => {
     if (search.get("repo") && search.get("repo") !== null) {
       repositoriesStore
-        .getOrganizationReposCount(search.get("repo") as string)
-        .then();
+        .getOrganizationReposCount(search.get("repo") as string);
       repositoriesStore.setSearchValue(search.get("repo") as string);
       repositoriesStore
         .getOrganizationReposList({
           pageNumber: 1,
           perPageCount: 20,
           organizationName: search.get("repo") as string,
-        })
-        .then();
+        });
     }
   }, [repositoriesStore, search]);
 
@@ -43,15 +41,13 @@ const Repositories: React.FC = observer(() => {
       setSearch({ repo: organization });
       repositoriesStore.setSearchValue(organization);
       repositoriesStore
-        .getOrganizationReposCount(repositoriesStore.searchValue)
-        .then();
+        .getOrganizationReposCount(repositoriesStore.searchValue);
       repositoriesStore
         .getOrganizationReposList({
           pageNumber: 1,
           perPageCount: 20,
           organizationName: repositoriesStore.searchValue,
-        })
-        .then();
+        });
     },
     [repositoriesStore, setSearch]
   );
