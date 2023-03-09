@@ -1,100 +1,89 @@
 import { BASE_URL, HEADER_API_KEY } from "@config/constants";
+import { gitHubRepoItemApi } from "@store/models/gitHub/gitHubRepoItemApi";
 import {
   GetRepositoriesType,
   GetRepositoryType,
-  GithubCardType,
   GetRepositoriesCountType,
 } from "@utils/types";
 import axios from "axios";
 
+const getAPIError = () => {
+  if (HEADER_API_KEY === undefined) {
+    throw new Error("Cannot find HEADER_API_KEY");
+  }
+};
+const axiosError = (error: any) => {
+  if (axios.isAxiosError(error)) {
+    throw error;
+  } else {
+    throw new Error("unexpected");
+  }
+};
 const getRepositories: GetRepositoriesType = async (
   pageNumber,
   perPageCount,
   organization = "ktsstudio"
 ) => {
-  if (HEADER_API_KEY === undefined) {
-    throw new Error("Cannot find HEADER_API_KEY");
-  }
+  getAPIError();
   try {
-    const request = await axios.get<GithubCardType[]>(
+    const request = await axios.get<gitHubRepoItemApi[]>(
       `${BASE_URL}/orgs/${organization}/repos?page=${pageNumber}&per_page=${perPageCount}`,
       HEADER_API_KEY
     );
     const data = await request.data;
     return data;
   } catch (error) {
-    if (axios.isAxiosError(error)) {
-      throw error;
-    } else {
-      throw new Error("unexpected");
-    }
+    axiosError(error);
   }
 };
 
-const getRepository: GetRepositoryType = async (org, repoName) => {
-  if (HEADER_API_KEY === undefined) {
-    throw new Error("Cannot find HEADER_API_KEY");
-  }
+const getRepository: GetRepositoryType = async (owner, repoName) => {
+  getAPIError();
   try {
-    const request = await axios.get<GithubCardType>(
-      `${BASE_URL}/repos/${org}/${repoName}`,
+    const request = await axios.get<gitHubRepoItemApi>(
+      `${BASE_URL}/repos/${owner}/${repoName}`,
       HEADER_API_KEY
     );
     const data = await request.data;
     return data;
   } catch (error) {
-    if (axios.isAxiosError(error)) {
-      throw error;
-    } else {
-      throw new Error("unexpected");
-    }
+    axiosError(error);
   }
 };
 
 const config = {
   headers: {
     Authorization: HEADER_API_KEY,
-    // Accept: "application/vnd.github.html",
     Accept: "application/vnd.github.raw",
   },
 };
-const getRepositoryReadme: GetRepositoryType = async (org, repoName) => {
-  if (HEADER_API_KEY === undefined) {
-    throw new Error("Cannot find HEADER_API_KEY");
-  }
+const getRepositoryReadme: GetRepositoryType = async (owner, repoName) => {
+  getAPIError();
   try {
-    const request = await axios.get<GithubCardType>(
-      `${BASE_URL}/repos/${org}/${repoName}/readme`,
+    const request = await axios.get<gitHubRepoItemApi>(
+      `${BASE_URL}/repos/${owner}/${repoName}/readme`,
       config
     );
     const data = await request.data;
     return data;
   } catch (error) {
-    if (axios.isAxiosError(error)) {
-      throw error;
-    } else {
-      throw new Error("unexpected");
-    }
+    axiosError(error);
   }
 };
 
-const getRepositoriesCount: GetRepositoriesCountType = async () => {
-  if (HEADER_API_KEY === undefined) {
-    throw new Error("Cannot find HEADER_API_KEY");
-  }
+const getRepositoriesCount: GetRepositoriesCountType = async (
+  organizationName
+) => {
+  getAPIError();
   try {
     const request = await axios.get(
-      `${BASE_URL}/orgs/ktsstudio`,
+      `${BASE_URL}/orgs/${organizationName}`,
       HEADER_API_KEY
     );
     const data = await request.data;
     return data.public_repos;
   } catch (error) {
-    if (axios.isAxiosError(error)) {
-      throw error;
-    } else {
-      throw new Error("unexpected");
-    }
+    axiosError(error);
   }
 };
 

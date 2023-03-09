@@ -8,19 +8,14 @@
   display: flex;
   justify-content: center;
 }
-
-@media (min-width: 1201px) {
-  .repositories_block {
+.repositories_block {
+  @media (min-width: 1201px) {
     width: 360px;
   }
-}
-@media (min-width: 641px) and (max-width: 1200px) {
-  .repositories_block {
+  @media (min-width: 641px) and (max-width: 1200px) {
     width: 57%;
   }
-}
-@media (max-width: 640px) {
-  .repositories_block {
+  @media (max-width: 640px) {
     width: 80%;
   }
 }

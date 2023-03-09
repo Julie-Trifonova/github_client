@@ -1,45 +1,41 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 
 import { Loader } from "@components/loader";
-import { ReadmeCard } from "@components/repositories/readmeCard";
-import { getRepository, getRepositoryReadme } from "@utils/api";
-import { logger } from "@utils/logger";
-import { GithubCardType } from "@utils/types";
+import RootStore from "@store/RootStore";
+import { Meta } from "@utils/meta";
+import { useLocalStore } from "@utils/UseLocalStore";
 import Markdown from "markdown-to-jsx";
+import { observer } from "mobx-react-lite";
 import { Link, useLocation } from "react-router-dom";
 
 import styles from "./RepositoryDescription.module.scss";
 
-const RepositoryDescription: React.FC = () => {
+const RepositoryDescription: React.FC = observer(() => {
+  const repositoryStore = React.useMemo(
+    () => new RootStore(),
+    []
+  ).queryRepository;
+  // const repositoryStore = useLocalStore(() => new RootStore()).queryRepository;
   const location = useLocation();
-  const [repo, setRepo] = useState<GithubCardType>();
-  const [readme, setReadme] = useState<GithubCardType | any>();
-  const [, , org, repoName]: Array<string> = location.pathname.split("/");
+  const [_root, _repo, org, repoName]: Array<string> =
+    location.pathname.split("/");
+
   useEffect(() => {
-    getRepository(org, repoName)
-      .then((response) => {
-        if (response) {
-          setRepo(response);
-        }
-      })
-      .catch((error) => logger(error));
-    getRepositoryReadme(org, repoName)
-      .then((response) => {
-        if (response) {
-          setReadme(response);
-        }
-      })
-      .catch((error) => logger(error));
-  }, [org, repoName]);
-  logger(repo);
-  if (!repo) {
+    repositoryStore.getRepoItem({ owner: org, repo: repoName }).then();
+  }, [repositoryStore, org, repoName]);
+  useEffect(() => {
+    repositoryStore.getRepoReadme({ owner: org, repo: repoName }).then();
+  }, [repositoryStore, org, repoName]);
+
+  if (repositoryStore.meta === Meta.loading) {
     return (
       <div className={styles.loader_position}>
         <Loader />
       </div>
     );
   }
-  if (repo.private) return <>Private Repository</>;
+
+  if (repositoryStore.repoItem?.private) return <>Private Repository</>;
 
   return (
     <div className={styles.block_repository_description}>
@@ -48,7 +44,7 @@ const RepositoryDescription: React.FC = () => {
       >
         <Link
           className={styles.repository_description_link_to_back_block}
-          to={"/"}
+          to={`/?repo=${org}`}
         >
           <button className={styles.repository_description_link_to_back_button}>
             <svg
@@ -67,48 +63,49 @@ const RepositoryDescription: React.FC = () => {
           </button>
         </Link>
         <span className={styles.repository_description_title}>
-          {repo.full_name}
+          {repositoryStore.repoItem?.fullName}
         </span>
       </div>
-      {repo.owner.login && repo.html_url && (
-        <div className={styles.repository_description_link_and_svg_block}>
-          <svg
-            className={styles.repository_description_link_svg_one}
-            width="9"
-            height="10"
-            viewBox="0 0 9 10"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              d="M8.63995 1.15926C8.92121 1.44707 8.92121 1.92328 8.63995 2.21093C8.35868 2.50853 7.8933 2.50853 7.61219 2.21093C7.20482 1.79409 6.67164 1.58587 6.1383 1.58587C5.60486 1.58587 5.07165 1.79423 4.6644 2.21093L2.06559 4.87022C1.65823 5.29683 1.45475 5.83265 1.45475 6.37841C1.45475 6.93405 1.65836 7.46988 2.06559 7.8866C2.47296 8.30344 2.99648 8.51166 3.53949 8.51166C4.07292 8.51166 4.59644 8.3033 5.01338 7.8866L6.31283 6.55691C6.5941 6.2691 7.04978 6.2691 7.34059 6.55691C7.62185 6.8545 7.62185 7.32093 7.34059 7.60858L6.04114 8.93827C5.35266 9.65269 4.44114 10 3.53936 10C2.62788 10 1.72619 9.65269 1.03758 8.93827C0.349105 8.23377 0 7.31097 0 6.37828C0 5.45538 0.339405 4.52291 1.03758 3.81828L3.63639 1.15926C4.32487 0.454763 5.23639 0.0975342 6.13817 0.0975342C7.03986 0.0974071 7.9516 0.454633 8.63995 1.15926Z"
-              fill="black"
-            />
-          </svg>
-          <svg
-            className={styles.repository_description_link_svg_two}
-            width="9"
-            height="10"
-            viewBox="0 0 9 10"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              d="M2.8618 9.90246C1.95989 9.90246 1.04863 9.54523 0.360026 8.84073C0.0692003 8.55293 0.0692003 8.07671 0.360026 7.78906C0.641288 7.50126 1.09697 7.50126 1.38778 7.78906C1.79515 8.20591 2.31867 8.41412 2.86168 8.41412C3.39511 8.41412 3.91863 8.20577 4.33557 7.78906L6.93438 5.12978C7.34175 4.70317 7.54522 4.16734 7.54522 3.62159C7.54522 3.06594 7.34161 2.53012 6.93438 2.1134C6.52701 1.69655 5.99383 1.48834 5.46048 1.48834C4.92705 1.48834 4.39383 1.69669 3.98659 2.1134L2.68714 3.44309C2.39631 3.7309 1.94049 3.7309 1.65938 3.44309C1.36856 3.1455 1.36856 2.67907 1.65938 2.39142L2.95883 1.06173C3.64731 0.347303 4.55883 0 5.46061 0C6.3623 0 7.27378 0.347303 7.96239 1.06173C8.65087 1.76623 8.99997 2.68903 8.99997 3.62172C8.99997 4.54462 8.65087 5.47708 7.96239 6.18171L5.36358 8.8406C4.67497 9.54523 3.76349 9.90246 2.8618 9.90246Z"
-              fill="black"
-            />
-          </svg>
-          <a
-            className={styles.repository_description_link}
-            href={repo.html_url}
-          >
-            {repo.owner.login}
-          </a>
-        </div>
-      )}
-      {repo.topics && (
+      {repositoryStore.repoItem?.owner.login &&
+        repositoryStore.repoItem?.htmlUrl && (
+          <div className={styles.repository_description_link_and_svg_block}>
+            <svg
+              className={styles.repository_description_link_svg_one}
+              width="9"
+              height="10"
+              viewBox="0 0 9 10"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M8.63995 1.15926C8.92121 1.44707 8.92121 1.92328 8.63995 2.21093C8.35868 2.50853 7.8933 2.50853 7.61219 2.21093C7.20482 1.79409 6.67164 1.58587 6.1383 1.58587C5.60486 1.58587 5.07165 1.79423 4.6644 2.21093L2.06559 4.87022C1.65823 5.29683 1.45475 5.83265 1.45475 6.37841C1.45475 6.93405 1.65836 7.46988 2.06559 7.8866C2.47296 8.30344 2.99648 8.51166 3.53949 8.51166C4.07292 8.51166 4.59644 8.3033 5.01338 7.8866L6.31283 6.55691C6.5941 6.2691 7.04978 6.2691 7.34059 6.55691C7.62185 6.8545 7.62185 7.32093 7.34059 7.60858L6.04114 8.93827C5.35266 9.65269 4.44114 10 3.53936 10C2.62788 10 1.72619 9.65269 1.03758 8.93827C0.349105 8.23377 0 7.31097 0 6.37828C0 5.45538 0.339405 4.52291 1.03758 3.81828L3.63639 1.15926C4.32487 0.454763 5.23639 0.0975342 6.13817 0.0975342C7.03986 0.0974071 7.9516 0.454633 8.63995 1.15926Z"
+                fill="black"
+              />
+            </svg>
+            <svg
+              className={styles.repository_description_link_svg_two}
+              width="9"
+              height="10"
+              viewBox="0 0 9 10"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M2.8618 9.90246C1.95989 9.90246 1.04863 9.54523 0.360026 8.84073C0.0692003 8.55293 0.0692003 8.07671 0.360026 7.78906C0.641288 7.50126 1.09697 7.50126 1.38778 7.78906C1.79515 8.20591 2.31867 8.41412 2.86168 8.41412C3.39511 8.41412 3.91863 8.20577 4.33557 7.78906L6.93438 5.12978C7.34175 4.70317 7.54522 4.16734 7.54522 3.62159C7.54522 3.06594 7.34161 2.53012 6.93438 2.1134C6.52701 1.69655 5.99383 1.48834 5.46048 1.48834C4.92705 1.48834 4.39383 1.69669 3.98659 2.1134L2.68714 3.44309C2.39631 3.7309 1.94049 3.7309 1.65938 3.44309C1.36856 3.1455 1.36856 2.67907 1.65938 2.39142L2.95883 1.06173C3.64731 0.347303 4.55883 0 5.46061 0C6.3623 0 7.27378 0.347303 7.96239 1.06173C8.65087 1.76623 8.99997 2.68903 8.99997 3.62172C8.99997 4.54462 8.65087 5.47708 7.96239 6.18171L5.36358 8.8406C4.67497 9.54523 3.76349 9.90246 2.8618 9.90246Z"
+                fill="black"
+              />
+            </svg>
+            <a
+              className={styles.repository_description_link}
+              href={repositoryStore.repoItem?.htmlUrl}
+            >
+              {repositoryStore.repoItem?.owner.login}
+            </a>
+          </div>
+        )}
+      {repositoryStore.repoItem?.topics && (
         <div className={styles.repository_description_tags}>
-          {repo.topics.map((topic: string) => (
+          {repositoryStore.repoItem?.topics.map((topic: string) => (
             <div className={styles.repository_description_tag}>{topic}</div>
           ))}
         </div>
@@ -130,7 +127,9 @@ const RepositoryDescription: React.FC = () => {
           />
         </svg>
         <span className={styles.repository_description_stars_count}>
-          {repo.stargazers_count ? repo.stargazers_count : 0}
+          {repositoryStore.repoItem?.stargazersCount
+            ? repositoryStore.repoItem?.stargazersCount
+            : 0}
         </span>
         <span className={styles.repository_description_stars_text}>stars</span>
       </div>
@@ -165,7 +164,9 @@ const RepositoryDescription: React.FC = () => {
           />
         </svg>
         <span className={styles.repository_description_watchers_count}>
-          {repo.watchers_count ? repo.watchers_count : 0}
+          {repositoryStore.repoItem?.watchersCount
+            ? repositoryStore.repoItem?.watchersCount
+            : 0}
         </span>
         <span className={styles.repository_description_watchers_text}>
           watching
@@ -186,26 +187,24 @@ const RepositoryDescription: React.FC = () => {
           />
         </svg>
         <span className={styles.repository_description_forks_count}>
-          {repo.forks_count ? repo.forks_count : 0}
+          {repositoryStore.repoItem?.forksCount
+            ? repositoryStore.repoItem?.forksCount
+            : 0}
         </span>
         <span className={styles.repository_description_forks_text}>fork</span>
       </div>
-      {readme && (
+      {repositoryStore.repoReadme && (
         <div className={styles.repository_description_readme_block}>
           <div className={styles.repository_description_readme_title}>
             Readme.md
           </div>
-          <div className={styles.repository_description_readme_content}>
-            <Markdown>{readme}</Markdown>
+          <div key="" className={styles.repository_description_readme_content}>
+            <Markdown>{`${repositoryStore.repoReadme}`}</Markdown>
           </div>
         </div>
       )}
-      {/*{readme && <div>{readme}</div>}*/}
-      {/*{readme && <ReadmeCard readme ={readme} />}*/}
-      {/*<ReadmeCard readme={readme} />*/}
-      {/*{readme}*/}
     </div>
   );
-};
+});
 
 export { RepositoryDescription };

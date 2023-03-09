@@ -1,41 +1,52 @@
+import { gitHubRepoItemApi } from "@store/models/gitHub/gitHubRepoItemApi";
+import { observable } from "mobx";
+
 export type GetRepositoriesType = {
   (pageNumber: number, perPageCount: number, organization?: string): Promise<
-    Array<GithubCardType>
+    Array<gitHubRepoItemApi> | undefined
   >;
 };
-
 export type GetRepositoryType = {
-  (org: string, repoName: string): Promise<GithubCardType>;
+  (owner: string, repoName: string): Promise<gitHubRepoItemApi | undefined>;
+};
+
+export type GetOrganizationReposListParams = {
+  pageNumber: number;
+  perPageCount: number;
+  organizationName: string;
+};
+
+export type GetRepoItemParams = {
+  owner: string;
+  repo: string;
 };
 
 export type GetRepositoriesCountType = {
-  (): Promise<never | any>;
+  (organizationName: string): Promise<never | number>;
 };
 
-export type DataType = {
-  month: "short";
-  day: "numeric";
-};
+export interface IRepositoryStore {
+  getRepoItem(params: GetRepoItemParams): Promise<void>;
+  setErrorMessage(e: string): void;
+}
+export interface IRepositoriesStore {
+  getOrganizationReposList(
+    params: GetOrganizationReposListParams
+  ): Promise<void>;
+  getOrganizationReposCount(organizationName: string): Promise<void>;
+  getRepoItem(params: GetRepoItemParams): Promise<void>;
+  fetchOrganizationReposList(): Promise<void>;
+  setSearchValue(e: string): void;
+  setErrorMessage(e: string): void;
+}
 
-export type GithubCardType = {
-  id: number;
-  node_id: string;
-  name: string;
-  owner: OwnerType;
-  full_name: string;
-  html_url: string;
-  updated_at: string;
-  private: boolean;
-  visibility: string;
-  watchers_count: string;
-  stargazers_count: number;
-  forks_count: number;
-  git_tags_url: string;
-  topics: Array<string>;
-  content: string;
-};
-
-export type OwnerType = {
-  avatar_url: string;
-  login: string;
-};
+export interface IApiStore {
+  getOrganizationReposList(
+    params: GetOrganizationReposListParams
+  ): Promise<void>;
+  getOrganizationReposCount(organizationName: string): Promise<void>;
+  getRepoItem(params: GetRepoItemParams): Promise<void>;
+  fetchOrganizationReposList(): Promise<void>;
+  setSearchValue(e: string): void;
+  setErrorMessage(e: string): void;
+}

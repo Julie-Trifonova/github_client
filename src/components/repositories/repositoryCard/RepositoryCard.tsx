@@ -1,6 +1,6 @@
 import React from "react";
 
-import { DataType } from "@utils/types";
+import { dateOptionsType } from "@store/models/gitHub";
 import { Link } from "react-router-dom";
 
 import styles from "./RepositoryCard.module.scss";
@@ -24,10 +24,9 @@ const RepositoryCard: React.FC<RepositoryCardType> = ({
   owner,
   id,
 }) => {
-  const dateOptions: DataType = { month: "short", day: "numeric" };
   const updateAt = new Date(lastUpdated).toLocaleDateString(
     "en-GB",
-    dateOptions
+    dateOptionsType
   );
   return (
     <div className={styles.block_repository_card}>

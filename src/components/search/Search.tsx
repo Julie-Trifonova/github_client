@@ -1,15 +1,27 @@
-import React from "react";
+import React, { useState } from "react";
 
 import styles from "./Search.module.scss";
 
-const Search: React.FC = () => {
+export type SearchType = React.PropsWithChildren<{
+  handleSearchButton(organization: string): void;
+}>;
+
+const Search: React.FC<SearchType> = ({ handleSearchButton }) => {
+  const [value, setValue] = useState("");
+
   return (
     <div className={styles.search_block}>
       <input
         className={styles.input_search}
         placeholder="Enter organization name"
+        type="text"
+        value={value}
+        onChange={(e) => setValue(e.target.value)}
       />
-      <button className={styles.search_button}>
+      <button
+        className={styles.search_button}
+        onClick={() => handleSearchButton(value)}
+      >
         <svg
           className={styles.svg_search_button}
           viewBox="0 0 18 18"

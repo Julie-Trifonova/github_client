@@ -5,7 +5,6 @@ import { nanoid } from "nanoid";
 import styles from "./BlockType.module.css";
 
 type BlockType = {
-  repos: Array<any>;
   disabled: boolean;
 };
 
@@ -13,30 +12,17 @@ const BlockType: React.FC<BlockType> = (props) => {
   const [visible, setVisible] = useState(false);
   const [typeValue, setTypeValue] = useState("Type");
 
-  const sortedRepos = (parameter: string) => {
-    if (parameter !== "standart") {
-      props.repos
-        .slice()
-        .sort((a: any, b: any) =>
-          a.parameter === b.parameter ? 0 : a.parameter ? 1 : -1
-        );
-    } else {
-      return props.repos;
-    }
-  };
-
   const handleChangeVisibility = () => {
     setVisible(!visible);
   };
-
-  const handleOnInputChange = (value: string, checked: boolean, e: any) => {
+  const handleChangeType = (e: any, option: string, checked: boolean) => {
     e.target.checked = !e.target.checked;
-    if (typeValue === value) {
+    if (typeValue === option) {
       setTypeValue("standart");
     } else {
-      setTypeValue(value);
+      setTypeValue(option);
     }
-    sortedRepos(typeValue);
+    // gitHubStore.sortByTypes(option);
   };
 
   const arrOptions = [
@@ -83,7 +69,7 @@ const BlockType: React.FC<BlockType> = (props) => {
             />
           </svg>
         </div>
-        {!props.disabled && visible ? (
+        {visible && (
           <div className={styles.type_select_list}>
             {arr.map((option) => (
               <div key={option.key} className={styles.type_select_list_element}>
@@ -93,9 +79,9 @@ const BlockType: React.FC<BlockType> = (props) => {
                     className={styles.type_select_list_element_input}
                     name={option.value}
                     type="checkbox"
-                    onChange={(e) =>
-                      handleOnInputChange(option.value, option.checked, e)
-                    }
+                    // onChange={(e) =>
+                    //   handleChangeType(e, option, option.checked)
+                    // }
                   />
                   <div className={styles.type_select_list_element_input_text}>
                     {option.value}
@@ -104,8 +90,6 @@ const BlockType: React.FC<BlockType> = (props) => {
               </div>
             ))}
           </div>
-        ) : (
-          <></>
         )}
       </div>
     </div>

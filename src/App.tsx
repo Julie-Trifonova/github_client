@@ -1,10 +1,12 @@
 import React from "react";
 
-import { Repositories } from "@components/repositories/Repositories";
-import { RepositoryDescription } from "@components/repositories/repositoryDescription";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import "@styles/App.scss";
+import Repositories from "@components/repositories/Repositories";
+import { RepositoryDescription } from "@components/repositories/RepositoryDescription";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+// import { Repositories, RepositoryDescription  } from "@components";
 
-function App() {
+const App = () => {
   return (
     <>
       <BrowserRouter>
@@ -14,10 +16,11 @@ function App() {
             path="/repo/:organization/:repo"
             element={<RepositoryDescription />}
           />
+          <Route path="/repos/:organization" element={<Repositories />} />
         </Routes>
       </BrowserRouter>
     </>
   );
-}
+};
 
 export default App;
