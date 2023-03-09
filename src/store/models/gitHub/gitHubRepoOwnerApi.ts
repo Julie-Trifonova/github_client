@@ -4,13 +4,13 @@ export type gitHubRepoOwnerApi = {
 };
 
 export type gitHubRepoOwnerModel = {
-  avatar_url: string;
+  avatarUrl: string;
   login: string;
 };
 
 export const normalizeGitHubRepoOwner = (
   from: gitHubRepoOwnerApi
 ): gitHubRepoOwnerModel => ({
-  avatar_url: from.avatar_url,
+  avatarUrl: from.avatar_url,
   login: from.login,
 });

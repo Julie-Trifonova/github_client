@@ -1,8 +1,8 @@
 import {
-  GithubCardType,
-  GitHubRepoItemModel,
+  gitHubRepoItemApi,
+  gitHubRepoItemModel,
   normalizeGitHubRepoItem,
-} from "@store/models/gitHub/repoItem";
+} from "@store/models/gitHub/gitHubRepoItemApi";
 import { getRepository, getRepositoryReadme } from "@utils/api";
 import { Meta } from "@utils/meta";
 import { GetRepoItemParams, IRepositoryStore } from "@utils/types";
@@ -18,8 +18,8 @@ type PrivateFields = "_meta" | "_repoItem" | "_repoReadme" | "_errorMessage";
 
 class RepositoryStore implements IRepositoryStore {
   private _meta: Meta = Meta.initial;
-  private _repoItem: GitHubRepoItemModel | null = null;
-  private _repoReadme: string | GithubCardType | null = null;
+  private _repoItem: gitHubRepoItemModel | null = null;
+  private _repoReadme: string | gitHubRepoItemApi | null = null;
   private _errorMessage = "";
 
   constructor() {
@@ -34,11 +34,11 @@ class RepositoryStore implements IRepositoryStore {
     });
   }
 
-  get repoItem(): GitHubRepoItemModel | null {
+  get repoItem(): gitHubRepoItemModel | null {
     return this._repoItem;
   }
 
-  get repoReadme(): string | GithubCardType | null {
+  get repoReadme(): string | gitHubRepoItemApi | null {
     return this._repoReadme;
   }
 

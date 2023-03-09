@@ -1,13 +1,13 @@
-import { GithubCardType } from "@store/models/gitHub/repoItem";
-import {observable} from "mobx";
+import { gitHubRepoItemApi } from "@store/models/gitHub/gitHubRepoItemApi";
+import { observable } from "mobx";
 
 export type GetRepositoriesType = {
   (pageNumber: number, perPageCount: number, organization?: string): Promise<
-    Array<GithubCardType> | undefined
+    Array<gitHubRepoItemApi> | undefined
   >;
 };
 export type GetRepositoryType = {
-  (owner: string, repoName: string): Promise<GithubCardType | undefined>;
+  (owner: string, repoName: string): Promise<gitHubRepoItemApi | undefined>;
 };
 
 export type GetOrganizationReposListParams = {
@@ -30,27 +30,19 @@ export interface IRepositoryStore {
   setErrorMessage(e: string): void;
 }
 export interface IRepositoriesStore {
-
   getOrganizationReposList(
     params: GetOrganizationReposListParams
-  ): void;
-  getOrganizationReposCount(organizationName: string): void;
-  getRepoItem(params: GetRepoItemParams): void;
-  fetchOrganizationReposList(): void;
+  ): Promise<void>;
+  getOrganizationReposCount(organizationName: string): Promise<void>;
+  getRepoItem(params: GetRepoItemParams): Promise<void>;
+  fetchOrganizationReposList(): Promise<void>;
   setSearchValue(e: string): void;
   setErrorMessage(e: string): void;
 }
 
 export interface IApiStore {
-  list: string,
-  meta: string,
-  count: string,
-  hasMore: string,
-  repoItem: string,
-  searchValue: string,
-  errorMessage: string,
   getOrganizationReposList(
-      params: GetOrganizationReposListParams
+    params: GetOrganizationReposListParams
   ): Promise<void>;
   getOrganizationReposCount(organizationName: string): Promise<void>;
   getRepoItem(params: GetRepoItemParams): Promise<void>;

@@ -1,5 +1,5 @@
 import { BASE_URL, HEADER_API_KEY } from "@config/constants";
-import { GithubCardType } from "@store/models/gitHub/repoItem";
+import { gitHubRepoItemApi } from "@store/models/gitHub/gitHubRepoItemApi";
 import {
   GetRepositoriesType,
   GetRepositoryType,
@@ -26,7 +26,7 @@ const getRepositories: GetRepositoriesType = async (
 ) => {
   getAPIError();
   try {
-    const request = await axios.get<GithubCardType[]>(
+    const request = await axios.get<gitHubRepoItemApi[]>(
       `${BASE_URL}/orgs/${organization}/repos?page=${pageNumber}&per_page=${perPageCount}`,
       HEADER_API_KEY
     );
@@ -40,7 +40,7 @@ const getRepositories: GetRepositoriesType = async (
 const getRepository: GetRepositoryType = async (owner, repoName) => {
   getAPIError();
   try {
-    const request = await axios.get<GithubCardType>(
+    const request = await axios.get<gitHubRepoItemApi>(
       `${BASE_URL}/repos/${owner}/${repoName}`,
       HEADER_API_KEY
     );
@@ -60,7 +60,7 @@ const config = {
 const getRepositoryReadme: GetRepositoryType = async (owner, repoName) => {
   getAPIError();
   try {
-    const request = await axios.get<GithubCardType>(
+    const request = await axios.get<gitHubRepoItemApi>(
       `${BASE_URL}/repos/${owner}/${repoName}/readme`,
       config
     );

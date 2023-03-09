@@ -1,15 +1,16 @@
 import {
+  gitHubRepoOwnerApi,
   gitHubRepoOwnerModel,
   normalizeGitHubRepoOwner,
-} from "./gitHubRepoOwner";
+} from "./gitHubRepoOwnerApi";
 
-export type GithubCardType = {
+export type gitHubRepoItemApi = {
   name: string;
   html_url: string;
   stargazers_count: number;
   updated_at: string;
   id: number;
-  owner: gitHubRepoOwnerModel;
+  owner: gitHubRepoOwnerApi;
   private: boolean;
   full_name: string;
   topics: Array<string>;
@@ -21,18 +22,18 @@ export type GithubCardType = {
   template: boolean;
 };
 
-export type GitHubRepoItemModel = {
+export type gitHubRepoItemModel = {
   name: string;
-  html_url: string;
-  stargazers_count: number;
-  updated_at: string;
+  htmlUrl: string;
+  stargazersCount: number;
+  updatedAt: string;
   id: number;
   owner: gitHubRepoOwnerModel;
   private: boolean;
-  full_name: string;
+  fullName: string;
   topics: Array<string>;
-  watchers_count: string;
-  forks_count: string;
+  watchersCount: string;
+  forksCount: string;
   fork: boolean;
   archive: boolean;
   mirror: boolean;
@@ -46,22 +47,22 @@ export type DateType = {
 };
 
 export const normalizeGitHubRepoItem = (
-  from: GithubCardType
-): GitHubRepoItemModel => ({
-  html_url: from.html_url,
+  from: gitHubRepoItemApi
+): gitHubRepoItemModel => ({
+  htmlUrl: from.html_url,
   name: from.name,
-  stargazers_count: from.stargazers_count,
-  updated_at: new Date(from.updated_at).toLocaleDateString(
+  stargazersCount: from.stargazers_count,
+  updatedAt: new Date(from.updated_at).toLocaleDateString(
     "en-GB",
     dateOptionsType
   ),
   id: from.id,
   owner: normalizeGitHubRepoOwner(from.owner),
   private: from.private,
-  full_name: from.full_name,
+  fullName: from.full_name,
   topics: from.topics,
-  watchers_count: from.watchers_count,
-  forks_count: from.forks_count,
+  watchersCount: from.watchers_count,
+  forksCount: from.forks_count,
   fork: from.fork,
   archive: from.archive,
   mirror: from.mirror,

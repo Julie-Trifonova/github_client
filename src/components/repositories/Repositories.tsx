@@ -6,7 +6,7 @@ import { Loader } from "@components/loader/Loader";
 import { InitialPage } from "@components/repositories/initialPage/InitialPage";
 import { RepositoryCard } from "@components/repositories/repositoryCard/RepositoryCard";
 import { Search } from "@components/search";
-import { GitHubRepoItemModel } from "@store/models/gitHub";
+import { gitHubRepoItemModel } from "@store/models/gitHub";
 import RootStore from "@store/RootStore";
 import { Meta } from "@utils/meta";
 import { observer } from "mobx-react-lite";
@@ -24,15 +24,13 @@ const Repositories: React.FC = observer(() => {
 
   useEffect(() => {
     if (search.get("repo") && search.get("repo") !== null) {
-      repositoriesStore
-        .getOrganizationReposCount(search.get("repo") as string);
+      repositoriesStore.getOrganizationReposCount(search.get("repo") as string);
       repositoriesStore.setSearchValue(search.get("repo") as string);
-      repositoriesStore
-        .getOrganizationReposList({
-          pageNumber: 1,
-          perPageCount: 20,
-          organizationName: search.get("repo") as string,
-        });
+      repositoriesStore.getOrganizationReposList({
+        pageNumber: 1,
+        perPageCount: 20,
+        organizationName: search.get("repo") as string,
+      });
     }
   }, [repositoriesStore, search]);
 
@@ -40,14 +38,14 @@ const Repositories: React.FC = observer(() => {
     (organization: string) => {
       setSearch({ repo: organization });
       repositoriesStore.setSearchValue(organization);
-      repositoriesStore
-        .getOrganizationReposCount(repositoriesStore.searchValue);
-      repositoriesStore
-        .getOrganizationReposList({
-          pageNumber: 1,
-          perPageCount: 20,
-          organizationName: repositoriesStore.searchValue,
-        });
+      repositoriesStore.getOrganizationReposCount(
+        repositoriesStore.searchValue
+      );
+      repositoriesStore.getOrganizationReposList({
+        pageNumber: 1,
+        perPageCount: 20,
+        organizationName: repositoriesStore.searchValue,
+      });
     },
     [repositoriesStore, setSearch]
   );
@@ -81,15 +79,15 @@ const Repositories: React.FC = observer(() => {
         >
           <BlockType disabled={false} />
           {repositoriesStore.list.map(
-            (repo: GitHubRepoItemModel) =>
+            (repo: gitHubRepoItemModel) =>
               !repo.private && (
                 <div key={repo.id}>
                   <RepositoryCard
-                    avatar={repo.owner.avatar_url}
+                    avatar={repo.owner.avatarUrl}
                     title={repo.name}
-                    link={repo.html_url}
-                    starCount={repo.stargazers_count}
-                    lastUpdated={repo.updated_at}
+                    link={repo.htmlUrl}
+                    starCount={repo.stargazersCount}
+                    lastUpdated={repo.updatedAt}
                     owner={repo.owner.login}
                     id={repo.id}
                   />

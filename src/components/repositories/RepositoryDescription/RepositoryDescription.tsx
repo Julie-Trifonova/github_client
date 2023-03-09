@@ -3,12 +3,12 @@ import React, { useEffect } from "react";
 import { Loader } from "@components/loader";
 import RootStore from "@store/RootStore";
 import { Meta } from "@utils/meta";
+import { useLocalStore } from "@utils/UseLocalStore";
 import Markdown from "markdown-to-jsx";
 import { observer } from "mobx-react-lite";
 import { Link, useLocation } from "react-router-dom";
 
 import styles from "./RepositoryDescription.module.scss";
-import {useLocalStore} from "@utils/UseLocalStore";
 
 const RepositoryDescription: React.FC = observer(() => {
   const repositoryStore = React.useMemo(
@@ -17,7 +17,8 @@ const RepositoryDescription: React.FC = observer(() => {
   ).queryRepository;
   // const repositoryStore = useLocalStore(() => new RootStore()).queryRepository;
   const location = useLocation();
-  const [_root, _repo, org, repoName]: Array<string> = location.pathname.split("/");
+  const [_root, _repo, org, repoName]: Array<string> =
+    location.pathname.split("/");
 
   useEffect(() => {
     repositoryStore.getRepoItem({ owner: org, repo: repoName }).then();
@@ -62,11 +63,11 @@ const RepositoryDescription: React.FC = observer(() => {
           </button>
         </Link>
         <span className={styles.repository_description_title}>
-          {repositoryStore.repoItem?.full_name}
+          {repositoryStore.repoItem?.fullName}
         </span>
       </div>
       {repositoryStore.repoItem?.owner.login &&
-        repositoryStore.repoItem?.html_url && (
+        repositoryStore.repoItem?.htmlUrl && (
           <div className={styles.repository_description_link_and_svg_block}>
             <svg
               className={styles.repository_description_link_svg_one}
@@ -96,7 +97,7 @@ const RepositoryDescription: React.FC = observer(() => {
             </svg>
             <a
               className={styles.repository_description_link}
-              href={repositoryStore.repoItem?.html_url}
+              href={repositoryStore.repoItem?.htmlUrl}
             >
               {repositoryStore.repoItem?.owner.login}
             </a>
@@ -126,8 +127,8 @@ const RepositoryDescription: React.FC = observer(() => {
           />
         </svg>
         <span className={styles.repository_description_stars_count}>
-          {repositoryStore.repoItem?.stargazers_count
-            ? repositoryStore.repoItem?.stargazers_count
+          {repositoryStore.repoItem?.stargazersCount
+            ? repositoryStore.repoItem?.stargazersCount
             : 0}
         </span>
         <span className={styles.repository_description_stars_text}>stars</span>
@@ -163,8 +164,8 @@ const RepositoryDescription: React.FC = observer(() => {
           />
         </svg>
         <span className={styles.repository_description_watchers_count}>
-          {repositoryStore.repoItem?.watchers_count
-            ? repositoryStore.repoItem?.watchers_count
+          {repositoryStore.repoItem?.watchersCount
+            ? repositoryStore.repoItem?.watchersCount
             : 0}
         </span>
         <span className={styles.repository_description_watchers_text}>
@@ -186,8 +187,8 @@ const RepositoryDescription: React.FC = observer(() => {
           />
         </svg>
         <span className={styles.repository_description_forks_count}>
-          {repositoryStore.repoItem?.forks_count
-            ? repositoryStore.repoItem?.forks_count
+          {repositoryStore.repoItem?.forksCount
+            ? repositoryStore.repoItem?.forksCount
             : 0}
         </span>
         <span className={styles.repository_description_forks_text}>fork</span>

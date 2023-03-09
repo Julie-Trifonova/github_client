@@ -1,10 +1,9 @@
 import RepositoriesStore from "@store/RepositoriesStore";
 import RepositoryStore from "@store/RepositoryStore";
-import {ILocalStore} from "@utils/UseLocalStore";
+import { ILocalStore } from "@utils/UseLocalStore";
 
-class RootStore
-    // implements ILocalStore
-{
+class RootStore {
+  // implements ILocalStore
   // private callback: null | (()=> void) = null;
   //
   // private initialRepositoryStore () {
@@ -25,6 +24,5 @@ class RootStore
   // }
   readonly queryRepository = new RepositoryStore();
   readonly queryRepositories = new RepositoriesStore();
-
 }
 export default RootStore;

@@ -1,2 +1,2 @@
-export * from "./gitHubRepoOwner";
-export * from "./repoItem";
+export * from "./gitHubRepoOwnerApi";
+export * from "./gitHubRepoItemApi";
