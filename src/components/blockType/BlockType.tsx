@@ -2,7 +2,7 @@ import React, { useState } from "react";
 
 import { nanoid } from "nanoid";
 
-import styles from "./BlockType.module.css";
+import styles from "./BlockType.module.scss";
 
 type BlockType = {
   disabled: boolean;
