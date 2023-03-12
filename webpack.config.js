@@ -5,7 +5,7 @@ const buildPath = path.resolve(__dirname, 'dist');
 const srcPath = path.resolve(__dirname, 'src');
 const isProd = process.env.NODE_ENV === 'production';
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-
+require('dotenv').config()
 const TsCheckerPlugin = require('fork-ts-checker-webpack-plugin');
 
 const getSettingsForStyles = (withModules = false) => {
@@ -48,6 +48,10 @@ module.exports = {
             }
         ),
         new TsCheckerPlugin(),
+        new DefinePlugin({
+            "process.env.NODE_ENV": JSON.stringify("development"),
+            "process.env.REACT_APP_MYAPP": JSON.stringify(process.env.REACT_APP_MYAPP)
+        })
     ].filter(Boolean),
     module:
         {

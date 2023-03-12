@@ -51,12 +51,13 @@ class RepositoryStore implements IRepositoryStore {
   };
 
   async getRepoItem(params: GetRepoItemParams) {
-    this._repoItem = null;
     this._meta = Meta.loading;
     this.setErrorMessage("");
     const data = await getRepository(params.owner, params.repo);
 
     runInAction(() => {
+      this._repoItem = null;
+
       if (data) {
         try {
           this._repoItem = normalizeGitHubRepoItem(data);

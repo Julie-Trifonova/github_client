@@ -7,11 +7,12 @@ import App from "../src/App";
 import "config/configureMobX";
 import 'regenerator-runtime';
 
-render(
+const root = ReactDOM.createRoot(document.getElementById("root") as HTMLElement);
+root.render(
     <React.StrictMode>
         <App />
     </React.StrictMode>
-    , document.getElementById('root'));
+);
 
 if (module.hot) {
     module.hot.accept();
