@@ -1,4 +1,4 @@
-import { gitHubRepoItemApi } from "@store/models/gitHub/gitHubRepoItemApi";
+import { gitHubRepoItemApi } from "store/models/gitHub/gitHubRepoItemApi/gitHubRepoItemApi";
 import { observable } from "mobx";
 
 export type GetRepositoriesType = {

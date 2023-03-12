@@ -2,10 +2,10 @@ import {
   gitHubRepoItemApi,
   gitHubRepoItemModel,
   normalizeGitHubRepoItem,
-} from "@store/models/gitHub/gitHubRepoItemApi";
-import { getRepository, getRepositoryReadme } from "@utils/api";
-import { Meta } from "@utils/meta";
-import { GetRepoItemParams, IRepositoryStore } from "@utils/types";
+} from "store/models/gitHub/gitHubRepoItemApi/gitHubRepoItemApi";
+import { getRepository, getRepositoryReadme } from "utils/api";
+import { Meta } from "utils/meta";
+import { GetRepoItemParams, IRepositoryStore } from "utils/types";
 import {
   action,
   computed,

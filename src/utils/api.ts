@@ -1,10 +1,10 @@
-import { BASE_URL, HEADER_API_KEY } from "@config/constants";
-import { gitHubRepoItemApi } from "@store/models/gitHub/gitHubRepoItemApi";
+import { BASE_URL, HEADER_API_KEY } from "config/constants";
+import { gitHubRepoItemApi } from "store/models/gitHub/gitHubRepoItemApi/gitHubRepoItemApi";
 import {
   GetRepositoriesType,
   GetRepositoryType,
   GetRepositoriesCountType,
-} from "@utils/types";
+} from "utils/types";
 import axios from "axios";
 
 const getAPIError = () => {

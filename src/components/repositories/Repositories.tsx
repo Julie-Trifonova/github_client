@@ -1,19 +1,22 @@
 import React, { useCallback, useEffect } from "react";
 
-import { BlockType } from "@components/blockType";
-import { GitHubError } from "@components/gitHubError/GitHubError";
-import { Loader } from "@components/loader/Loader";
-import { InitialPage } from "@components/repositories/initialPage/InitialPage";
-import { RepositoryCard } from "@components/repositories/repositoryCard/RepositoryCard";
-import { Search } from "@components/search";
-import { gitHubRepoItemModel } from "@store/models/gitHub";
-import RootStore from "@store/RootStore";
-import { Meta } from "@utils/meta";
+import { BlockType } from "components/blockType";
+import { GitHubError } from "components/gitHubError/GitHubError";
+import { Loader } from "components/loader/Loader";
+import { InitialPage } from "components/repositories/initialPage/InitialPage";
+import { RepositoryCard } from "components/repositories/repositoryCard/RepositoryCard";
+import { Search } from "components/search";
+import { gitHubRepoItemModel } from "store/models/gitHub/gitHubRepoItemApi";
+import { Meta } from "utils/meta";
 import { observer } from "mobx-react-lite";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { useSearchParams } from "react-router-dom";
 
 import styles from "./Repositories.module.scss";
+import {RootStore} from "store/RootStore";
+
+
+
 
 const Repositories: React.FC = observer(() => {
   const repositoriesStore = React.useMemo(

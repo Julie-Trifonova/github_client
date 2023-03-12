@@ -1,9 +1,9 @@
 import React, { useEffect } from "react";
 
-import { Loader } from "@components/loader";
-import RootStore from "@store/RootStore";
-import { Meta } from "@utils/meta";
-import { useLocalStore } from "@utils/UseLocalStore";
+import { Loader } from "components/loader";
+import {RootStore} from "store/RootStore";
+import { Meta } from "utils/meta";
+import { useLocalStore } from "utils/UseLocalStore";
 import Markdown from "markdown-to-jsx";
 import { observer } from "mobx-react-lite";
 import { Link, useLocation } from "react-router-dom";

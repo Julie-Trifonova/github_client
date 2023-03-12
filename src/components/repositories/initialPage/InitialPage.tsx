@@ -1,3 +1,4 @@
+import React from 'react';
 import styles from "./InitialPage.module.scss";
 
 export const InitialPage = () => {
