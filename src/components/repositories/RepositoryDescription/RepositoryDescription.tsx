@@ -3,13 +3,13 @@ import React, { useEffect } from "react";
 import { Loader } from "components/loader";
 import Markdown from "markdown-to-jsx";
 import { observer } from "mobx-react-lite";
+import { nanoid } from "nanoid";
 import { Link, useLocation } from "react-router-dom";
 import { RootStore } from "store/RootStore";
 import { Meta } from "utils/meta";
 import { useLocalStore } from "utils/UseLocalStore";
 
 import styles from "./RepositoryDescription.module.scss";
-import {nanoid} from 'nanoid';
 
 const RepositoryDescription: React.FC = observer(() => {
   const repositoryStore = React.useMemo(
@@ -107,7 +107,9 @@ const RepositoryDescription: React.FC = observer(() => {
       {repositoryStore.repoItem?.topics && (
         <div className={styles.repository_description_tags}>
           {repositoryStore.repoItem?.topics.map((topic: string) => (
-            <div key={nanoid()} className={styles.repository_description_tag}>{topic}</div>
+            <div key={nanoid()} className={styles.repository_description_tag}>
+              {topic}
+            </div>
           ))}
         </div>
       )}

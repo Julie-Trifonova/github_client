@@ -1,18 +1,15 @@
 import React, { useCallback, useEffect } from "react";
 
-import { BlockType } from "components/blockType";
 import { GitHubError } from "components/gitHubError/GitHubError";
 import { Loader } from "components/loader/Loader";
-import { RepositoryCard } from "components/repositories/repositoryCard/RepositoryCard";
 import { Search } from "components/search";
 import { observer } from "mobx-react-lite";
-import InfiniteScroll from "react-infinite-scroll-component";
 import { useSearchParams } from "react-router-dom";
-import { gitHubRepoItemModel } from "store/models/gitHub/gitHubRepoItemApi";
 import { RootStore } from "store/RootStore";
 import { Meta } from "utils/meta";
 
 import styles from "./Repositories.module.scss";
+import {Page} from "components/page/Page";
 
 const Repositories: React.FC = observer(() => {
   const repositoriesStore = React.useMemo(
@@ -63,72 +60,18 @@ const Repositories: React.FC = observer(() => {
     );
   }
 
-  return (
+    return (
     <div className={styles.repositories_block}>
       <Search handleSearchButton={handleSearchButton} />
       {repositoriesStore.meta === Meta.error ? (
         <GitHubError errorMessage={repositoriesStore.errorMessage} />
-      ) : repositoriesStore.meta === Meta.initial ? (
-        <InfiniteScroll
+      ) : <Page
           dataLength={repositoriesStore.list.length}
           next={() => repositoriesStore.fetchOrganizationReposList()}
           hasMore={repositoriesStore.hasMore}
-          loader={
-            <div className={styles.loader_position}>
-              <Loader />
-            </div>
-          }
-          endMessage={<h2 className={styles.loader_position}>End</h2>}
-        >
-          <BlockType disabled={false} />
-          {repositoriesStore.list.map(
-            (repo: gitHubRepoItemModel) =>
-              !repo.private && (
-                <div key={repo.id}>
-                  <RepositoryCard
-                    avatar={repo.owner.avatarUrl}
-                    title={repo.name}
-                    link={repo.htmlUrl}
-                    starCount={repo.stargazersCount}
-                    lastUpdated={repo.updatedAt}
-                    owner={repo.owner.login}
-                    id={repo.id}
-                  />
-                </div>
-              )
-          )}
-        </InfiniteScroll>
-      ) : (
-        <InfiniteScroll
-          dataLength={repositoriesStore.list.length}
-          next={() => repositoriesStore.fetchOrganizationReposList()}
-          hasMore={repositoriesStore.hasMore}
-          loader={
-            <div className={styles.loader_position}>
-              <Loader />
-            </div>
-          }
-          endMessage={<h2 className={styles.loader_position}>End</h2>}
-        >
-          <BlockType disabled={false} />
-          {repositoriesStore.list.map(
-            (repo: gitHubRepoItemModel) =>
-              !repo.private && (
-                <div key={repo.id}>
-                  <RepositoryCard
-                    avatar={repo.owner.avatarUrl}
-                    title={repo.name}
-                    link={repo.htmlUrl}
-                    starCount={repo.stargazersCount}
-                    lastUpdated={repo.updatedAt}
-                    owner={repo.owner.login}
-                    id={repo.id}
-                  />
-                </div>
-              )
-          )}
-        </InfiniteScroll>
-      )}
+          list={repositoriesStore.list}
+      />
+      }
     </div>
   );
 });
