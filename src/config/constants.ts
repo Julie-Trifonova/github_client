@@ -1,5 +1,4 @@
 import { AxiosRequestHeaders } from "axios";
-// console.log("process", process)
 const BASE_URL: string | undefined = "https://api.github.com";
 const HEADER_API_KEY: AxiosRequestHeaders | any = {
   auth: process.env.REACT_APP_GITHUB_API_KEY,

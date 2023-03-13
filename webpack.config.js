@@ -5,13 +5,12 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 const buildPath = path.resolve(__dirname, 'dist');
 const srcPath = path.resolve(__dirname, 'src');
-require('dotenv').config()
 const isProd = process.env.NODE_ENV === 'production';
 
 const TsCheckerPlugin = require('fork-ts-checker-webpack-plugin');
+
 const { webpack, DefinePlugin } = require("webpack");
-// const webpack = require('webpack');
-// const DefinePlugin = require('define-variable-webpack-plugin');
+require('dotenv').config()
 
 const getSettingsForStyles = (withModules = false) => {
     return [MiniCssExtractPlugin.loader,
@@ -56,16 +55,6 @@ module.exports = {
             "process.env.NODE_ENV": JSON.stringify("development"),
             "process.env.REACT_APP_GITHUB_API_KEY": JSON.stringify(process.env.REACT_APP_GITHUB_API_KEY)
         }),
-        // new webpack.DefinePlugin({
-        //     PRODUCTION: JSON.stringify(true),
-        //     VERSION: JSON.stringify('5fa3b9'),
-        //     BROWSER_SUPPORTS_HTML5: true,
-        //     TWO: '1+1',
-        //     'typeof window': JSON.stringify('object'),
-        //     'process.env': {
-        //         NODE_ENV: JSON.stringify(process.env.NODE_ENV)
-        //     },
-        // })
     ].filter(Boolean),
     module:
         {
@@ -92,21 +81,10 @@ module.exports = {
                         }
                     }
                 },
-                {
-                    test: /\.(png|woff|woff2|eot|ttf|svg)$/,
-                    // use: ['url-loader?limit=100000']
-                    use: 'file-loader'
-                },
                 // {
-                //     test: /\.(woff|woff2|ttf|otf)$/,
-                //     loader: 'file-loader',
-                //     include: [/fonts/],
-                //
-                //     options: {
-                //         name: '[hash].[ext]',
-                //         outputPath: 'css/',
-                //         publicPath: url => '../css/' + url
-                //     }
+                //     test: /\.(png|woff|woff2|eot|ttf|svg)$/,
+                //     // use: ['url-loader?limit=100000']
+                //     use: 'file-loader'
                 // },
             ]
         },
