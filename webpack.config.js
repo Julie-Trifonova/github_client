@@ -69,6 +69,10 @@ module.exports = {
                     use: getSettingsForStyles()
                 },
                 {
+                    test: /\.s?css$/i,
+                    use: ["style-loader", "css-loader"],
+                },
+                {
                     test: /\.[tj]sx?$/,
                     use: 'babel-loader'
                 },
