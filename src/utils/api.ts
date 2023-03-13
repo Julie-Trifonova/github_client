@@ -9,7 +9,8 @@ import {
 import axios from "axios";
 
 const getAPIError = () => {
-  if (HEADER_API_KEY === undefined) {
+
+  if (HEADER_API_KEY.auth === undefined) {
     throw new Error("Cannot find HEADER_API_KEY");
   }
 };
@@ -25,6 +26,7 @@ const getRepositories: GetRepositoriesType = async (
   perPageCount,
   organization = "ktsstudio"
 ) => {
+
   getAPIError();
   try {
     const request = await axios.get<gitHubRepoItemApi[]>(

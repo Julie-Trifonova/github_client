@@ -5,13 +5,13 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 const buildPath = path.resolve(__dirname, 'dist');
 const srcPath = path.resolve(__dirname, 'src');
-
+require('dotenv').config()
 const isProd = process.env.NODE_ENV === 'production';
 
 const TsCheckerPlugin = require('fork-ts-checker-webpack-plugin');
-
-const webpack = require('webpack');
-const DefinePlugin = require('define-variable-webpack-plugin');
+const { webpack, DefinePlugin } = require("webpack");
+// const webpack = require('webpack');
+// const DefinePlugin = require('define-variable-webpack-plugin');
 
 const getSettingsForStyles = (withModules = false) => {
     return [MiniCssExtractPlugin.loader,
@@ -52,20 +52,20 @@ module.exports = {
             }
         ),
         new TsCheckerPlugin(),
-        // new DefinePlugin({
-        //     "process.env.NODE_ENV": JSON.stringify("development"),
-        //     "process.env.REACT_APP_MYAPP": JSON.stringify(process.env.REACT_APP_MYAPP)
-        // }),
-        new webpack.DefinePlugin({
-            PRODUCTION: JSON.stringify(true),
-            VERSION: JSON.stringify('5fa3b9'),
-            BROWSER_SUPPORTS_HTML5: true,
-            TWO: '1+1',
-            'typeof window': JSON.stringify('object'),
-            'process.env': {
-                NODE_ENV: JSON.stringify(process.env.NODE_ENV)
-            },
-        })
+        new DefinePlugin({
+            "process.env.NODE_ENV": JSON.stringify("development"),
+            "process.env.REACT_APP_GITHUB_API_KEY": JSON.stringify(process.env.REACT_APP_GITHUB_API_KEY)
+        }),
+        // new webpack.DefinePlugin({
+        //     PRODUCTION: JSON.stringify(true),
+        //     VERSION: JSON.stringify('5fa3b9'),
+        //     BROWSER_SUPPORTS_HTML5: true,
+        //     TWO: '1+1',
+        //     'typeof window': JSON.stringify('object'),
+        //     'process.env': {
+        //         NODE_ENV: JSON.stringify(process.env.NODE_ENV)
+        //     },
+        // })
     ].filter(Boolean),
     module:
         {
