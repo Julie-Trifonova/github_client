@@ -14,9 +14,6 @@ import { useSearchParams } from "react-router-dom";
 import styles from "./Repositories.module.scss";
 import {RootStore} from "store/RootStore";
 
-
-
-
 const Repositories: React.FC = observer(() => {
   const repositoriesStore = React.useMemo(
     () => new RootStore(),
