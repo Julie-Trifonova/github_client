@@ -25,4 +25,4 @@ class RootStore {
   readonly queryRepository = new RepositoryStore();
   readonly queryRepositories = new RepositoriesStore();
 }
-export {RootStore};
+export { RootStore };

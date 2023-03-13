@@ -2,6 +2,7 @@ const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ReactRefreshWebpackPlugin = require('@pmmmwh/react-refresh-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const ESLintPlugin = require('eslint-webpack-plugin');
 
 const buildPath = path.resolve(__dirname, 'dist');
 const srcPath = path.resolve(__dirname, 'src');
@@ -51,6 +52,7 @@ module.exports = {
             }
         ),
         new TsCheckerPlugin(),
+        new ESLintPlugin(),
         new DefinePlugin({
             "process.env.NODE_ENV": JSON.stringify("development"),
             "process.env.REACT_APP_GITHUB_API_KEY": JSON.stringify(process.env.REACT_APP_GITHUB_API_KEY)
@@ -68,10 +70,10 @@ module.exports = {
                     exclude: /\.module\.s?css$/,
                     use: getSettingsForStyles()
                 },
-                {
-                    test: /\.s?css$/i,
-                    use: ["style-loader", "css-loader"],
-                },
+                // {
+                //     test: /\.s?css$/i,
+                //     use: ["style-loader", "css-loader"],
+                // },
                 {
                     test: /\.[tj]sx?$/,
                     use: 'babel-loader'

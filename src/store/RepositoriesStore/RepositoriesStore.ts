@@ -1,3 +1,11 @@
+import axios from "axios";
+import {
+  action,
+  computed,
+  makeObservable,
+  observable,
+  runInAction,
+} from "mobx";
 import {
   gitHubRepoItemModel,
   normalizeGitHubRepoItem,
@@ -21,15 +29,6 @@ import {
   GetRepoItemParams,
   IRepositoriesStore,
 } from "utils/types";
-
-import axios from "axios";
-import {
-  action,
-  computed,
-  makeObservable,
-  observable,
-  runInAction,
-} from "mobx";
 
 type PrivateFields =
   | "_list"

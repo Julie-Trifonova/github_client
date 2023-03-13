@@ -1,7 +1,7 @@
 import React from "react";
 
+import { Repositories, RepositoryDescription } from "components";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { Repositories, RepositoryDescription  } from "components";
 
 import "styles/App.scss";
 

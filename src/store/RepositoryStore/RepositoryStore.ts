@@ -1,4 +1,11 @@
 import {
+  action,
+  computed,
+  makeObservable,
+  observable,
+  runInAction,
+} from "mobx";
+import {
   gitHubRepoItemApi,
   gitHubRepoItemModel,
   normalizeGitHubRepoItem,
@@ -6,14 +13,6 @@ import {
 import { getRepository, getRepositoryReadme } from "utils/api";
 import { Meta } from "utils/meta";
 import { GetRepoItemParams, IRepositoryStore } from "utils/types";
-
-import {
-  action,
-  computed,
-  makeObservable,
-  observable,
-  runInAction,
-} from "mobx";
 
 type PrivateFields = "_meta" | "_repoItem" | "_repoReadme" | "_errorMessage";
 

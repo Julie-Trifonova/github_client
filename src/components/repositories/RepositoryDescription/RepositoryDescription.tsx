@@ -1,15 +1,14 @@
 import React, { useEffect } from "react";
 
-import {RootStore} from "store/RootStore";
-import { Meta } from "utils/meta";
 import { Loader } from "components/loader";
-import { useLocalStore } from "utils/UseLocalStore";
-
-import styles from "./RepositoryDescription.module.scss";
-
 import Markdown from "markdown-to-jsx";
 import { observer } from "mobx-react-lite";
 import { Link, useLocation } from "react-router-dom";
+import { RootStore } from "store/RootStore";
+import { Meta } from "utils/meta";
+import { useLocalStore } from "utils/UseLocalStore";
+
+import styles from "./RepositoryDescription.module.scss";
 
 const RepositoryDescription: React.FC = observer(() => {
   const repositoryStore = React.useMemo(
