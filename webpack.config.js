@@ -70,10 +70,10 @@ module.exports = {
                     exclude: /\.module\.s?css$/,
                     use: getSettingsForStyles()
                 },
-                // {
-                //     test: /\.s?css$/i,
-                //     use: ["style-loader", "css-loader"],
-                // },
+                {
+                    test: /\.css$/i,
+                    use: ["style-loader", "css-loader"],
+                },
                 {
                     test: /\.[tj]sx?$/,
                     use: 'babel-loader'
