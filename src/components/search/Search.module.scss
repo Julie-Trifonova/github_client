@@ -19,6 +19,7 @@
   font-style: normal;
   font-size: 14px;
 }
+
 .input_search:focus {
   outline: none;
   border: solid 1px $button-primary-color;
@@ -32,9 +33,11 @@
   border: none;
   background-color: $button-primary-color;
 }
+
 .search_button:hover {
   opacity: 0.5;
 }
+
 .svg_search_button {
   width: 18px;
   height: 18px;

@@ -71,8 +71,7 @@
 .repository_description_tags {
   margin-top: 18px;
   display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
+  flex-flow: row wrap;
 }
 
 .repository_description_tag {
@@ -192,9 +191,11 @@
   @media (min-width: 1201px) {
     width: 360px;
   }
+
   @media (min-width: 641px) and (max-width: 1200px) {
     width: 65%;
   }
+
   @media (max-width: 640px) {
     width: 100%;
   }

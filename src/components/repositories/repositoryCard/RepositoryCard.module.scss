@@ -9,7 +9,7 @@
   border-radius: 6px;
   justify-content: space-between;
   align-items: center;
-  margin: 0 auto 16px auto;
+  margin: 0 auto 16px;
   font-family: $font;
   font-style: normal;
   font-weight: normal;
@@ -18,7 +18,7 @@
 }
 
 .block_repository_card_link:hover {
-  box-shadow: 0 2px 6px 0 rgba(182, 182, 182, 0.25);
+  box-shadow: 0 2px 6px 0 rgb(182 182 182 / 25%);
 }
 
 .img_repository_card {
