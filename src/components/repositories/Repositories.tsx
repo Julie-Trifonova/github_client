@@ -3,7 +3,6 @@ import React, { useCallback, useEffect } from "react";
 import { BlockType } from "components/blockType";
 import { GitHubError } from "components/gitHubError/GitHubError";
 import { Loader } from "components/loader/Loader";
-import { InitialPage } from "components/repositories/initialPage/InitialPage";
 import { RepositoryCard } from "components/repositories/repositoryCard/RepositoryCard";
 import { Search } from "components/search";
 import { gitHubRepoItemModel } from "store/models/gitHub/gitHubRepoItemApi";
@@ -34,6 +33,12 @@ const Repositories: React.FC = observer(() => {
         perPageCount: 20,
         organizationName: search.get("repo") as string,
       });
+    } else {
+        repositoriesStore.getOrganizationReposList({
+            pageNumber: 1,
+            perPageCount: 20,
+            organizationName: 'ktsstudio',
+        });
     }
   }, [repositoriesStore, search]);
 
@@ -67,7 +72,6 @@ const Repositories: React.FC = observer(() => {
       {repositoriesStore.meta === Meta.error ? (
         <GitHubError errorMessage={repositoriesStore.errorMessage} />
       ) : repositoriesStore.meta === Meta.initial ? (
-        // <InitialPage />
           <InfiniteScroll
               dataLength={repositoriesStore.list.length}
               next={() => repositoriesStore.fetchOrganizationReposList()}
