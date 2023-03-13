@@ -1,10 +1,14 @@
 import React from "react";
-import styles from "components/repositories/Repositories.module.scss";
+
 import {Loader} from "components/loader";
 import {BlockType} from "components/blockType";
 import {gitHubRepoItemModel} from "store/models/gitHub/gitHubRepoItemApi";
 import {RepositoryCard} from "components/repositories/repositoryCard";
+
 import InfiniteScroll from "react-infinite-scroll-component";
+
+import styles from "components/repositories/Repositories.module.scss";
+
 
 type PageInterface = {
     dataLength: number,
