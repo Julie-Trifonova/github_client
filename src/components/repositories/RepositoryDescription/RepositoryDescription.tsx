@@ -9,6 +9,7 @@ import { Meta } from "utils/meta";
 import { useLocalStore } from "utils/UseLocalStore";
 
 import styles from "./RepositoryDescription.module.scss";
+import {nanoid} from 'nanoid';
 
 const RepositoryDescription: React.FC = observer(() => {
   const repositoryStore = React.useMemo(
@@ -106,7 +107,7 @@ const RepositoryDescription: React.FC = observer(() => {
       {repositoryStore.repoItem?.topics && (
         <div className={styles.repository_description_tags}>
           {repositoryStore.repoItem?.topics.map((topic: string) => (
-            <div className={styles.repository_description_tag}>{topic}</div>
+            <div key={nanoid()} className={styles.repository_description_tag}>{topic}</div>
           ))}
         </div>
       )}
