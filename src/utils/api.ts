@@ -5,6 +5,7 @@ import {
   GetRepositoryType,
   GetRepositoriesCountType,
 } from "utils/types";
+
 import axios from "axios";
 
 const getAPIError = () => {

@@ -1,12 +1,17 @@
-const path = require('node:path');
+const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ReactRefreshWebpackPlugin = require('@pmmmwh/react-refresh-webpack-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+
 const buildPath = path.resolve(__dirname, 'dist');
 const srcPath = path.resolve(__dirname, 'src');
+
 const isProd = process.env.NODE_ENV === 'production';
-const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-require('dotenv').config()
+
 const TsCheckerPlugin = require('fork-ts-checker-webpack-plugin');
+
+const webpack = require('webpack');
+const DefinePlugin = require('define-variable-webpack-plugin');
 
 const getSettingsForStyles = (withModules = false) => {
     return [MiniCssExtractPlugin.loader,
@@ -30,7 +35,6 @@ const getSettingsForStyles = (withModules = false) => {
 
 module.exports = {
     entry: path.join(srcPath, 'index.tsx'),
-    // target: process.env.NODE_ENV === 'development' ? 'web' : 'browserslist',
     target: !isProd ? 'web' : 'browserslist',
     devtool: isProd ? 'hidden-source-map' : 'eval-source-map',
     output: {
@@ -48,9 +52,19 @@ module.exports = {
             }
         ),
         new TsCheckerPlugin(),
-        new DefinePlugin({
-            "process.env.NODE_ENV": JSON.stringify("development"),
-            "process.env.REACT_APP_MYAPP": JSON.stringify(process.env.REACT_APP_MYAPP)
+        // new DefinePlugin({
+        //     "process.env.NODE_ENV": JSON.stringify("development"),
+        //     "process.env.REACT_APP_MYAPP": JSON.stringify(process.env.REACT_APP_MYAPP)
+        // }),
+        new webpack.DefinePlugin({
+            PRODUCTION: JSON.stringify(true),
+            VERSION: JSON.stringify('5fa3b9'),
+            BROWSER_SUPPORTS_HTML5: true,
+            TWO: '1+1',
+            'typeof window': JSON.stringify('object'),
+            'process.env': {
+                NODE_ENV: JSON.stringify(process.env.NODE_ENV)
+            },
         })
     ].filter(Boolean),
     module:
@@ -77,7 +91,23 @@ module.exports = {
                             maxSize: 10 * 1024
                         }
                     }
-                }
+                },
+                {
+                    test: /\.(png|woff|woff2|eot|ttf|svg)$/,
+                    // use: ['url-loader?limit=100000']
+                    use: 'file-loader'
+                },
+                // {
+                //     test: /\.(woff|woff2|ttf|otf)$/,
+                //     loader: 'file-loader',
+                //     include: [/fonts/],
+                //
+                //     options: {
+                //         name: '[hash].[ext]',
+                //         outputPath: 'css/',
+                //         publicPath: url => '../css/' + url
+                //     }
+                // },
             ]
         },
     resolve: {

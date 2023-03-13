@@ -1,10 +1,11 @@
 import React from "react";
 
-import "styles/App.scss";
-import Repositories from "components/repositories/Repositories";
+import { Repositories } from "components/repositories/Repositories";
 import { RepositoryDescription } from "components/repositories/RepositoryDescription";
+
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 // import { Repositories, RepositoryDescription  } from "@components";
+import "styles/App.scss";
 
 const App = () => {
   return (

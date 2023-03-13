@@ -103,4 +103,4 @@ const Repositories: React.FC = observer(() => {
   );
 });
 
-export default Repositories;
+export {Repositories};

@@ -1,4 +1,4 @@
-@import 'styles/ColorVariables.scss';
+@import 'styles/StylesVariables';
 
 .block_type_select {
     display: flex;
@@ -7,7 +7,7 @@
     justify-content: space-between;
     align-items: center;
     margin-bottom: 24px;
-    font-family: Roboto-Regular, Arial, sans-serif;
+    font-family: $font;
 }
 .type_select_title {
     display: inline-block;
@@ -26,19 +26,24 @@
     width: 160px;
     height: 50px;
     padding: 12px;
-    border: 1px solid #D9D9D9;
-    border-radius: 6px;
+    border: 1px solid $border-color;
     font-size: 14px;
-    color:#7E7E7E;
     align-items: center;
+    border-radius: 6px;
 }
+//.type_select_list_element_input:first-child {
+//    border-radius: 6px;
+//}
+//.type_select_list_element_input:first-of-type {
+//    border-radius: 6px;
+//}
+//.type_select_list_element_input:nth-child(1) {
+//    border-radius: 6px;
+//}
 .type_select_list {
     position: absolute;
     z-index: 2;
     display: block;
-    /*margin-top: 50px;*/
-    /*margin-left: 163px;*/
-    color:#7E7E7E;
 }
 .type_select_chosen_element:hover {
     cursor: pointer;
@@ -49,20 +54,18 @@
     width: 160px;
     height: 50px;
     padding: 12px;
-    border: 1px solid #D9D9D9;
-    border-radius: 6px;
-    background-color: white;
+    border: 1px solid $border-color;
+    background-color: $loader-border-color-white;
     font-size: 14px;
     align-items: center;
 }
+
 .type_select_list_element_input:hover {
     cursor: pointer;
-    background-color: #ff8282;
-    border: #FF5555;
+    background-color: $border-color;
 }
 .type_select_list_element_input:checked {
-    background-color: #ff8282;
-    border: #FF5555;
+    background-color: $border-color;
 }
 .type_select_list_element_input_text {
     display: flex;

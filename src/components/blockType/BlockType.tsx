@@ -50,7 +50,7 @@ const BlockType: React.FC<BlockType> = (props) => {
     <div className={styles.block_type_select}>
       <div className={styles.type_select_title}>Repositories</div>
       <div className={styles.type_select_title_list_block}>
-        <div
+        <button
           className={styles.type_select_chosen_element}
           onClick={handleChangeVisibility}
         >
@@ -68,7 +68,7 @@ const BlockType: React.FC<BlockType> = (props) => {
               fill="#6C757D"
             />
           </svg>
-        </div>
+        </button>
         {visible && (
           <div className={styles.type_select_list}>
             {arr.map((option) => (
@@ -79,6 +79,7 @@ const BlockType: React.FC<BlockType> = (props) => {
                     className={styles.type_select_list_element_input}
                     name={option.value}
                     type="checkbox"
+                    onClick={handleChangeVisibility}
                     // onChange={(e) =>
                     //   handleChangeType(e, option, option.checked)
                     // }
