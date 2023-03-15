@@ -7,14 +7,16 @@ import { nanoid } from "nanoid";
 import { Link, useLocation } from "react-router-dom";
 import { RootStore } from "store/RootStore";
 import { Meta } from "utils/meta";
+import { useLocalStore } from "utils/UseLocalStore";
 
 import styles from "./RepositoryDescription.module.scss";
 
 const RepositoryDescription: React.FC = observer(() => {
-  const repositoryStore = React.useMemo(
-    () => new RootStore(),
-    []
-  ).queryRepository;
+  // const repositoryStore = React.useMemo(
+  //   () => new RootStore(),
+  //   []
+  // ).queryRepository;
+  const repositoryStore = useLocalStore(() => new RootStore()).queryRepository;
   const location = useLocation();
   const [_root, _repo, org, repoName]: Array<string> =
     location.pathname.split("/");

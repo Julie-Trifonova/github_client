@@ -1,6 +1,6 @@
 import RepositoriesStore from "store/RepositoriesStore";
 import RepositoryStore from "store/RepositoryStore";
-import { ILocalStore } from "utils/UseLocalStore";
+// import { ILocalStore } from "utils/UseLocalStore";
 
 class RootStore {
   // implements ILocalStore

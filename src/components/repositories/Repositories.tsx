@@ -10,29 +10,31 @@ import { RootStore } from "store/RootStore";
 import { Meta } from "utils/meta";
 
 import styles from "./Repositories.module.scss";
+import {useLocalStore} from "utils/UseLocalStore";
 
 const Repositories: React.FC = observer(() => {
-  const repositoriesStore = React.useMemo(
-    () => new RootStore(),
-    []
-  ).queryRepositories;
+  // const repositoriesStore = React.useMemo(
+  //   () => new RootStore(),
+  //   []
+  // ).queryRepositories;
+  const repositoriesStore = useLocalStore(() => new RootStore()).queryRepositories;
   const [search, setSearch] = useSearchParams();
 
   useEffect(() => {
     if (search.get("repo") && search.get("repo") !== null) {
-      repositoriesStore.getOrganizationReposCount(search.get("repo") as string);
+      repositoriesStore.getOrganizationReposCount(search.get("repo") as string).then();
       repositoriesStore.setSearchValue(search.get("repo") as string);
       repositoriesStore.getOrganizationReposList({
         pageNumber: 1,
         perPageCount: 20,
         organizationName: search.get("repo") as string,
-      });
+      }).then();
     } else {
       repositoriesStore.getOrganizationReposList({
         pageNumber: 1,
         perPageCount: 20,
         organizationName: "ktsstudio",
-      });
+      }).then();
     }
   }, [repositoriesStore, search]);
 
@@ -42,12 +44,12 @@ const Repositories: React.FC = observer(() => {
       repositoriesStore.setSearchValue(organization);
       repositoriesStore.getOrganizationReposCount(
         repositoriesStore.searchValue
-      );
+      ).then();
       repositoriesStore.getOrganizationReposList({
         pageNumber: 1,
         perPageCount: 20,
         organizationName: repositoriesStore.searchValue,
-      });
+      }).then();
     },
     [repositoriesStore, setSearch]
   );
