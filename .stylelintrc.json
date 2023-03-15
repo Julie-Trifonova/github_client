@@ -3,5 +3,8 @@
   "extends": [
     "stylelint-config-standard-scss",
     "stylelint-config-css-modules"
-  ]
+  ],
+  "rules": {
+    "selector-class-pattern": "^([a-z0-9-_]*)*$"
+  }
 }

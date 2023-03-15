@@ -2,6 +2,7 @@ import React, { useCallback, useEffect } from "react";
 
 import { GitHubError } from "components/gitHubError/GitHubError";
 import { Loader } from "components/loader/Loader";
+import { Page } from "components/page/Page";
 import { Search } from "components/search";
 import { observer } from "mobx-react-lite";
 import { useSearchParams } from "react-router-dom";
@@ -9,7 +10,6 @@ import { RootStore } from "store/RootStore";
 import { Meta } from "utils/meta";
 
 import styles from "./Repositories.module.scss";
-import {Page} from "components/page/Page";
 
 const Repositories: React.FC = observer(() => {
   const repositoriesStore = React.useMemo(
@@ -60,18 +60,19 @@ const Repositories: React.FC = observer(() => {
     );
   }
 
-    return (
-    <div className={styles.repositories_block}>
+  return (
+    <div className={`${styles.repositories_block} ${styles.repositories_block_media}`}>
       <Search handleSearchButton={handleSearchButton} />
       {repositoriesStore.meta === Meta.error ? (
         <GitHubError errorMessage={repositoriesStore.errorMessage} />
-      ) : <Page
+      ) : (
+        <Page
           dataLength={repositoriesStore.list.length}
           next={() => repositoriesStore.fetchOrganizationReposList()}
           hasMore={repositoriesStore.hasMore}
           list={repositoriesStore.list}
-      />
-      }
+        />
+      )}
     </div>
   );
 });

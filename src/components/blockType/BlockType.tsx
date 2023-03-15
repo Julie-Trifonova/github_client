@@ -72,14 +72,17 @@ const BlockType: React.FC<BlockType> = (props) => {
         {visible && (
           <div className={styles.type_select_list}>
             {arr.map((option) => (
-              <div key={option.key} className={styles.type_select_list_element}>
+              <div key={option.key}
+                   className={styles.type_select_list_element}
+                   onClick={handleChangeVisibility}
+              >
                 <label>
                   <input
                     checked={option.checked}
                     className={styles.type_select_list_element_input}
                     name={option.value}
                     type="checkbox"
-                    onClick={handleChangeVisibility}
+                    // onClick={handleChangeVisibility}
                     // onChange={(e) =>
                     //   handleChangeType(e, option, option.checked)
                     // }

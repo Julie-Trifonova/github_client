@@ -37,7 +37,7 @@ const RepositoryDescription: React.FC = observer(() => {
   if (repositoryStore.repoItem?.private) return <>Private Repository</>;
 
   return (
-    <div className={styles.block_repository_description}>
+    <div className={`${styles.block_repository_description} ${styles.block_repository_description_media}`}>
       <div
         className={styles.repository_description_title_and_link_to_back_block}
       >

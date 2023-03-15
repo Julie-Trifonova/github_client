@@ -10,7 +10,7 @@
   }
 }
 
-.loader {
+.loader_media {
   @media (min-width: 1201px) {
     width: 60px;
     height: 60px;
@@ -34,5 +34,5 @@
   margin: 50px auto;
   border-radius: 50%;
   animation: spinner 2s linear infinite;
-  border-bottom-color: $loader-border-color-white;
+  border-bottom-color: $main-background-color;
 }

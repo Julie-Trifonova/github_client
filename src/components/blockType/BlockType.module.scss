@@ -11,76 +11,58 @@
 }
 
 .type_select_title {
-    display: inline-block;
-}
-
-.type_select_title_list_block {
-    display: inline-block;
-}
-
-.type_select_title {
     font-weight: 700;
     font-size: 24px;
 }
 
-.type_select_chosen_element {
-    position: relative;
-    display: flex;
-    justify-content: space-between;
+.type_select_chosen_element, .type_select_list_element {
     width: 160px;
     height: 50px;
-    padding: 12px;
+    padding: 0 12px;
     border: 1px solid $border-color;
     font-size: 14px;
+    background: $main-background-color;
+}
+.type_select_chosen_element {
+    display: flex;
     align-items: center;
+    justify-content: space-between;
+    color: $repository-description-text-color;
     border-radius: 6px;
 }
 
-//.type_select_list_element_input:first-child {
-//    border-radius: 6px;
-//}
-//.type_select_list_element_input:first-of-type {
-//    border-radius: 6px;
-//}
-//.type_select_list_element_input:nth-child(1) {
-//    border-radius: 6px;
-//}
+.type_select_list_element {
+    display: inline-block;
+    vertical-align: center;
+}
+
+.type_select_list_element:nth-child(n+2) {
+    margin-top: -5px;
+}
+
+.type_select_list_element:first-child {
+    border-radius: 6px 6px 0 0;
+}
+
+.type_select_list_element:last-child {
+    border-radius: 0 0 6px 6px;
+}
+
 .type_select_list {
     position: absolute;
     z-index: 2;
-    display: block;
 }
 
 .type_select_chosen_element:hover {
     cursor: pointer;
 }
 
-.type_select_list_element_input {
-    position: absolute;
-    z-index: -1;
-    width: 160px;
-    height: 50px;
-    padding: 12px;
-    border: 1px solid $border-color;
-    background-color: $loader-border-color-white;
-    font-size: 14px;
-    align-items: center;
+.type_select_chosen_element:focus {
+    border-color: $button-primary-color;
+    color: $font-black;
 }
 
-.type_select_list_element_input:hover {
+.type_select_list_element:hover {
     cursor: pointer;
     background-color: $border-color;
-}
-
-.type_select_list_element_input:checked {
-    background-color: $border-color;
-}
-
-.type_select_list_element_input_text {
-    display: flex;
-    width: 160px;
-    height: 50px;
-    padding: 12px;
-    justify-content: space-between;
-    align-items: center;
 }
