@@ -3,37 +3,45 @@ import React, { useState } from "react";
 import { nanoid } from "nanoid";
 
 import styles from "./BlockType.module.scss";
+import {useLocalStore} from "utils/UseLocalStore";
+import {RootStore} from "store/RootStore";
 
 type BlockType = {
   disabled: boolean;
 };
 
 const BlockType: React.FC<BlockType> = (props) => {
+  const repositoriesStore = useLocalStore(() => new RootStore()).queryRepositories;
   const [visible, setVisible] = useState(false);
   const [typeValue, setTypeValue] = useState("Type");
 
   const handleChangeVisibility = () => {
     setVisible(!visible);
   };
-  const handleChangeType = (e: any, option: string, checked: boolean) => {
+  const handleChangeType = (e: any, option: string) => {
     e.target.checked = !e.target.checked;
-    if (typeValue === option) {
-      setTypeValue("standart");
+    if (option === 'sort by stars') {
+      return repositoriesStore.sortByStarsType();
+    } else if (option === 'sort by name') {
+      repositoriesStore.sortByNameType();
+    } else if (option === 'sort by date') {
+      repositoriesStore.sortByDateType();
+    }
+    if (option === typeValue ) {
+      setTypeValue("default");
     } else {
       setTypeValue(option);
     }
-    // gitHubStore.sortByTypes(option);
   };
 
   const arrOptions = [
-    { key: nanoid(), value: "standart", checked: false },
-    { key: nanoid(), value: "archive", checked: false },
-    { key: nanoid(), value: "fork", checked: false },
-    { key: nanoid(), value: "template", checked: false },
-    { key: nanoid(), value: "mirror", checked: false },
+    { key: nanoid(), value: "default", checked: false },
+    { key: nanoid(), value: "sort by stars", checked: false },
+    { key: nanoid(), value: "sort by name", checked: false },
+    { key: nanoid(), value: "sort by date", checked: false },
   ];
 
-  const currentState = () => {
+  const currentType = () => {
     const obj: any[] = [];
     arrOptions.map((option) => {
       if (typeValue === option.value) {
@@ -44,7 +52,7 @@ const BlockType: React.FC<BlockType> = (props) => {
     });
     return obj;
   };
-  const arr = currentState();
+  const arr = currentType();
 
   return (
     <div className={styles.block_type_select}>
@@ -74,7 +82,10 @@ const BlockType: React.FC<BlockType> = (props) => {
             {arr.map((option) => (
               <div key={option.key}
                    className={styles.type_select_list_element}
-                   onClick={handleChangeVisibility}
+                   // onClick={handleChangeVisibility}
+                   onClick={(e) =>
+                       handleChangeType(e, option)
+                   }
               >
                 <label>
                   <input
@@ -83,8 +94,8 @@ const BlockType: React.FC<BlockType> = (props) => {
                     name={option.value}
                     type="checkbox"
                     // onClick={handleChangeVisibility}
-                    // onChange={(e) =>
-                    //   handleChangeType(e, option, option.checked)
+                    // onClick={(e) =>
+                    //   handleChangeType(e, option)
                     // }
                   />
                   <div className={styles.type_select_list_element_input_text}>

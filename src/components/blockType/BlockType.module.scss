@@ -48,11 +48,6 @@
     border-radius: 0 0 6px 6px;
 }
 
-.type_select_list {
-    position: absolute;
-    z-index: 2;
-}
-
 .type_select_chosen_element:hover {
     cursor: pointer;
 }
@@ -60,6 +55,11 @@
 .type_select_chosen_element:focus {
     border-color: $button-primary-color;
     color: $font-black;
+}
+
+.type_select_list {
+    position: absolute;
+    z-index: 2;
 }
 
 .type_select_list_element:hover {

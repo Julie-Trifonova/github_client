@@ -37,4 +37,7 @@ export interface IRepositoriesStore {
   fetchOrganizationReposList(): Promise<void>;
   setSearchValue(e: string): void;
   setErrorMessage(e: string): void;
+  sortByNameType(): void,
+  sortByStarsType(): void,
+  sortByDateType(): void,
 }

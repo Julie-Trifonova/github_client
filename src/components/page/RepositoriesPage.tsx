@@ -14,7 +14,7 @@ type PageInterface = {
   list: gitHubRepoItemModel[];
 };
 
-const Page: React.FC<PageInterface> = (props) => {
+const RepositoriesPage: React.FC<PageInterface> = (props) => {
   return (
     <div>
       <InfiniteScroll
@@ -28,7 +28,7 @@ const Page: React.FC<PageInterface> = (props) => {
         }
         endMessage={<h2 className={styles.loader_position}>End</h2>}
       >
-        <BlockType disabled={false} />
+        <BlockType disabled={false}/>
         {props.list.map(
           (repo: gitHubRepoItemModel) =>
             !repo.private && (
@@ -49,4 +49,4 @@ const Page: React.FC<PageInterface> = (props) => {
     </div>
   );
 };
-export { Page };
+export { RepositoriesPage };

@@ -2,7 +2,7 @@ import React, { useCallback, useEffect } from "react";
 
 import { GitHubError } from "components/gitHubError/GitHubError";
 import { Loader } from "components/loader/Loader";
-import { Page } from "components/page/Page";
+import { RepositoriesPage } from "components/page/RepositoriesPage";
 import { Search } from "components/search";
 import { observer } from "mobx-react-lite";
 import { useSearchParams } from "react-router-dom";
@@ -68,7 +68,7 @@ const Repositories: React.FC = observer(() => {
       {repositoriesStore.meta === Meta.error ? (
         <GitHubError errorMessage={repositoriesStore.errorMessage} />
       ) : (
-        <Page
+        <RepositoriesPage
           dataLength={repositoriesStore.list.length}
           next={() => repositoriesStore.fetchOrganizationReposList()}
           hasMore={repositoriesStore.hasMore}
