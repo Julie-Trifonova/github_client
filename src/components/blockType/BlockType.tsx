@@ -18,20 +18,21 @@ const BlockType: React.FC<BlockType> = (props) => {
   const handleChangeVisibility = () => {
     setVisible(!visible);
   };
-  const handleChangeType = (e: any, option: string) => {
-    e.target.checked = !e.target.checked;
-    if (option === 'sort by stars') {
-      return repositoriesStore.sortByStarsType();
-    } else if (option === 'sort by name') {
+  const handleChangeType = (e: any, value: string, checked: boolean) => {
+    if (value === 'sort by stars') {
+      repositoriesStore.sortByStarsType();
+    } else if (value === 'sort by name') {
       repositoriesStore.sortByNameType();
-    } else if (option === 'sort by date') {
+    } else if (value === 'sort by date') {
       repositoriesStore.sortByDateType();
     }
-    if (option === typeValue ) {
+    if (value === typeValue ) {
       setTypeValue("default");
     } else {
-      setTypeValue(option);
+      setTypeValue(value);
     }
+    e.target.checked = !e.target.checked;
+    // checked = !checked;
   };
 
   const arrOptions = [
@@ -82,10 +83,6 @@ const BlockType: React.FC<BlockType> = (props) => {
             {arr.map((option) => (
               <div key={option.key}
                    className={styles.type_select_list_element}
-                   // onClick={handleChangeVisibility}
-                   onClick={(e) =>
-                       handleChangeType(e, option)
-                   }
               >
                 <label>
                   <input
@@ -93,10 +90,10 @@ const BlockType: React.FC<BlockType> = (props) => {
                     className={styles.type_select_list_element_input}
                     name={option.value}
                     type="checkbox"
-                    // onClick={handleChangeVisibility}
-                    // onClick={(e) =>
-                    //   handleChangeType(e, option)
-                    // }
+                    onClick={handleChangeVisibility}
+                    onChange={(e) =>
+                      handleChangeType(e, option.value, option.checked)
+                    }
                   />
                   <div className={styles.type_select_list_element_input_text}>
                     {option.value}

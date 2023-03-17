@@ -15,7 +15,8 @@
     font-size: 24px;
 }
 
-.type_select_chosen_element, .type_select_list_element {
+.type_select_chosen_element, .type_select_list_element_input {
+    display: block;
     width: 160px;
     height: 50px;
     padding: 0 12px;
@@ -29,15 +30,6 @@
     justify-content: space-between;
     color: $repository-description-text-color;
     border-radius: 6px;
-}
-
-.type_select_list_element {
-    display: inline-block;
-    vertical-align: center;
-}
-
-.type_select_list_element:nth-child(n+2) {
-    margin-top: -5px;
 }
 
 .type_select_list_element:first-child {
@@ -62,7 +54,27 @@
     z-index: 2;
 }
 
-.type_select_list_element:hover {
+.type_select_list_element_input {
+    position: relative;
+}
+
+.type_select_list_element_input:nth-child(n+2){
+    margin-top: -6px;
+}
+
+.type_select_list_element_input:hover {
     cursor: pointer;
     background-color: $border-color;
+}
+
+.type_select_list_element_input:checked {
+    background-color: $border-color;
+}
+
+.type_select_list_element_input_text {
+    position: absolute;
+    z-index: 3;
+    display: flex;
+    margin-top: -36px;
+    padding: 0 12px;
 }
