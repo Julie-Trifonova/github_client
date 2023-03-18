@@ -54,6 +54,16 @@ const Repositories: React.FC = observer(() => {
     [repositoriesStore, setSearch]
   );
 
+  const handleSortByStarsType = () => {
+    repositoriesStore.sortByStarsType();
+  }
+  const handleSortByNameType = () => {
+    repositoriesStore.sortByNameType();
+  }
+  const handleSortByDateType = () => {
+    repositoriesStore.sortByDateType();
+  }
+
   if (repositoriesStore.meta === Meta.loading) {
     return (
       <div className={styles.loader_position}>
@@ -69,6 +79,9 @@ const Repositories: React.FC = observer(() => {
         <GitHubError errorMessage={repositoriesStore.errorMessage} />
       ) : (
         <RepositoriesPage
+            handleSortByDateType={handleSortByDateType}
+            handleSortByNameType={handleSortByNameType}
+            handleSortByStarsType={handleSortByStarsType}
           dataLength={repositoriesStore.list.length}
           next={() => repositoriesStore.fetchOrganizationReposList()}
           hasMore={repositoriesStore.hasMore}

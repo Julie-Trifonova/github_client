@@ -291,15 +291,13 @@ class RepositoriesStore implements IRepositoriesStore {
                 if (new Date(a.updatedAt).getTime() < new Date(b.updatedAt).getTime()) {
                     return 1;
                 }
-                if (new Date(a.updatedAt).getTime() < new Date(b.updatedAt).getTime()) {
+                if (new Date(a.updatedAt).getTime() > new Date(b.updatedAt).getTime()) {
                     return -1;
                 }
                 return 0;
             });
-
         this._list = normalizeCollection(list, (listItem) => listItem.id);
     };
-
 }
 
 export default RepositoriesStore;
