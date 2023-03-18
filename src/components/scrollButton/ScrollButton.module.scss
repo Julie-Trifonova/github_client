@@ -4,7 +4,6 @@
   border: none;
   position: fixed;
   justify-content: right;
-  left: 80%;
   bottom: 40px;
   z-index: 1;
   color: $main-style-color;
@@ -18,4 +17,18 @@
 
 .scroll_button:hover {
   opacity: 0.5;
+}
+
+.scroll_button {
+  @media (min-width: 1201px) {
+    left: 70%;
+  }
+
+  @media (min-width: 641px) and (max-width: 1200px) {
+    left: 85%;
+  }
+
+  @media (max-width: 640px) {
+    left: 90%;
+  }
 }
