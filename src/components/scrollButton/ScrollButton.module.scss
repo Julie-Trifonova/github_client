@@ -1,0 +1,21 @@
+@import 'styles/StylesVariables';
+
+.scroll_button {
+  border: none;
+  position: fixed;
+  justify-content: right;
+  left: 80%;
+  bottom: 40px;
+  z-index: 1;
+  color: $main-style-color;
+  background-color: $main-background-color;
+  text-decoration: none;
+  border-radius: 5px;
+  font-weight: bold;
+  font-family: Roboto, sans-serif;
+  cursor: pointer;
+}
+
+.scroll_button:hover {
+  opacity: 0.5;
+}

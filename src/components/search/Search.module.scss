@@ -22,7 +22,7 @@
 
 .input_search:focus {
   outline: none;
-  border: solid 1px $button-primary-color;
+  border: solid 1px $main-style-color;
 }
 
 .search_button {
@@ -31,7 +31,7 @@
   margin-left: 2%;
   border-radius: 6px;
   border: none;
-  background-color: $button-primary-color;
+  background-color: $main-style-color;
 }
 
 .search_button:hover {

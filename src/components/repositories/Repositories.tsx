@@ -11,6 +11,7 @@ import { Meta } from "utils/meta";
 
 import styles from "./Repositories.module.scss";
 import {useLocalStore} from "utils/UseLocalStore";
+import ScrollButton from "components/scrollButton/ScrollButton";
 
 const Repositories: React.FC = observer(() => {
   // const repositoriesStore = React.useMemo(
@@ -78,6 +79,7 @@ const Repositories: React.FC = observer(() => {
 
   return (
     <div className={`${styles.repositories_block} ${styles.repositories_block_media}`}>
+      <ScrollButton/>
       <Search handleSearchButton={handleSearchButton} />
       {repositoriesStore.meta === Meta.error ? (
         <GitHubError errorMessage={repositoriesStore.errorMessage} />

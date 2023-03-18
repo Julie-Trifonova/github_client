@@ -10,6 +10,7 @@ import { Meta } from "utils/meta";
 import { useLocalStore } from "utils/UseLocalStore";
 
 import styles from "./RepositoryDescription.module.scss";
+import ScrollButton from "components/scrollButton/ScrollButton";
 
 const RepositoryDescription: React.FC = observer(() => {
   // const repositoryStore = React.useMemo(
@@ -40,6 +41,7 @@ const RepositoryDescription: React.FC = observer(() => {
 
   return (
     <div className={`${styles.block_repository_description} ${styles.block_repository_description_media}`}>
+      <ScrollButton/>
       <div
         className={styles.repository_description_title_and_link_to_back_block}
       >
