@@ -52,7 +52,8 @@ class RepositoriesStore implements IRepositoriesStore {
     private _errorMessage = "";
     private _sortByStars = false;
     private _sortByName = false;
-    private _sortByDate = false;
+    private _sortByUpdatingDate = false;
+    private _sortByCreatingDate = false;
 
     constructor() {
         makeObservable<RepositoriesStore, PrivateFields>(this, {
@@ -77,7 +78,8 @@ class RepositoriesStore implements IRepositoriesStore {
             hasMore: computed,
             sortByNameType: action,
             sortByStarsType: action,
-            sortByDateType: action
+            sortByDateUpdatingType: action,
+            sortByCreatingDateType: action
         });
     }
 
@@ -273,10 +275,10 @@ class RepositoriesStore implements IRepositoriesStore {
         this._list = normalizeCollection(list, (listItem) => listItem.id);
     };
 
-    sortByDateType = () => {
-        this._sortByDate = !this._sortByDate;
+    sortByDateUpdatingType = () => {
+        this._sortByUpdatingDate = !this._sortByUpdatingDate;
         const list = linearizeCollection(this._list);
-        if (this._sortByDate) {
+        if (this._sortByUpdatingDate) {
             list.sort((a: gitHubRepoItemModel, b: gitHubRepoItemModel) => {
                 if (new Date(a.updatedAt).getTime() < new Date(b.updatedAt).getTime()) {
                     return -1;
@@ -292,6 +294,32 @@ class RepositoriesStore implements IRepositoriesStore {
                     return 1;
                 }
                 if (new Date(a.updatedAt).getTime() > new Date(b.updatedAt).getTime()) {
+                    return -1;
+                }
+                return 0;
+            });
+        this._list = normalizeCollection(list, (listItem) => listItem.id);
+    };
+
+    sortByCreatingDateType = () => {
+        this._sortByCreatingDate = !this._sortByCreatingDate;
+        const list = linearizeCollection(this._list);
+        if (this._sortByCreatingDate) {
+            list.sort((a: gitHubRepoItemModel, b: gitHubRepoItemModel) => {
+                if (new Date(a.createdAt).getTime() < new Date(b.createdAt).getTime()) {
+                    return -1;
+                }
+                if (new Date(a.createdAt).getTime() > new Date(b.createdAt).getTime()) {
+                    return 1;
+                }
+                return 0;
+            });
+        } else
+            list.sort((a: gitHubRepoItemModel, b: gitHubRepoItemModel) => {
+                if (new Date(a.createdAt).getTime() < new Date(b.createdAt).getTime()) {
+                    return 1;
+                }
+                if (new Date(a.createdAt).getTime() > new Date(b.createdAt).getTime()) {
                     return -1;
                 }
                 return 0;

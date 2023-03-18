@@ -7,8 +7,9 @@ import styles from "./BlockType.module.scss";
 type BlockType = {
     disabled: boolean;
     handleSortByNameType: any;
-    handleSortByDateType: any;
+    handleSortByUpdatingDateType: any;
     handleSortByStarsType: any;
+    handleSortByCreatingDateType: any;
 };
 
 const BlockType: React.FC<BlockType> = (props) => {
@@ -24,7 +25,9 @@ const BlockType: React.FC<BlockType> = (props) => {
         } else if (value === 'sort by name') {
             props.handleSortByNameType();
         } else if (value === 'sort by date') {
-            props.handleSortByDateType();
+            props.handleSortByUpdatingDateType();
+        } else if (value === 'default') {
+            props.handleSortByCreatingDateType();
         }
         setTypeValue(value);
         e.target.checked = !e.target.checked;

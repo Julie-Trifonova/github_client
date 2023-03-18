@@ -60,8 +60,12 @@ const Repositories: React.FC = observer(() => {
   const handleSortByNameType = () => {
     repositoriesStore.sortByNameType();
   }
-  const handleSortByDateType = () => {
-    repositoriesStore.sortByDateType();
+  const handleSortByUpdatingDateType = () => {
+    repositoriesStore.sortByDateUpdatingType();
+  }
+
+  const handleSortByCreatingDateType = () => {
+    repositoriesStore.sortByCreatingDateType();
   }
 
   if (repositoriesStore.meta === Meta.loading) {
@@ -79,9 +83,10 @@ const Repositories: React.FC = observer(() => {
         <GitHubError errorMessage={repositoriesStore.errorMessage} />
       ) : (
         <RepositoriesPage
-            handleSortByDateType={handleSortByDateType}
+            handleSortByUpdatingDateType={handleSortByUpdatingDateType}
             handleSortByNameType={handleSortByNameType}
             handleSortByStarsType={handleSortByStarsType}
+            handleSortByCreatingDateType={handleSortByCreatingDateType}
           dataLength={repositoriesStore.list.length}
           next={() => repositoriesStore.fetchOrganizationReposList()}
           hasMore={repositoriesStore.hasMore}

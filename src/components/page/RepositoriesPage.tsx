@@ -13,8 +13,9 @@ type PageInterface = {
   hasMore: boolean;
   list: gitHubRepoItemModel[];
     handleSortByNameType: any;
-    handleSortByDateType: any;
+    handleSortByUpdatingDateType: any;
     handleSortByStarsType: any;
+    handleSortByCreatingDateType: any;
 };
 
 const RepositoriesPage: React.FC<PageInterface> = (props) => {
@@ -32,9 +33,10 @@ const RepositoriesPage: React.FC<PageInterface> = (props) => {
         endMessage={<h2 className={styles.loader_position}>End</h2>}
       >
         <BlockType disabled={false}
-                   handleSortByDateType={props.handleSortByDateType}
+                   handleSortByUpdatingDateType={props.handleSortByUpdatingDateType}
                    handleSortByNameType={props.handleSortByNameType}
                    handleSortByStarsType={props.handleSortByStarsType}
+                   handleSortByCreatingDateType={props.handleSortByCreatingDateType}
         />
         {props.list.map(
           (repo: gitHubRepoItemModel) =>

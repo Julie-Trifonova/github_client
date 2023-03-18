@@ -39,5 +39,5 @@ export interface IRepositoriesStore {
   setErrorMessage(e: string): void;
   sortByNameType(): void,
   sortByStarsType(): void,
-  sortByDateType(): void,
+  sortByDateUpdatingType(): void,
 }

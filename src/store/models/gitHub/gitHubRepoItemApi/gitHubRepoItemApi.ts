@@ -20,6 +20,7 @@ export type gitHubRepoItemApi = {
   archive: boolean;
   mirror: boolean;
   template: boolean;
+  created_at: string;
 };
 
 export type gitHubRepoItemModel = {
@@ -38,6 +39,7 @@ export type gitHubRepoItemModel = {
   archive: boolean;
   mirror: boolean;
   template: boolean;
+  createdAt: string;
 };
 
 export const dateOptionsType: DateType = { month: "short", day: "numeric" };
@@ -67,4 +69,5 @@ export const normalizeGitHubRepoItem = (
   archive: from.archive,
   mirror: from.mirror,
   template: from.template,
+  createdAt: from.created_at
 });
