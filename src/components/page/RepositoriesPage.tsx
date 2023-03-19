@@ -2,20 +2,24 @@ import React from "react";
 
 import { BlockType } from "components/blockType";
 import { Loader } from "components/loader";
-import styles from "components/repositories/Repositories.module.scss";
 import { RepositoryCard } from "components/repositories/repositoryCard";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { gitHubRepoItemModel } from "store/models/gitHub/gitHubRepoItemApi";
+
+import styles from "components/repositories/Repositories.module.scss";
+
+// @ts-ignore
+import gigI from 'styles/giphy_22.gif'
 
 type PageInterface = {
   dataLength: number;
   next: () => Promise<void>;
   hasMore: boolean;
   list: gitHubRepoItemModel[];
-    handleSortByNameType: any;
-    handleSortByUpdatingDateType: any;
-    handleSortByStarsType: any;
-    handleSortByCreatingDateType: any;
+  handleSortByNameType: any;
+  handleSortByUpdatingDateType: any;
+  handleSortByStarsType: any;
+  handleSortByCreatingDateType: any;
 };
 
 const RepositoriesPage: React.FC<PageInterface> = (props) => {
@@ -30,15 +34,19 @@ const RepositoriesPage: React.FC<PageInterface> = (props) => {
             <Loader />
           </div>
         }
-        endMessage={<h2 className={styles.loader_position}>End</h2>}
+        endMessage={
+            <img className={styles.gif} src={gigI} alt='jj'/>
+      }
       >
-        <BlockType disabled={false}
-                   handleSortByUpdatingDateType={props.handleSortByUpdatingDateType}
-                   handleSortByNameType={props.handleSortByNameType}
-                   handleSortByStarsType={props.handleSortByStarsType}
-                   handleSortByCreatingDateType={props.handleSortByCreatingDateType}
+        <BlockType
+          disabled={false}
+          handleSortByUpdatingDateType={props.handleSortByUpdatingDateType}
+          handleSortByNameType={props.handleSortByNameType}
+          handleSortByStarsType={props.handleSortByStarsType}
+          handleSortByCreatingDateType={props.handleSortByCreatingDateType}
         />
-        {props.list.map(
+          <img className={styles.gif} src={gigI} alt='jj'/>
+          {props.list.map(
           (repo: gitHubRepoItemModel) =>
             !repo.private && (
               <div key={repo.id}>

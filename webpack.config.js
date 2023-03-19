@@ -10,7 +10,7 @@ const isProd = process.env.NODE_ENV === 'production';
 
 const TsCheckerPlugin = require('fork-ts-checker-webpack-plugin');
 
-const { webpack, DefinePlugin } = require("webpack");
+const { _webpack, DefinePlugin } = require("webpack");
 require('dotenv').config()
 
 const getSettingsForStyles = (withModules = false) => {
@@ -39,7 +39,7 @@ module.exports = {
     devtool: isProd ? 'hidden-source-map' : 'eval-source-map',
     output: {
         path: buildPath,
-        filename: "bundle.js"
+        filename: "bundle.js",
     },
     plugins: [
         new HtmlWebpackPlugin({
@@ -91,7 +91,7 @@ module.exports = {
                     test: /\.(woff|woff2|eot|ttf|otf)$/i,
                     type: 'asset/resource',
                 },
-            ]
+            ],
         },
     resolve: {
         extensions: ['.tsx', '.jsx', '.js', '.ts'],

@@ -9,6 +9,14 @@
   justify-content: center;
 }
 
+.gif {
+  background-color: white;
+  color: blue;
+  //display: block;
+  height: 200px;
+  width: 100%;
+}
+
 .repositories_block_media {
   @media (min-width: 1201px) {
     width: 360px;

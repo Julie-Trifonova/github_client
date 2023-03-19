@@ -69,5 +69,5 @@ export const normalizeGitHubRepoItem = (
   archive: from.archive,
   mirror: from.mirror,
   template: from.template,
-  createdAt: from.created_at
+  createdAt: from.created_at,
 });

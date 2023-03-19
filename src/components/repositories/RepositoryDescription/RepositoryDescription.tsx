@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 
 import { Loader } from "components/loader";
+import ScrollButton from "components/scrollButton/ScrollButton";
 import Markdown from "markdown-to-jsx";
 import { observer } from "mobx-react-lite";
 import { nanoid } from "nanoid";
@@ -10,7 +11,6 @@ import { Meta } from "utils/meta";
 import { useLocalStore } from "utils/UseLocalStore";
 
 import styles from "./RepositoryDescription.module.scss";
-import ScrollButton from "components/scrollButton/ScrollButton";
 
 const RepositoryDescription: React.FC = observer(() => {
   // const repositoryStore = React.useMemo(
@@ -40,8 +40,10 @@ const RepositoryDescription: React.FC = observer(() => {
   if (repositoryStore.repoItem?.private) return <>Private Repository</>;
 
   return (
-    <div className={`${styles.block_repository_description} ${styles.block_repository_description_media}`}>
-      <ScrollButton/>
+    <div
+      className={`${styles.block_repository_description} ${styles.block_repository_description_media}`}
+    >
+      <ScrollButton />
       <div
         className={styles.repository_description_title_and_link_to_back_block}
       >
