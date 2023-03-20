@@ -1,13 +1,12 @@
 import React, { useCallback, useEffect } from "react";
 
-import MyLoader from "components/contentLoader/MyLoader";
+import Skeleton from "components/skeleton/Skeleton";
 import { GitHubError } from "components/gitHubError/GitHubError";
 import { Loader } from "components/loader";
 import { RepositoriesPage } from "components/page/RepositoriesPage";
 import ScrollButton from "components/scrollButton/ScrollButton";
 import { Search } from "components/search";
 import { observer } from "mobx-react-lite";
-import { RectShape, TextBlock } from "react-placeholder/lib/placeholders";
 import { useSearchParams } from "react-router-dom";
 import { RootStore } from "store/RootStore";
 import { Meta } from "utils/meta";
@@ -79,15 +78,17 @@ const Repositories: React.FC = observer(() => {
   if (repositoriesStore.meta === Meta.loading) {
     return (
       <div className={styles.loader_position}>
-        <Loader />
-        <MyLoader />
+        {/*<Loader />*/}
+        <Skeleton />
       </div>
     );
   }
 
   return (
+      <>
+          <Skeleton />
     <section className={`${styles.repositories} ${styles.repositories_media}`}>
-      <ScrollButton />
+        <ScrollButton />
       <Search handleSearchButton={handleSearchButton} />
       {repositoriesStore.meta === Meta.error ? (
         <GitHubError errorMessage={repositoriesStore.errorMessage} />
@@ -104,6 +105,8 @@ const Repositories: React.FC = observer(() => {
         />
       )}
     </section>
+      </>
+
   );
 });
 

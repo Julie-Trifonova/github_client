@@ -1,0 +1,17 @@
+.skeleton {
+  @media (min-width: 1201px) {
+    width: 360px;
+  }
+
+  @media (min-width: 641px) and (max-width: 1200px) {
+    width: 57%;
+  }
+
+  @media (max-width: 640px) {
+    width: 80%;
+  }
+}
+
+.skeleton {
+
+}
