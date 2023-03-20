@@ -8,10 +8,9 @@ import InfiniteScroll from "react-infinite-scroll-component";
 import { RectShape, TextBlock } from "react-placeholder/lib/placeholders";
 import { gitHubRepoItemModel } from "store/models/gitHub/gitHubRepoItemApi";
 import { RootStore } from "store/RootStore";
-// @ts-ignore
-import gif from "styles/giphy_3.gif";
 import { Meta } from "utils/meta";
 import { useLocalStore } from "utils/UseLocalStore";
+let gif = require("styles/giphy_3.gif");
 
 type PageInterface = {
   dataLength: number;
@@ -19,10 +18,10 @@ type PageInterface = {
   hasMore: boolean;
   list: gitHubRepoItemModel[];
   meta: string;
-  handleSortByNameType: any;
-  handleSortByUpdatingDateType: any;
-  handleSortByStarsType: any;
-  handleSortByCreatingDateType: any;
+  handleSortByNameType: () => void;
+  handleSortByUpdatingDateType: () => void;
+  handleSortByStarsType: () => void;
+  handleSortByCreatingDateType: () => void;
 };
 
 const RepositoriesPage: React.FC<PageInterface> = (props) => {

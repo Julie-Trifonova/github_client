@@ -25,7 +25,4 @@
 
   "include": ["src/**/*"],
   "exclude": ["node_modules"],
-  "typeRoots": [
-    "./types.d.ts"
-  ]
 }

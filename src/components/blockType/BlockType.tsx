@@ -6,10 +6,10 @@ import styles from "./BlockType.module.scss";
 
 type BlockType = {
   disabled: boolean;
-  handleSortByNameType: any;
-  handleSortByUpdatingDateType: any;
-  handleSortByStarsType: any;
-  handleSortByCreatingDateType: any;
+  handleSortByNameType: () => void;
+  handleSortByUpdatingDateType: () => void;
+  handleSortByStarsType: () => void;
+  handleSortByCreatingDateType: () => void;
 };
 
 const BlockType: React.FC<BlockType> = (props) => {

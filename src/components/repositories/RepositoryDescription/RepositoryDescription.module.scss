@@ -127,7 +127,7 @@
 .watchers__svg_two {
   position: absolute;
   margin-left: -9px;
-  margin-top: 8px;
+  margin-top: calc(11px / 2);
 }
 
 .watchers__count {
