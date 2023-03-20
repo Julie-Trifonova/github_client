@@ -70,10 +70,16 @@ module.exports = {
                     exclude: /\.module\.s?css$/,
                     use: getSettingsForStyles()
                 },
-                {
-                    test: /\.css$/i,
-                    use: ["style-loader", "css-loader"],
-                },
+                // {
+                //     test: /\.s?css$/,
+                //     use: [
+                //         isProd ? MiniCssExtractPlugin.loader
+                //             :
+                //             'style-loader',
+                //         'css-loader',
+                //         'sass-loader'
+                //     ],
+                // },
                 {
                     test: /\.[tj]sx?$/,
                     use: 'babel-loader'

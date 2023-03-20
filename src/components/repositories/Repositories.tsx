@@ -50,13 +50,13 @@ const Repositories: React.FC = observer(() => {
       setSearch({ repo: organization });
       repositoriesStore.setSearchValue(organization);
       repositoriesStore
-        .getOrganizationReposCount(repositoriesStore.searchValue)
+        .getOrganizationReposCount(repositoriesStore.searchValue())
         .then();
       repositoriesStore
         .getOrganizationReposList({
           pageNumber: 1,
           perPageCount: 20,
-          organizationName: repositoriesStore.searchValue,
+          organizationName: repositoriesStore.searchValue(),
         })
         .then();
     },
@@ -86,9 +86,7 @@ const Repositories: React.FC = observer(() => {
   }
 
   return (
-    <section
-      className={`${styles.repositories} ${styles.repositories_media}`}
-    >
+    <section className={`${styles.repositories} ${styles.repositories_media}`}>
       <ScrollButton />
       <Search handleSearchButton={handleSearchButton} />
       {repositoriesStore.meta === Meta.error ? (
@@ -110,4 +108,4 @@ const Repositories: React.FC = observer(() => {
   );
 });
 
-export {Repositories};
+export { Repositories };

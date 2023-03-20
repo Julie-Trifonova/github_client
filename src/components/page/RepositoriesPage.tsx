@@ -9,7 +9,7 @@ import { RectShape, TextBlock } from "react-placeholder/lib/placeholders";
 import { gitHubRepoItemModel } from "store/models/gitHub/gitHubRepoItemApi";
 import { RootStore } from "store/RootStore";
 // @ts-ignore
-import gif from "styles/giphy_2.gif";
+// import gif from "styles/giphy_2.gif";
 import { Meta } from "utils/meta";
 import { useLocalStore } from "utils/UseLocalStore";
 
@@ -48,7 +48,7 @@ const RepositoriesPage: React.FC<PageInterface> = (props) => {
             <Loader />
           </div>
         }
-        endMessage={<img className={styles.end_gif} src={gif} alt="gif" />}
+        endMessage={<img className={styles.end_gif} src='' alt="gif" />}
       >
         <BlockType
           disabled={false}
@@ -62,9 +62,9 @@ const RepositoriesPage: React.FC<PageInterface> = (props) => {
             !repo.private && (
               <div key={repo.id}>
                 {/*<ReactPlaceholder ready={props.meta === Meta.loading} customPlaceholder={<GhostPlaceholder />}>*/}
-                {repositoriesStore.meta === Meta.loading ? (
-                  <GhostPlaceholder />
-                ) : (
+                {/*{repositoriesStore.meta === Meta.loading ? (*/}
+                {/*  <GhostPlaceholder />*/}
+                {/*) : (*/}
                   <RepositoryCard
                     avatar={repo.owner.avatarUrl}
                     title={repo.name}
@@ -74,7 +74,8 @@ const RepositoriesPage: React.FC<PageInterface> = (props) => {
                     owner={repo.owner.login}
                     id={repo.id}
                   />
-                )}
+                {/*)*/}
+                  {/*}*/}
                 {/*</ReactPlaceholder>*/}
               </div>
             )

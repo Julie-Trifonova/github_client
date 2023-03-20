@@ -31,6 +31,7 @@ class RepositoryStore implements IRepositoryStore {
       meta: computed,
       getRepoItem: action,
       setErrorMessage: action,
+      getRepoReadme: action,
     });
   }
 

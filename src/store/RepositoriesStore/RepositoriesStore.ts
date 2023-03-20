@@ -32,8 +32,8 @@ import {
 
 type PrivateFields =
   | "_list"
-  | "_meta"
-  | "_count"
+    | "_meta"
+    | "_count"
   | "_hasMore"
   | "_repoItem"
   | "_page"
@@ -65,17 +65,18 @@ class RepositoriesStore implements IRepositoriesStore {
       _repoItem: observable,
       _searchValue: observable,
       _errorMessage: observable.ref,
-      list: computed,
-      meta: computed,
-      getOrganizationReposList: action,
-      getOrganizationReposCount: action,
-      getRepoItem: action,
-      fetchOrganizationReposList: action,
-      setSearchValue: action,
-      setErrorMessage: action,
       errorMessage: computed,
       repoItem: computed,
       hasMore: computed,
+      list: computed,
+      meta: computed,
+      searchValue: action,
+      setSearchValue: action,
+      setErrorMessage: action,
+      getRepoItem: action,
+      getOrganizationReposList: action,
+      getOrganizationReposCount: action,
+      fetchOrganizationReposList: action,
       sortByNameType: action,
       sortByStarsType: action,
       sortByDateUpdatingType: action,
@@ -85,10 +86,6 @@ class RepositoriesStore implements IRepositoriesStore {
 
   get errorMessage(): string {
     return this._errorMessage;
-  }
-
-  get searchValue(): string {
-    return this._searchValue;
   }
 
   get repoItem(): gitHubRepoItemModel | null {
@@ -105,6 +102,10 @@ class RepositoriesStore implements IRepositoriesStore {
 
   get meta(): Meta {
     return this._meta;
+  }
+
+  searchValue(): string {
+    return this._searchValue;
   }
 
   setSearchValue = (e: string) => {
@@ -208,7 +209,7 @@ class RepositoriesStore implements IRepositoriesStore {
   }
 
   async fetchOrganizationReposList(): Promise<void> {
-    const data = await getRepositories(this._page, 20, this.searchValue);
+    const data = await getRepositories(this._page, 20, this.searchValue());
     this.setErrorMessage("");
     runInAction(() => {
       if (data) {

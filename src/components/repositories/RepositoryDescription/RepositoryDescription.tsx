@@ -169,9 +169,7 @@ const RepositoryDescription: React.FC = observer(() => {
             ? repositoryStore.repoItem?.watchersCount
             : 0}
         </span>
-        <span className={styles.watchers__text}>
-          watching
-        </span>
+        <span className={styles.watchers__text}>watching</span>
       </div>
       <div className={styles.forks}>
         <svg
@@ -196,9 +194,7 @@ const RepositoryDescription: React.FC = observer(() => {
       </div>
       {repositoryStore.repoReadme && (
         <div className={styles.readme}>
-          <div className={styles.readme__title}>
-            Readme.md
-          </div>
+          <div className={styles.readme__title}>Readme.md</div>
           <div key="" className={styles.readme__content}>
             <Markdown>{`${repositoryStore.repoReadme}`}</Markdown>
           </div>
