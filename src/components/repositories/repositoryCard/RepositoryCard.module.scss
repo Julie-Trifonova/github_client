@@ -1,6 +1,6 @@
 @import 'styles/StylesVariables';
 
-.block_repository_card_link {
+.link_to_description_block {
   display: flex;
   width: 100%;
   height: 110px;
@@ -17,24 +17,24 @@
   color: inherit;
 }
 
-.block_repository_card_link:hover {
+.link_to_description_block:hover {
   box-shadow: 0 2px 6px 0 rgb(182 182 182 / 25%);
 }
 
-.img_repository_card {
+.avatar {
   height: 80px;
   width: 80px;
   border-radius: 50%;
 }
 
-.repository_card_text_block {
+.information {
   display: flex;
   margin-left: 12px;
   width: calc(100% - 92px);
   flex-direction: column;
 }
 
-.repository_card_title {
+.information__title {
   font-weight: 700;
   font-size: 16px;
   margin-bottom: 4px;
@@ -44,27 +44,27 @@
   white-space: nowrap;
 }
 
-.block_repository_card_organization {
+.information__organization {
   margin-bottom: 4px;
   color: $text-card-color;
   font-size: 14px;
   line-height: 16px;
 }
 
-.repository_card_star_svg {
+.meta_data__star_svg {
   width: 14px;
   height: 14px;
   color: $star-color;
 }
 
-.repository_card_star_count {
+.meta_data__star_count {
   margin-left: 5px;
   color: $text-card-color;
   font-size: 14px;
   line-height: 16px;
 }
 
-.repository_card_date {
+.meta_data__update_date {
   margin-left: 18px;
   font-size: 14px;
   line-height: 16px;

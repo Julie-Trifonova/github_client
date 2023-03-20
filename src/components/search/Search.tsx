@@ -2,7 +2,7 @@ import React, { useState } from "react";
 
 import styles from "./Search.module.scss";
 
-export type SearchType = React.PropsWithChildren<{
+type SearchType = React.PropsWithChildren<{
   handleSearchButton(organization: string): void;
 }>;
 
@@ -10,20 +10,20 @@ const Search: React.FC<SearchType> = ({ handleSearchButton }) => {
   const [value, setValue] = useState("");
 
   return (
-    <div className={styles.search_block}>
+    <div className={styles.search}>
       <input
-        className={styles.input_search}
+        className={styles.search__input}
         placeholder="Enter organization name"
         type="text"
         value={value}
         onChange={(e) => setValue(e.target.value)}
       />
       <button
-        className={styles.search_button}
+        className={styles.search__button}
         onClick={() => handleSearchButton(value)}
       >
         <svg
-          className={styles.svg_search_button}
+          className={styles.button__svg}
           viewBox="0 0 18 18"
           xmlns="http://www.w3.org/2000/svg"
         >

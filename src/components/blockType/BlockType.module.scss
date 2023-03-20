@@ -1,6 +1,6 @@
 @import 'styles/StylesVariables';
 
-.block_type_select {
+.section__type_select {
     display: flex;
     overflow: auto;
     height: 55px;
@@ -10,12 +10,12 @@
     font-family: $font;
 }
 
-.type_select_title {
+.title {
     font-weight: 700;
     font-size: 24px;
 }
 
-.type_select_chosen_element {
+.filter__button_chosen_element {
     display: block;
     width: 160px;
     height: 50px;
@@ -24,12 +24,12 @@
     font-size: 14px;
     background: $main-background-color;
 }
-.type_select_list_element_input {
+.drop_element__input {
     display: block;
     width: 160px;
     height: 50px;
 }
-.type_select_chosen_element {
+.filter__button_chosen_element {
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -37,34 +37,42 @@
     border-radius: 6px;
 }
 
-.type_select_chosen_element:hover {
+.filter__button_chosen_element:hover {
     cursor: pointer;
 }
 
-.type_select_chosen_element:focus {
+.filter__button_chosen_element:focus {
     border-color: $main-style-color;
     color: $font-black;
 }
 
-.type_select_list {
+.dropdown {
     position: absolute;
     z-index: 2;
 }
 
-.type_select_list_element_input {
+.dropdown__drop_element:first-child .drop_element__text {
+    border-radius: 6px 6px 0 0;
+}
+
+.dropdown__drop_element:last-child .drop_element__text {
+    border-radius: 0 0 6px 6px;
+}
+
+.drop_element__input {
     position: relative;
 }
 
-.type_select_list_element_input:nth-child(n+2){
+.drop_element__input:nth-child(n+2){
     margin-top: -6px;
 }
 
-.type_select_list_element_input:checked {
+.drop_element__input:checked ~ .drop_element__text {
     background-color: $border-color;
     font-size: 14px;
 }
 
-.type_select_list_element_input_text {
+.drop_element__text {
     position: absolute;
     z-index: 3;
     display: flex;
@@ -78,15 +86,7 @@
     background: $main-background-color;
 }
 
-.type_select_list_element_input_text:hover {
+.drop_element__text:hover {
     cursor: pointer;
     background-color: $border-color;
-}
-
-.type_select_list_element:first-child .type_select_list_element_input_text {
-    border-radius: 6px 6px 0 0;
-}
-
-.type_select_list_element:last-child .type_select_list_element_input_text {
-    border-radius: 0 0 6px 6px;
 }

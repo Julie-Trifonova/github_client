@@ -29,22 +29,18 @@ const RepositoryCard: React.FC<RepositoryCardType> = ({
     dateOptionsType
   );
   return (
-    <div className={styles.block_repository_card}>
+    <div className={styles.repository_card}>
       <Link
-        className={styles.block_repository_card_link}
+        className={styles.link_to_description_block}
         to={`/repo/${owner}/${title}`}
       >
-        <img className={styles.img_repository_card} src={avatar} alt="avatar" />
-        <div className={styles.repository_card_text_block}>
-          <div className={styles.repository_card_title}>{title}</div>
-          <div>
-            <div className={styles.block_repository_card_organization}>
-              {owner}
-            </div>
-          </div>
-          <div className={styles.repository_card_meta_data}>
+        <img className={styles.avatar} src={avatar} alt="avatar" />
+        <div className={styles.information}>
+          <div className={styles.information__title}>{title}</div>
+          <div className={styles.information__organization}>{owner}</div>
+          <div className={styles.information__meta_data}>
             <svg
-              className={styles.repository_card_star_svg}
+              className={styles.meta_data__star_svg}
               viewBox="0 0 14 13"
               fill="none"
               xmlns="http://www.w3.org/2000/svg"
@@ -56,10 +52,8 @@ const RepositoryCard: React.FC<RepositoryCardType> = ({
                 fill="#FF9432"
               />
             </svg>
-            <span className={styles.repository_card_star_count}>
-              {starCount}
-            </span>
-            <span className={styles.repository_card_date}>
+            <span className={styles.meta_data__star_count}>{starCount}</span>
+            <span className={styles.meta_data__update_date}>
               {`Updated ${updateAt}`}
             </span>
           </div>

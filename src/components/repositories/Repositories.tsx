@@ -1,11 +1,13 @@
 import React, { useCallback, useEffect } from "react";
 
+import MyLoader from "components/contentLoader/MyLoader";
 import { GitHubError } from "components/gitHubError/GitHubError";
-import { Loader } from "components/loader/Loader";
+import { Loader } from "components/loader";
 import { RepositoriesPage } from "components/page/RepositoriesPage";
 import ScrollButton from "components/scrollButton/ScrollButton";
 import { Search } from "components/search";
 import { observer } from "mobx-react-lite";
+import { RectShape, TextBlock } from "react-placeholder/lib/placeholders";
 import { useSearchParams } from "react-router-dom";
 import { RootStore } from "store/RootStore";
 import { Meta } from "utils/meta";
@@ -14,10 +16,6 @@ import { useLocalStore } from "utils/UseLocalStore";
 import styles from "./Repositories.module.scss";
 
 const Repositories: React.FC = observer(() => {
-  // const repositoriesStore = React.useMemo(
-  //   () => new RootStore(),
-  //   []
-  // ).queryRepositories;
   const repositoriesStore = useLocalStore(
     () => new RootStore()
   ).queryRepositories;
@@ -82,13 +80,14 @@ const Repositories: React.FC = observer(() => {
     return (
       <div className={styles.loader_position}>
         <Loader />
+        <MyLoader />
       </div>
     );
   }
 
   return (
-    <div
-      className={`${styles.repositories_block} ${styles.repositories_block_media}`}
+    <section
+      className={`${styles.repositories} ${styles.repositories_media}`}
     >
       <ScrollButton />
       <Search handleSearchButton={handleSearchButton} />
@@ -104,10 +103,11 @@ const Repositories: React.FC = observer(() => {
           next={() => repositoriesStore.fetchOrganizationReposList()}
           hasMore={repositoriesStore.hasMore}
           list={repositoriesStore.list}
+          meta={repositoriesStore.meta}
         />
       )}
-    </div>
+    </section>
   );
 });
 
-export { Repositories };
+export {Repositories};

@@ -54,16 +54,16 @@ const BlockType: React.FC<BlockType> = (props) => {
   const arr = currentType();
 
   return (
-    <div className={styles.block_type_select}>
-      <div className={styles.type_select_title}>Repositories</div>
-      <div className={styles.type_select_title_list_block}>
+    <section className={styles.section__type_select}>
+      <div className={styles.title}>Repositories</div>
+      <div className={styles.filter}>
         <button
-          className={styles.type_select_chosen_element}
+          className={styles.filter__button_chosen_element}
           onClick={handleChangeVisibility}
         >
           {typeValue}
           <svg
-            className={styles.type_select_chosen_element_svg}
+            className={styles.button_chosen_element__svg}
             width="11"
             height="7"
             viewBox="0 0 11 7"
@@ -77,19 +77,19 @@ const BlockType: React.FC<BlockType> = (props) => {
           </svg>
         </button>
         {visible && (
-          <div className={styles.type_select_list}>
+          <div className={styles.dropdown}>
             {arr.map((option) => (
-              <div key={option.key} className={styles.type_select_list_element}>
+              <div key={option.key} className={styles.dropdown__drop_element}>
                 <label>
                   <input
                     checked={option.checked}
-                    className={styles.type_select_list_element_input}
+                    className={styles.drop_element__input}
                     name={option.value}
                     type="checkbox"
                     onClick={handleChangeVisibility}
                     onChange={(e) => handleChangeType(e, option.value)}
                   />
-                  <div className={styles.type_select_list_element_input_text}>
+                  <div className={styles.drop_element__text}>
                     {option.value}
                   </div>
                 </label>
@@ -98,7 +98,7 @@ const BlockType: React.FC<BlockType> = (props) => {
           </div>
         )}
       </div>
-    </div>
+    </section>
   );
 };
 
