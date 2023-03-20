@@ -101,7 +101,6 @@ const Repositories: React.FC = observer(() => {
           next={() => repositoriesStore.fetchOrganizationReposList()}
           hasMore={repositoriesStore.hasMore}
           list={repositoriesStore.list}
-          meta={repositoriesStore.meta}
         />
       )}
     </section>

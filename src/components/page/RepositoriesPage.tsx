@@ -10,6 +10,7 @@ import { gitHubRepoItemModel } from "store/models/gitHub/gitHubRepoItemApi";
 import { RootStore } from "store/RootStore";
 import { Meta } from "utils/meta";
 import { useLocalStore } from "utils/UseLocalStore";
+import {logger} from "utils/logger";
 let gif = require("styles/giphy_3.gif");
 
 type PageInterface = {
@@ -17,7 +18,6 @@ type PageInterface = {
   next: () => Promise<void>;
   hasMore: boolean;
   list: gitHubRepoItemModel[];
-  meta: string;
   handleSortByNameType: () => void;
   handleSortByUpdatingDateType: () => void;
   handleSortByStarsType: () => void;
@@ -25,16 +25,6 @@ type PageInterface = {
 };
 
 const RepositoriesPage: React.FC<PageInterface> = (props) => {
-  const repositoriesStore = useLocalStore(
-    () => new RootStore()
-  ).queryRepositories;
-
-  const GhostPlaceholder = () => (
-    <div className={styles.placeholder}>
-      <RectShape color="gray" style={{ width: 25, height: 70 }} />
-      <TextBlock rows={6} color="blue" />
-    </div>
-  );
 
   return (
     <div>
@@ -60,10 +50,6 @@ const RepositoriesPage: React.FC<PageInterface> = (props) => {
           (repo: gitHubRepoItemModel) =>
             !repo.private && (
               <div key={repo.id}>
-                {/*<ReactPlaceholder ready={props.meta === Meta.loading} customPlaceholder={<GhostPlaceholder />}>*/}
-                {/*{repositoriesStore.meta === Meta.loading ? (*/}
-                {/*  <GhostPlaceholder />*/}
-                {/*) : (*/}
                   <RepositoryCard
                     avatar={repo.owner.avatarUrl}
                     title={repo.name}
@@ -73,9 +59,6 @@ const RepositoriesPage: React.FC<PageInterface> = (props) => {
                     owner={repo.owner.login}
                     id={repo.id}
                   />
-                {/*)*/}
-                  {/*}*/}
-                {/*</ReactPlaceholder>*/}
               </div>
             )
         )}
