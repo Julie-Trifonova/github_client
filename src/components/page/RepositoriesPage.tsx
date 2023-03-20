@@ -9,7 +9,7 @@ import { RectShape, TextBlock } from "react-placeholder/lib/placeholders";
 import { gitHubRepoItemModel } from "store/models/gitHub/gitHubRepoItemApi";
 import { RootStore } from "store/RootStore";
 // @ts-ignore
-// import gif from "styles/giphy_2.gif";
+import gif from "styles/giphy_3.gif";
 import { Meta } from "utils/meta";
 import { useLocalStore } from "utils/UseLocalStore";
 
@@ -48,7 +48,7 @@ const RepositoriesPage: React.FC<PageInterface> = (props) => {
             <Loader />
           </div>
         }
-        endMessage={<img className={styles.end_gif} src='' alt="gif" />}
+        endMessage={<img className={styles.end_gif} src={gif} alt="gif" />}
       >
         <BlockType
           disabled={false}
