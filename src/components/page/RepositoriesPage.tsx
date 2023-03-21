@@ -33,7 +33,7 @@ const RepositoriesPage: React.FC<PageInterface> = (props) => {
         next={() => props.next()}
         hasMore={props.hasMore}
         loader={
-          <div className={styles.loader_position}>
+          <div className={styles.skeleton_position}>
             <Loader />
           </div>
         }

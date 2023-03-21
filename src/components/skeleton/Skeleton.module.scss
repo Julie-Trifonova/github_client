@@ -1,4 +1,5 @@
 .skeleton {
+  display: block;
   @media (min-width: 1201px) {
     width: 360px;
   }
@@ -10,8 +11,4 @@
   @media (max-width: 640px) {
     width: 80%;
   }
-}
-
-.skeleton {
-
 }

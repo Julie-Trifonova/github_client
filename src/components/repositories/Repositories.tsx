@@ -1,8 +1,7 @@
 import React, { useCallback, useEffect } from "react";
 
-import Skeleton from "components/skeleton/Skeleton";
+import {Skeleton} from "components/skeleton/Skeleton";
 import { GitHubError } from "components/gitHubError/GitHubError";
-import { Loader } from "components/loader";
 import { RepositoriesPage } from "components/page/RepositoriesPage";
 import ScrollButton from "components/scrollButton/ScrollButton";
 import { Search } from "components/search";
@@ -75,18 +74,15 @@ const Repositories: React.FC = observer(() => {
     repositoriesStore.sortByCreatingDateType();
   };
 
-  if (repositoriesStore.meta === Meta.loading) {
+    if (repositoriesStore.meta === Meta.loading) {
     return (
-      <div className={styles.loader_position}>
-        {/*<Loader />*/}
+      <div className={styles.skeleton_position}>
         <Skeleton />
       </div>
     );
   }
 
   return (
-      <>
-          <Skeleton />
     <section className={`${styles.repositories} ${styles.repositories_media}`}>
         <ScrollButton />
       <Search handleSearchButton={handleSearchButton} />
@@ -105,8 +101,6 @@ const Repositories: React.FC = observer(() => {
         />
       )}
     </section>
-      </>
-
   );
 });
 
