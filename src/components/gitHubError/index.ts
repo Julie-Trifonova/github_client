@@ -1,1 +1,1 @@
-export * from "@components/gitHubError";
+export * from "components/gitHubError";

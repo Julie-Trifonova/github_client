@@ -1,26 +1,3 @@
-import {
-  gitHubRepoItemModel,
-  normalizeGitHubRepoItem,
-} from "@store/models/gitHub/gitHubRepoItemApi";
-import {
-  CollectionModel,
-  getInitialCollectionModel,
-  linearizeCollection,
-  normalizeCollection,
-} from "@store/models/shared/collection";
-import {
-  getRepository,
-  getRepositories,
-  getRepositoriesCount,
-} from "@utils/api";
-import { getMoreFetch } from "@utils/helpers";
-import { logger } from "@utils/logger";
-import { Meta } from "@utils/meta";
-import {
-  GetOrganizationReposListParams,
-  GetRepoItemParams,
-  IRepositoriesStore,
-} from "@utils/types";
 import axios from "axios";
 import {
   action,
@@ -29,6 +6,29 @@ import {
   observable,
   runInAction,
 } from "mobx";
+import {
+  gitHubRepoItemModel,
+  normalizeGitHubRepoItem,
+} from "store/models/gitHub/gitHubRepoItemApi/gitHubRepoItemApi";
+import {
+  CollectionModel,
+  getInitialCollectionModel,
+  linearizeCollection,
+  normalizeCollection,
+} from "store/models/shared/collection";
+import {
+  getRepository,
+  getRepositories,
+  getRepositoriesCount,
+} from "utils/api";
+import { getMoreFetch } from "utils/helpers";
+import { logger } from "utils/logger";
+import { Meta } from "utils/meta";
+import {
+  GetOrganizationReposListParams,
+  GetRepoItemParams,
+  IRepositoriesStore,
+} from "utils/types";
 
 type PrivateFields =
   | "_list"
@@ -36,6 +36,7 @@ type PrivateFields =
   | "_count"
   | "_hasMore"
   | "_repoItem"
+  | "_page"
   | "_searchValue"
   | "_errorMessage";
 
@@ -48,8 +49,11 @@ class RepositoriesStore implements IRepositoriesStore {
   private _page = 2;
   private _repoItem: gitHubRepoItemModel | null = null;
   private _searchValue = "";
-  private _sortType = false;
   private _errorMessage = "";
+  private _sortByStars = false;
+  private _sortByName = false;
+  private _sortByUpdatingDate = false;
+  private _sortByCreatingDate = false;
 
   constructor() {
     makeObservable<RepositoriesStore, PrivateFields>(this, {
@@ -57,30 +61,31 @@ class RepositoriesStore implements IRepositoriesStore {
       _meta: observable,
       _count: observable,
       _hasMore: observable,
+      _page: observable,
       _repoItem: observable,
       _searchValue: observable,
       _errorMessage: observable.ref,
-      list: computed,
-      meta: computed,
-      getOrganizationReposList: action,
-      getOrganizationReposCount: action,
-      getRepoItem: action,
-      fetchOrganizationReposList: action,
-      setSearchValue: action,
-      setErrorMessage: action,
-      sortByTypes: action,
       errorMessage: computed,
       repoItem: computed,
       hasMore: computed,
+      list: computed,
+      meta: computed,
+      searchValue: action,
+      setSearchValue: action,
+      setErrorMessage: action,
+      getRepoItem: action,
+      getOrganizationReposList: action,
+      getOrganizationReposCount: action,
+      fetchOrganizationReposList: action,
+      sortByNameType: action,
+      sortByStarsType: action,
+      sortByDateUpdatingType: action,
+      sortByCreatingDateType: action,
     });
   }
 
   get errorMessage(): string {
     return this._errorMessage;
-  }
-
-  get searchValue(): string {
-    return this._searchValue;
   }
 
   get repoItem(): gitHubRepoItemModel | null {
@@ -99,54 +104,9 @@ class RepositoriesStore implements IRepositoriesStore {
     return this._meta;
   }
 
-  sortByTypes = (type: string) => {
-    this._sortType = !this._sortType;
-    const list = linearizeCollection(this._list);
-    if (this._sortType) {
-      if (type === "archive") {
-        list.sort((a: gitHubRepoItemModel, b: gitHubRepoItemModel) => {
-          if (a.archive > b.archive) {
-            return 1;
-          }
-          if (a.archive < b.archive) {
-            return -1;
-          }
-          return 0;
-        });
-      } else if (type === "mirror") {
-        list.sort((a: gitHubRepoItemModel, b: gitHubRepoItemModel) => {
-          if (a.mirror > b.mirror) {
-            return 1;
-          }
-          if (a.mirror < b.mirror) {
-            return -1;
-          }
-          return 0;
-        });
-      } else if (type === "mirror") {
-        list.sort((a: gitHubRepoItemModel, b: gitHubRepoItemModel) => {
-          if (a.fork > b.fork) {
-            return 1;
-          }
-          if (a.fork < b.fork) {
-            return -1;
-          }
-          return 0;
-        });
-      } else if (type === "mirror") {
-        list.sort((a: gitHubRepoItemModel, b: gitHubRepoItemModel) => {
-          if (a.template > b.template) {
-            return 1;
-          }
-          if (a.template < b.template) {
-            return -1;
-          }
-          return 0;
-        });
-      }
-    }
-    this._list = normalizeCollection(list, (listItem) => listItem.id);
-  };
+  searchValue(): string {
+    return this._searchValue;
+  }
 
   setSearchValue = (e: string) => {
     this._searchValue = e;
@@ -249,7 +209,7 @@ class RepositoriesStore implements IRepositoriesStore {
   }
 
   async fetchOrganizationReposList(): Promise<void> {
-    const data = await getRepositories(this._page, 20, this.searchValue);
+    const data = await getRepositories(this._page, 20, this.searchValue());
     this.setErrorMessage("");
     runInAction(() => {
       if (data) {
@@ -272,5 +232,101 @@ class RepositoriesStore implements IRepositoriesStore {
       this._hasMore = getMoreFetch(this._list.order.length, this._count);
     });
   }
+
+  sortByStarsType = () => {
+    this._sortByStars = !this._sortByStars;
+    const list = linearizeCollection(this._list);
+    if (this._sortByStars) {
+      list.sort(
+        (a: gitHubRepoItemModel, b: gitHubRepoItemModel) =>
+          b.stargazersCount - a.stargazersCount
+      );
+    } else
+      list.sort(
+        (a: gitHubRepoItemModel, b: gitHubRepoItemModel) =>
+          a.stargazersCount - b.stargazersCount
+      );
+    this._list = normalizeCollection(list, (listItem) => listItem.id);
+  };
+
+  sortByNameType = () => {
+    this._sortByName = !this._sortByName;
+    const list = linearizeCollection(this._list);
+    if (this._sortByName) {
+      list.sort((a: gitHubRepoItemModel, b: gitHubRepoItemModel) => {
+        if (a.name < b.name) {
+          return -1;
+        }
+        if (a.name > b.name) {
+          return 1;
+        }
+        return 0;
+      });
+    } else
+      list.sort((a: gitHubRepoItemModel, b: gitHubRepoItemModel) => {
+        if (a.name < b.name) {
+          return 1;
+        }
+        if (a.name > b.name) {
+          return -1;
+        }
+        return 0;
+      });
+
+    this._list = normalizeCollection(list, (listItem) => listItem.id);
+  };
+
+  sortByDateUpdatingType = () => {
+    this._sortByUpdatingDate = !this._sortByUpdatingDate;
+    const list = linearizeCollection(this._list);
+    if (this._sortByUpdatingDate) {
+      list.sort((a: gitHubRepoItemModel, b: gitHubRepoItemModel) => {
+        if (new Date(a.updatedAt).getTime() < new Date(b.updatedAt).getTime()) {
+          return -1;
+        }
+        if (new Date(a.updatedAt).getTime() > new Date(b.updatedAt).getTime()) {
+          return 1;
+        }
+        return 0;
+      });
+    } else
+      list.sort((a: gitHubRepoItemModel, b: gitHubRepoItemModel) => {
+        if (new Date(a.updatedAt).getTime() < new Date(b.updatedAt).getTime()) {
+          return 1;
+        }
+        if (new Date(a.updatedAt).getTime() > new Date(b.updatedAt).getTime()) {
+          return -1;
+        }
+        return 0;
+      });
+    this._list = normalizeCollection(list, (listItem) => listItem.id);
+  };
+
+  sortByCreatingDateType = () => {
+    this._sortByCreatingDate = !this._sortByCreatingDate;
+    const list = linearizeCollection(this._list);
+    if (this._sortByCreatingDate) {
+      list.sort((a: gitHubRepoItemModel, b: gitHubRepoItemModel) => {
+        if (new Date(a.createdAt).getTime() < new Date(b.createdAt).getTime()) {
+          return -1;
+        }
+        if (new Date(a.createdAt).getTime() > new Date(b.createdAt).getTime()) {
+          return 1;
+        }
+        return 0;
+      });
+    } else
+      list.sort((a: gitHubRepoItemModel, b: gitHubRepoItemModel) => {
+        if (new Date(a.createdAt).getTime() < new Date(b.createdAt).getTime()) {
+          return 1;
+        }
+        if (new Date(a.createdAt).getTime() > new Date(b.createdAt).getTime()) {
+          return -1;
+        }
+        return 0;
+      });
+    this._list = normalizeCollection(list, (listItem) => listItem.id);
+  };
 }
+
 export default RepositoriesStore;

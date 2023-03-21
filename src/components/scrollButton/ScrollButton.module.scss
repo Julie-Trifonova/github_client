@@ -1,0 +1,35 @@
+@import 'styles/StylesVariables';
+
+.scroll_button {
+  border: none;
+  position: fixed;
+  justify-content: right;
+  bottom: 40px;
+  z-index: 1;
+  color: $main-style-color;
+  background-color: $main-background-color;
+  text-decoration: none;
+  border-radius: 5px;
+  font-weight: bold;
+  font-family: Roboto, sans-serif;
+  cursor: pointer;
+}
+
+.scroll_button_media {
+  @media (min-width: 1201px) {
+    left: 70%;
+  }
+
+  @media (min-width: 641px) and (max-width: 1200px) {
+    left: 85%;
+  }
+
+  @media (max-width: 640px) {
+    left: 90%;
+  }
+}
+
+.scroll_button:hover {
+  opacity: 0.5;
+}
+

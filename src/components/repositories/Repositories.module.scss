@@ -1,20 +1,28 @@
-.repositories_block {
+.repositories {
   padding: 20px;
   display: block;
   margin: auto;
-
 }
-.loader_position {
+
+.skeleton_position {
   display: flex;
   justify-content: center;
 }
-.repositories_block {
+
+.end_gif {
+  height: 200px;
+  width: 80%;
+}
+
+.repositories_media {
   @media (min-width: 1201px) {
     width: 360px;
   }
+
   @media (min-width: 641px) and (max-width: 1200px) {
     width: 57%;
   }
+
   @media (max-width: 640px) {
     width: 80%;
   }

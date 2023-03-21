@@ -6,6 +6,10 @@ import styles from "./BlockType.module.scss";
 
 type BlockType = {
   disabled: boolean;
+  handleSortByNameType: () => void;
+  handleSortByUpdatingDateType: () => void;
+  handleSortByStarsType: () => void;
+  handleSortByCreatingDateType: () => void;
 };
 
 const BlockType: React.FC<BlockType> = (props) => {
@@ -15,25 +19,28 @@ const BlockType: React.FC<BlockType> = (props) => {
   const handleChangeVisibility = () => {
     setVisible(!visible);
   };
-  const handleChangeType = (e: any, option: string, checked: boolean) => {
-    e.target.checked = !e.target.checked;
-    if (typeValue === option) {
-      setTypeValue("standart");
-    } else {
-      setTypeValue(option);
+  const handleChangeType = (e: any, value: string) => {
+    if (value === "sort by stars") {
+      props.handleSortByStarsType();
+    } else if (value === "sort by name") {
+      props.handleSortByNameType();
+    } else if (value === "sort by date") {
+      props.handleSortByUpdatingDateType();
+    } else if (value === "default") {
+      props.handleSortByCreatingDateType();
     }
-    // gitHubStore.sortByTypes(option);
+    setTypeValue(value);
+    e.target.checked = !e.target.checked;
   };
 
   const arrOptions = [
-    { key: nanoid(), value: "standart", checked: false },
-    { key: nanoid(), value: "archive", checked: false },
-    { key: nanoid(), value: "fork", checked: false },
-    { key: nanoid(), value: "template", checked: false },
-    { key: nanoid(), value: "mirror", checked: false },
+    { key: nanoid(), value: "default", checked: false },
+    { key: nanoid(), value: "sort by stars", checked: false },
+    { key: nanoid(), value: "sort by name", checked: false },
+    { key: nanoid(), value: "sort by date", checked: false },
   ];
 
-  const currentState = () => {
+  const currentType = () => {
     const obj: any[] = [];
     arrOptions.map((option) => {
       if (typeValue === option.value) {
@@ -44,19 +51,19 @@ const BlockType: React.FC<BlockType> = (props) => {
     });
     return obj;
   };
-  const arr = currentState();
+  const arr = currentType();
 
   return (
-    <div className={styles.block_type_select}>
-      <div className={styles.type_select_title}>Repositories</div>
-      <div className={styles.type_select_title_list_block}>
-        <div
-          className={styles.type_select_chosen_element}
+    <section className={styles.section__type_select}>
+      <div className={styles.title}>Repositories</div>
+      <div className={styles.filter}>
+        <button
+          className={styles.filter__button_chosen_element}
           onClick={handleChangeVisibility}
         >
           {typeValue}
           <svg
-            className={styles.type_select_chosen_element_svg}
+            className={styles.button_chosen_element__svg}
             width="11"
             height="7"
             viewBox="0 0 11 7"
@@ -68,22 +75,21 @@ const BlockType: React.FC<BlockType> = (props) => {
               fill="#6C757D"
             />
           </svg>
-        </div>
+        </button>
         {visible && (
-          <div className={styles.type_select_list}>
+          <div className={styles.dropdown}>
             {arr.map((option) => (
-              <div key={option.key} className={styles.type_select_list_element}>
+              <div key={option.key} className={styles.dropdown__drop_element}>
                 <label>
                   <input
                     checked={option.checked}
-                    className={styles.type_select_list_element_input}
+                    className={styles.drop_element__input}
                     name={option.value}
                     type="checkbox"
-                    // onChange={(e) =>
-                    //   handleChangeType(e, option, option.checked)
-                    // }
+                    onClick={handleChangeVisibility}
+                    onChange={(e) => handleChangeType(e, option.value)}
                   />
-                  <div className={styles.type_select_list_element_input_text}>
+                  <div className={styles.drop_element__text}>
                     {option.value}
                   </div>
                 </label>
@@ -92,7 +98,7 @@ const BlockType: React.FC<BlockType> = (props) => {
           </div>
         )}
       </div>
-    </div>
+    </section>
   );
 };
 

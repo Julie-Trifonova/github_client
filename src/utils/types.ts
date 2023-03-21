@@ -1,5 +1,4 @@
-import { gitHubRepoItemApi } from "@store/models/gitHub/gitHubRepoItemApi";
-import { observable } from "mobx";
+import { gitHubRepoItemApi } from "store/models/gitHub/gitHubRepoItemApi/gitHubRepoItemApi";
 
 export type GetRepositoriesType = {
   (pageNumber: number, perPageCount: number, organization?: string): Promise<
@@ -38,15 +37,7 @@ export interface IRepositoriesStore {
   fetchOrganizationReposList(): Promise<void>;
   setSearchValue(e: string): void;
   setErrorMessage(e: string): void;
-}
-
-export interface IApiStore {
-  getOrganizationReposList(
-    params: GetOrganizationReposListParams
-  ): Promise<void>;
-  getOrganizationReposCount(organizationName: string): Promise<void>;
-  getRepoItem(params: GetRepoItemParams): Promise<void>;
-  fetchOrganizationReposList(): Promise<void>;
-  setSearchValue(e: string): void;
-  setErrorMessage(e: string): void;
+  sortByNameType(): void;
+  sortByStarsType(): void;
+  sortByDateUpdatingType(): void;
 }

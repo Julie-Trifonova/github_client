@@ -1,11 +1,11 @@
-@import '@styles/ColorVariables';
+@import 'styles/StylesVariables';
 
-.loader_position {
+.skeleton_position {
   display: flex;
   justify-content: center;
 }
 
-.block_repository_description {
+.section__repository_description {
   display: block;
   margin: auto;
   padding: 20px;
@@ -14,13 +14,13 @@
   font-weight: normal;
 }
 
-.repository_description_title_and_link_to_back_block {
+.repository_name {
   display: flex;
   justify-content: flex-start;
   align-items: center;
 }
 
-.repository_description_link_to_back_button {
+.link_to_back__button {
   width: 20px;
   height: 30px;
   border: none;
@@ -28,38 +28,38 @@
   outline: none;
 }
 
-.repository_description_link_to_back_button:hover {
+.link_to_back__button:hover {
   cursor: pointer;
   opacity: 0.5;
 }
 
-.repository_description_link_to_back_svg {
+.button__svg {
   width: 18px;
   height: 25px;
 }
 
-.repository_description_title {
+.repository_name__title {
   margin-left: 18px;
   font-weight: 700;
   font-size: 20px;
   line-height: 23px;
 }
 
-.repository_description_link_and_svg_block {
+.link_to_organization {
   height: 26px;
   margin-top: 25px;
 }
 
-.repository_description_link_svg_one {
+.link_to_organization__svg_one {
   margin-top: 3px;
 }
 
-.repository_description_link_svg_two {
+.link_to_organization__svg_two {
   margin-left: -2px;
   margin-bottom: 4px;
 }
 
-.repository_description_link {
+.link_to_organization__link {
   margin-left: 4px;
   text-decoration: none;
   font-weight: 700;
@@ -68,14 +68,13 @@
   color: $repository-description-link-color;
 }
 
-.repository_description_tags {
+.tags {
   margin-top: 18px;
   display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
+  flex-flow: row wrap;
 }
 
-.repository_description_tag {
+.tags__tag {
   display: flex;
   height: 22px;
   margin: 5px 5px 0 0;
@@ -91,16 +90,16 @@
   color: $repository-description-tag-color;
 }
 
-.repository_description_stars_and_svg {
+.stars {
   margin-top: 18px;
 }
 
-.repository_description_stars_svg {
+.stars__svg {
   width: 14px;
   height: 14px;
 }
 
-.repository_description_stars_count {
+.stars__count {
   margin-left: 7px;
   font-weight: 600;
   font-size: 14px;
@@ -108,30 +107,30 @@
   color: $repository-description-text-color;
 }
 
-.repository_description_stars_text {
+.stars__text {
   margin-left: 4px;
   font-size: 14px;
   line-height: 16px;
   color: $repository-description-text-color;
 }
 
-.repository_description_watchers_and_svg_block {
+.watchers {
   margin-top: 8px;
 }
 
-.repository_description_watchers_svg_one {
+.watchers__svg_one {
   position: relative;
   width: 14px;
   height: 14px;
 }
 
-.repository_description_watchers_svg_two {
+.watchers__svg_two {
   position: absolute;
   margin-left: -9px;
-  margin-top: 8px;
+  margin-top: calc(11px / 2);
 }
 
-.repository_description_watchers_count {
+.watchers__count {
   margin-left: 7px;
   font-weight: 600;
   font-size: 14px;
@@ -139,23 +138,23 @@
   color: $repository-description-text-color;
 }
 
-.repository_description_watchers_text {
+.watchers__text {
   margin-left: 4px;
   font-size: 14px;
   line-height: 16px;
   color: $repository-description-text-color;
 }
 
-.repository_description_forks_and_svg_block {
+.forks {
   margin-top: 8px;
 }
 
-.repository_description_forks_svg {
+.forks__svg {
   width: 14px;
   height: 14px;
 }
 
-.repository_description_forks_count {
+.forks__count {
   margin-left: 7px;
   font-weight: 600;
   font-size: 14px;
@@ -163,40 +162,42 @@
   color: $repository-description-text-color;
 }
 
-.repository_description_forks_text {
+.forks__text {
   margin-left: 4px;
   font-size: 14px;
   line-height: 16px;
   color: $repository-description-text-color;
 }
 
-.repository_description_readme_block {
+.readme {
   margin-top: 25px;
   padding: 12px;
   border: solid 1px $border-color;
   border-radius: 6px;
 }
 
-.repository_description_readme_title {
+.readme__title {
   font-weight: 700;
   font-size: 12px;
   text-transform: uppercase;
 
 }
 
-.repository_description_readme_content {
+.readme__content {
   margin-top: 12px;
 }
 
-.block_repository_description {
+.section__repository_description_media {
   @media (min-width: 1201px) {
     width: 360px;
   }
+
   @media (min-width: 641px) and (max-width: 1200px) {
     width: 65%;
   }
+
   @media (max-width: 640px) {
-    width: 100%;
+    width: 85%;
   }
 }
 

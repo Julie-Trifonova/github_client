@@ -1,21 +1,19 @@
 import React, { useEffect } from "react";
 
-import { Loader } from "@components/loader";
-import RootStore from "@store/RootStore";
-import { Meta } from "@utils/meta";
-import { useLocalStore } from "@utils/UseLocalStore";
+import { Loader } from "components/loader";
+import ScrollButton from "components/scrollButton/ScrollButton";
 import Markdown from "markdown-to-jsx";
 import { observer } from "mobx-react-lite";
+import { nanoid } from "nanoid";
 import { Link, useLocation } from "react-router-dom";
+import { RootStore } from "store/RootStore";
+import { Meta } from "utils/meta";
+import { useLocalStore } from "utils/UseLocalStore";
 
 import styles from "./RepositoryDescription.module.scss";
 
 const RepositoryDescription: React.FC = observer(() => {
-  const repositoryStore = React.useMemo(
-    () => new RootStore(),
-    []
-  ).queryRepository;
-  // const repositoryStore = useLocalStore(() => new RootStore()).queryRepository;
+  const repositoryStore = useLocalStore(() => new RootStore()).queryRepository;
   const location = useLocation();
   const [_root, _repo, org, repoName]: Array<string> =
     location.pathname.split("/");
@@ -38,17 +36,18 @@ const RepositoryDescription: React.FC = observer(() => {
   if (repositoryStore.repoItem?.private) return <>Private Repository</>;
 
   return (
-    <div className={styles.block_repository_description}>
-      <div
-        className={styles.repository_description_title_and_link_to_back_block}
-      >
+    <section
+      className={`${styles.section__repository_description} ${styles.section__repository_description_media}`}
+    >
+      <ScrollButton />
+      <div className={styles.repository_name}>
         <Link
-          className={styles.repository_description_link_to_back_block}
+          className={styles.repository_name__link_to_back}
           to={`/?repo=${org}`}
         >
-          <button className={styles.repository_description_link_to_back_button}>
+          <button className={styles.link_to_back__button}>
             <svg
-              className={styles.repository_description_link_to_back_svg}
+              className={styles.button__svg}
               width="16"
               height="25"
               viewBox="0 0 16 25"
@@ -62,15 +61,15 @@ const RepositoryDescription: React.FC = observer(() => {
             </svg>
           </button>
         </Link>
-        <span className={styles.repository_description_title}>
+        <span className={styles.repository_name__title}>
           {repositoryStore.repoItem?.fullName}
         </span>
       </div>
       {repositoryStore.repoItem?.owner.login &&
         repositoryStore.repoItem?.htmlUrl && (
-          <div className={styles.repository_description_link_and_svg_block}>
+          <div className={styles.link_to_organization}>
             <svg
-              className={styles.repository_description_link_svg_one}
+              className={styles.link_to_organization__svg_one}
               width="9"
               height="10"
               viewBox="0 0 9 10"
@@ -83,7 +82,7 @@ const RepositoryDescription: React.FC = observer(() => {
               />
             </svg>
             <svg
-              className={styles.repository_description_link_svg_two}
+              className={styles.link_to_organization__svg_two}
               width="9"
               height="10"
               viewBox="0 0 9 10"
@@ -96,7 +95,7 @@ const RepositoryDescription: React.FC = observer(() => {
               />
             </svg>
             <a
-              className={styles.repository_description_link}
+              className={styles.link_to_organization__link}
               href={repositoryStore.repoItem?.htmlUrl}
             >
               {repositoryStore.repoItem?.owner.login}
@@ -104,15 +103,17 @@ const RepositoryDescription: React.FC = observer(() => {
           </div>
         )}
       {repositoryStore.repoItem?.topics && (
-        <div className={styles.repository_description_tags}>
+        <div className={styles.tags}>
           {repositoryStore.repoItem?.topics.map((topic: string) => (
-            <div className={styles.repository_description_tag}>{topic}</div>
+            <div key={nanoid()} className={styles.tags__tag}>
+              {topic}
+            </div>
           ))}
         </div>
       )}
-      <div className={styles.repository_description_stars_and_svg}>
+      <div className={styles.stars}>
         <svg
-          className={styles.repository_description_stars_svg}
+          className={styles.stars__svg}
           width="16"
           height="15"
           viewBox="0 0 16 15"
@@ -126,16 +127,16 @@ const RepositoryDescription: React.FC = observer(() => {
             fill="#646769"
           />
         </svg>
-        <span className={styles.repository_description_stars_count}>
+        <span className={styles.stars__count}>
           {repositoryStore.repoItem?.stargazersCount
             ? repositoryStore.repoItem?.stargazersCount
             : 0}
         </span>
-        <span className={styles.repository_description_stars_text}>stars</span>
+        <span className={styles.stars__text}>stars</span>
       </div>
-      <div className={styles.repository_description_watchers_and_svg_block}>
+      <div className={styles.watchers}>
         <svg
-          className={styles.repository_description_watchers_svg_ove}
+          className={styles.watchers__svg_one}
           width="14"
           height="10"
           viewBox="0 0 14 10"
@@ -148,7 +149,7 @@ const RepositoryDescription: React.FC = observer(() => {
           />
         </svg>
         <svg
-          className={styles.repository_description_watchers_svg_two}
+          className={styles.watchers__svg_two}
           width="4"
           height="4"
           viewBox="0 0 4 4"
@@ -163,18 +164,16 @@ const RepositoryDescription: React.FC = observer(() => {
             fill="#646769"
           />
         </svg>
-        <span className={styles.repository_description_watchers_count}>
+        <span className={styles.watchers__count}>
           {repositoryStore.repoItem?.watchersCount
             ? repositoryStore.repoItem?.watchersCount
             : 0}
         </span>
-        <span className={styles.repository_description_watchers_text}>
-          watching
-        </span>
+        <span className={styles.watchers__text}>watching</span>
       </div>
-      <div className={styles.repository_description_forks_and_svg_block}>
+      <div className={styles.forks}>
         <svg
-          className={styles.repository_description_forks_svg}
+          className={styles.forks__svg}
           width="12"
           height="14"
           viewBox="0 0 12 14"
@@ -186,24 +185,22 @@ const RepositoryDescription: React.FC = observer(() => {
             fill="#646769"
           />
         </svg>
-        <span className={styles.repository_description_forks_count}>
+        <span className={styles.forks__count}>
           {repositoryStore.repoItem?.forksCount
             ? repositoryStore.repoItem?.forksCount
             : 0}
         </span>
-        <span className={styles.repository_description_forks_text}>fork</span>
+        <span className={styles.forks__text}>fork</span>
       </div>
       {repositoryStore.repoReadme && (
-        <div className={styles.repository_description_readme_block}>
-          <div className={styles.repository_description_readme_title}>
-            Readme.md
-          </div>
-          <div key="" className={styles.repository_description_readme_content}>
+        <div className={styles.readme}>
+          <div className={styles.readme__title}>Readme.md</div>
+          <div key="" className={styles.readme__content}>
             <Markdown>{`${repositoryStore.repoReadme}`}</Markdown>
           </div>
         </div>
       )}
-    </div>
+    </section>
   );
 });
 

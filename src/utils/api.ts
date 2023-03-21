@@ -1,14 +1,14 @@
-import { BASE_URL, HEADER_API_KEY } from "@config/constants";
-import { gitHubRepoItemApi } from "@store/models/gitHub/gitHubRepoItemApi";
+import axios from "axios";
+import { BASE_URL, HEADER_API_KEY } from "config/constants";
+import { gitHubRepoItemApi } from "store/models/gitHub/gitHubRepoItemApi/gitHubRepoItemApi";
 import {
   GetRepositoriesType,
   GetRepositoryType,
   GetRepositoriesCountType,
-} from "@utils/types";
-import axios from "axios";
+} from "utils/types";
 
 const getAPIError = () => {
-  if (HEADER_API_KEY === undefined) {
+  if (HEADER_API_KEY.auth === undefined) {
     throw new Error("Cannot find HEADER_API_KEY");
   }
 };
