@@ -1,10 +1,10 @@
 import React, { useCallback, useEffect } from "react";
 
-import {Skeleton} from "components/skeleton/Skeleton";
 import { GitHubError } from "components/gitHubError/GitHubError";
 import { RepositoriesPage } from "components/page/RepositoriesPage";
 import ScrollButton from "components/scrollButton/ScrollButton";
 import { Search } from "components/search";
+import { Skeleton } from "components/skeleton/Skeleton";
 import { observer } from "mobx-react-lite";
 import { useSearchParams } from "react-router-dom";
 import { RootStore } from "store/RootStore";
@@ -74,7 +74,7 @@ const Repositories: React.FC = observer(() => {
     repositoriesStore.sortByCreatingDateType();
   };
 
-    if (repositoriesStore.meta === Meta.loading) {
+  if (repositoriesStore.meta === Meta.loading) {
     return (
       <div className={styles.skeleton_position}>
         <Skeleton />
@@ -84,7 +84,7 @@ const Repositories: React.FC = observer(() => {
 
   return (
     <section className={`${styles.repositories} ${styles.repositories_media}`}>
-        <ScrollButton />
+      <ScrollButton />
       <Search handleSearchButton={handleSearchButton} />
       {repositoriesStore.meta === Meta.error ? (
         <GitHubError errorMessage={repositoriesStore.errorMessage} />

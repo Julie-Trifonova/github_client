@@ -15,11 +15,7 @@
   cursor: pointer;
 }
 
-.scroll_button:hover {
-  opacity: 0.5;
-}
-
-.scroll_button {
+.scroll_button_media {
   @media (min-width: 1201px) {
     left: 70%;
   }
@@ -32,3 +28,8 @@
     left: 90%;
   }
 }
+
+.scroll_button:hover {
+  opacity: 0.5;
+}
+

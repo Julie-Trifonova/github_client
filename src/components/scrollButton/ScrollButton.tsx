@@ -27,7 +27,7 @@ const ScrollButton = () => {
     <button
       onClick={scrollToTop}
       style={{ display: visible ? "inline" : "none" }}
-      className={styles.scroll_button}
+      className={`${styles.scroll_button} ${styles.scroll_button_media}`}
     >
       <svg
         width="40px"

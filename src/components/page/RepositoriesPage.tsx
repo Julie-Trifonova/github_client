@@ -8,9 +8,10 @@ import InfiniteScroll from "react-infinite-scroll-component";
 import { RectShape, TextBlock } from "react-placeholder/lib/placeholders";
 import { gitHubRepoItemModel } from "store/models/gitHub/gitHubRepoItemApi";
 import { RootStore } from "store/RootStore";
+import { logger } from "utils/logger";
 import { Meta } from "utils/meta";
 import { useLocalStore } from "utils/UseLocalStore";
-import {logger} from "utils/logger";
+
 let gif = require("styles/giphy_3.gif");
 
 type PageInterface = {
@@ -25,7 +26,6 @@ type PageInterface = {
 };
 
 const RepositoriesPage: React.FC<PageInterface> = (props) => {
-
   return (
     <div>
       <InfiniteScroll
@@ -50,15 +50,15 @@ const RepositoriesPage: React.FC<PageInterface> = (props) => {
           (repo: gitHubRepoItemModel) =>
             !repo.private && (
               <div key={repo.id}>
-                  <RepositoryCard
-                    avatar={repo.owner.avatarUrl}
-                    title={repo.name}
-                    link={repo.htmlUrl}
-                    starCount={repo.stargazersCount}
-                    lastUpdated={repo.updatedAt}
-                    owner={repo.owner.login}
-                    id={repo.id}
-                  />
+                <RepositoryCard
+                  avatar={repo.owner.avatarUrl}
+                  title={repo.name}
+                  link={repo.htmlUrl}
+                  starCount={repo.stargazersCount}
+                  lastUpdated={repo.updatedAt}
+                  owner={repo.owner.login}
+                  id={repo.id}
+                />
               </div>
             )
         )}

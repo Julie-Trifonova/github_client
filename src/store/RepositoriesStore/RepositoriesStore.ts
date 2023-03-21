@@ -32,8 +32,8 @@ import {
 
 type PrivateFields =
   | "_list"
-    | "_meta"
-    | "_count"
+  | "_meta"
+  | "_count"
   | "_hasMore"
   | "_repoItem"
   | "_page"
