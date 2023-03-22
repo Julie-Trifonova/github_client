@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 
-import { Loader } from "components/loader";
 import ScrollButton from "components/scrollButton/ScrollButton";
+import { DescriptionSkeleton } from "components/skeleton/DescriptionSkeleton/DescriptionSkeleton";
 import Markdown from "markdown-to-jsx";
 import { observer } from "mobx-react-lite";
 import { nanoid } from "nanoid";
@@ -27,8 +27,8 @@ const RepositoryDescription: React.FC = observer(() => {
 
   if (repositoryStore.meta === Meta.loading) {
     return (
-      <div className={styles.loader_position}>
-        <Loader />
+      <div className={styles.description_skeleton_position}>
+        <DescriptionSkeleton />
       </div>
     );
   }
