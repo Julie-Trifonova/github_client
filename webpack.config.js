@@ -43,6 +43,11 @@ module.exports = {
         path: buildPath,
         filename: "bundle.js",
     },
+    performance: {
+        hints: false,
+        maxEntrypointSize: 512000,
+        maxAssetSize: 512000
+    },
     plugins: [
         new HtmlWebpackPlugin({
             template: path.join(srcPath, 'index.html')
@@ -56,8 +61,8 @@ module.exports = {
         new TsCheckerPlugin(),
         new ESLintPlugin(),
         new DefinePlugin({
-            "process.env.NODE_ENV": JSON.stringify("development"),
-            "process.env.REACT_APP_GITHUB_API_KEY": JSON.stringify(process.env.REACT_APP_GITHUB_API_KEY)
+            // "process.env.NODE_ENV": JSON.stringify("development"),
+            "process.env.REACT_APP_GITHUB_API_KEY": JSON.stringify("production")
         }),
     ].filter(Boolean),
     module:
