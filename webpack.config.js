@@ -14,7 +14,9 @@ const { _webpack, DefinePlugin } = require("webpack");
 require('dotenv').config()
 
 const getSettingsForStyles = (withModules = false) => {
-    return [MiniCssExtractPlugin.loader,
+    return [
+        isProd ? MiniCssExtractPlugin.loader
+          : 'style-loader',
         !withModules ? 'css-loader' : {
             loader: 'css-loader',
             options: {
@@ -70,16 +72,14 @@ module.exports = {
                     exclude: /\.module\.s?css$/,
                     use: getSettingsForStyles()
                 },
-                // {
-                //     test: /\.s?css$/,
-                //     use: [
-                //         isProd ? MiniCssExtractPlugin.loader
-                //             :
-                //             'style-loader',
-                //         'css-loader',
-                //         'sass-loader'
-                //     ],
-                // },
+                {
+                    // test: /\.module\.s?css$/,
+                    // use:
+                    //   getSettingsForStyles()
+                    //     // isProd ? MiniCssExtractPlugin.loader
+                    //     //     : 'style-loader'
+                    // ,
+                },
                 {
                     test: /\.(png|svg|jpg|jpeg|gif)$/i,
                     type: 'asset/resource',

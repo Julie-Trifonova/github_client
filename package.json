@@ -2,6 +2,7 @@
   "name": "frontend_kts_5",
   "version": "1.0.0",
   "main": "src/index.tsx",
+  "homepage": "https://Julie-T.github.io/frontend_kts_3",
   "repository": "https://github.com/Julie-T/frontend_kts_5.git",
   "author": "Juliya <yula_sakura@list.ru>",
   "license": "MIT",
@@ -10,7 +11,9 @@
     "build": "cross-env NODE_ENV=production npx webpack --mode=production",
     "ts-check": "tsc --skipLibCheck --noEmit --project tsconfig.json",
     "lint": "eslint \"./src/**/*.{js,jsx,ts,tsx}\"",
-    "lint:fix": "eslint \"./src/**/*.{js,jsx,ts,tsx}\" --fix"
+    "lint:fix": "eslint \"./src/**/*.{js,jsx,ts,tsx}\" --fix",
+    "predeploy": "yarn build",
+    "deploy": "gh-pages -d build"
   },
   "devDependencies": {
     "@babel/cli": "^7.21.0",
@@ -36,6 +39,7 @@
     "eslint-webpack-plugin": "^4.0.0",
     "file-loader": "^6.2.0",
     "fork-ts-checker-webpack-plugin": "^8.0.0",
+    "gh-pages": "^5.0.0",
     "html-webpack-plugin": "^5.5.0",
     "markdown-to-jsx": "^7.1.9",
     "mini-css-extract-plugin": "^2.7.3",
